@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "evaluation_date": "2026-10-09T18:43:27.113286+00:00",
+    "evaluation_date": "2026-10-09T19:49:02.434199+00:00",
     "model": "gemini-3.5-flash-lite",
     "temperature": 0.0,
     "manifest_samples": 80,
@@ -11,30 +11,231 @@
   },
   "hypotheses": {
     "H1_hybrid_superiority": {
-      "supported": true,
-      "hybrid_recall": 0.933,
-      "raw_recall": 0.767,
-      "hybrid_fpr": 0.0,
+      "preregistered_criterion_met": true,
+      "verdict_label": "PREREGISTERED CRITERION MET",
+      "executive_finding": "Preregistered criterion met; accuracy parity with raw on visible payloads (not significantly different); advantage is cost (about 36% of raw tokens) and robustness to truncation.",
+      "all_30_hybrid_recall": 0.933,
+      "all_30_raw_recall": 0.767,
       "token_ratio": 0.363,
-      "details": "Hybrid achieved 0.933 recall at 36.3% tokens of raw (budget <= 50%, FPR <= 0.10)"
+      "mcnemar_all_30": {
+        "discordant_hybrid_wins": 7,
+        "discordant_raw_wins": 2,
+        "raw_p": 0.1797,
+        "holm_p": 0.8985
+      },
+      "visible_23_subset_exploratory": {
+        "hybrid_visible_recall": 0.913,
+        "raw_visible_recall": 1.0,
+        "mcnemar_visible_raw_p": 0.5,
+        "mcnemar_visible_holm_p": 0.5,
+        "interpretation": "On the visible subset, raw's recall is 23/23 and hybrid's is 21/23; the preregistered pass depends on the blinded subset where raw cannot see the payload by construction."
+      }
     },
     "H2_domain_defanging_confound": {
-      "supported": false,
-      "p_value_fisher": 1.0,
-      "fabricated_recall": "11/15 (0.73)",
-      "invalid_recall": "11/15 (0.73)"
+      "verdict_label": "NOT TESTABLE AS EXECUTED (design confound)",
+      "design_confound": true,
+      "fabricated_categories": [
+        "C1",
+        "C3",
+        "C5",
+        "C7"
+      ],
+      "invalid_categories": [
+        "C2",
+        "C4",
+        "C6",
+        "C8"
+      ],
+      "invalid_hostname_count_malicious": "11/30",
+      "network_hostname_count_malicious": "21/30",
+      "fisher_category_level_p": 1.0,
+      "limitation": "The v1 defanging question remains open; a valid test needs the same payload template rendered with both domain styles on identical base crates (domain_type crossed with category), on a fresh split, preregistered separately."
     },
     "H3_scale_omitted_region": {
-      "supported": true,
+      "verdict_label": "CONFIRMED BY CONSTRUCTION",
+      "finding": "Raw recall on omitted-region samples is 0/7 because the payload lies beyond the packer's character budget (inject_v2 appends the payload at the end of build.rs / module, exactly where truncation falls). This demonstrates a failure mode of truncating baselines, not an empirical discovery about model capability.",
       "raw_normal_recall": 1.0,
       "raw_omitted_recall": 0.0,
       "hybrid_omitted_recall": 1.0,
-      "details": "Raw recall dropped by 1.00 when payloads sat in omitted regions, while hybrid retained 1.00 recall"
+      "omitted_diagnostics": [
+        {
+          "sample_id": "s_0022_malicious",
+          "base_crate": "discord-indexmap",
+          "injected_file": "src/map.rs",
+          "file_size_chars": 78628,
+          "payload_char_offset": 5572,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0034_malicious",
+          "base_crate": "signal-hook",
+          "injected_file": "src/iterator/backend.rs",
+          "file_size_chars": 17817,
+          "payload_char_offset": 17393,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0046_malicious",
+          "base_crate": "muter",
+          "injected_file": "src/lib/codec/helpers/codecs.rs",
+          "file_size_chars": 18433,
+          "payload_char_offset": 18101,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0058_malicious",
+          "base_crate": "crystals-rs",
+          "injected_file": "src/utils/unsafe_utils/flatten.rs",
+          "file_size_chars": 5495,
+          "payload_char_offset": 4963,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0064_malicious",
+          "base_crate": "matrixmultiply",
+          "injected_file": "src/sgemm_kernel.rs",
+          "file_size_chars": 33593,
+          "payload_char_offset": 8521,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0066_malicious",
+          "base_crate": "tikv-jemalloc-sys-0.7.1+5.3.1-0",
+          "injected_file": "src/lib.rs",
+          "file_size_chars": 40883,
+          "payload_char_offset": 40429,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0070_malicious",
+          "base_crate": "libsqlite3-sys",
+          "injected_file": "sqlcipher/bindgen_bundled_version.rs",
+          "file_size_chars": 125014,
+          "payload_char_offset": 124545,
+          "omitted_by_packer": true
+        }
+      ],
+      "limitation": "Payloads were placed at the end of the file, which maximizes truncation sensitivity; payload position within the file was not varied."
     },
     "H4_rag_effect": {
+      "verdict_label": "NO DIFF",
       "mcnemar_raw_p": 1.0,
       "mcnemar_holm_p": 1.0,
       "significant": false
+    }
+  },
+  "visible_vs_blinded_decomposition": {
+    "hybrid": {
+      "vis_hits": 21,
+      "vis_total": 23,
+      "vis_recall": 0.913,
+      "vis_ci": [
+        0.732,
+        0.976
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "hybrid_norag": {
+      "vis_hits": 21,
+      "vis_total": 23,
+      "vis_recall": 0.913,
+      "vis_ci": [
+        0.732,
+        0.976
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "raw": {
+      "vis_hits": 23,
+      "vis_total": 23,
+      "vis_recall": 1.0,
+      "vis_ci": [
+        0.857,
+        1.0
+      ],
+      "blind_hits": 0,
+      "blind_total": 7,
+      "blind_recall": 0.0,
+      "blind_ci": [
+        0.0,
+        0.354
+      ]
+    },
+    "naive": {
+      "vis_hits": 23,
+      "vis_total": 23,
+      "vis_recall": 1.0,
+      "vis_ci": [
+        0.857,
+        1.0
+      ],
+      "blind_hits": 0,
+      "blind_total": 7,
+      "blind_recall": 0.0,
+      "blind_ci": [
+        0.0,
+        0.354
+      ]
+    },
+    "structured": {
+      "vis_hits": 15,
+      "vis_total": 23,
+      "vis_recall": 0.652,
+      "vis_ci": [
+        0.449,
+        0.812
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "structured_norag": {
+      "vis_hits": 16,
+      "vis_total": 23,
+      "vis_recall": 0.696,
+      "vis_ci": [
+        0.491,
+        0.844
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "grep": {
+      "vis_hits": 20,
+      "vis_total": 23,
+      "vis_recall": 0.87,
+      "vis_ci": [
+        0.679,
+        0.955
+      ],
+      "blind_hits": 6,
+      "blind_total": 7,
+      "blind_recall": 0.857,
+      "blind_ci": [
+        0.487,
+        0.974
+      ]
     }
   },
   "diagnostics": {
@@ -42,6 +243,40 @@
     "size_delta_leak": {
       "all_pairs_leaked": true,
       "mean_delta_bytes": 415.8
+    },
+    "grep_by_obfuscation": {
+      "0": {
+        "hits": 8,
+        "total": 9,
+        "recall": 0.889,
+        "ci": [
+          0.565,
+          0.98
+        ]
+      },
+      "1": {
+        "hits": 10,
+        "total": 12,
+        "recall": 0.833,
+        "ci": [
+          0.552,
+          0.953
+        ]
+      },
+      "2": {
+        "hits": 8,
+        "total": 9,
+        "recall": 0.889,
+        "ci": [
+          0.565,
+          0.98
+        ]
+      }
+    },
+    "residual_tells": {
+      "invalid_domains_in_malicious": "11/30",
+      "invalid_domains_in_benign": "0/30",
+      "disclosure": ".invalid hostnames appear in 11/30 malicious twins and 0 benign twins by design (domain-style arm) and are therefore a residual token-level tell for those samples."
     }
   },
   "tier3_metrics": {
@@ -92,7 +327,10 @@
         0.114,
         0.114
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 0,
+      "pair_consistency_strict_rate": 0.0,
+      "pair_consistency_relaxed_count": 0,
+      "pair_consistency_relaxed_rate": 0.0,
       "mean_tokens_in": 0.0,
       "mean_tokens_out": 0.0,
       "mean_total_tokens": 0.0,
@@ -146,7 +384,10 @@
         0.912,
         0.912
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 25,
+      "pair_consistency_strict_rate": 0.833,
+      "pair_consistency_relaxed_count": 25,
+      "pair_consistency_relaxed_rate": 0.833,
       "mean_tokens_in": 0.0,
       "mean_tokens_out": 0.0,
       "mean_total_tokens": 0.0,
@@ -200,7 +441,10 @@
         0.235,
         0.235
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 4,
+      "pair_consistency_strict_rate": 0.133,
+      "pair_consistency_relaxed_count": 4,
+      "pair_consistency_relaxed_rate": 0.133,
       "mean_tokens_in": 0.0,
       "mean_tokens_out": 0.0,
       "mean_total_tokens": 0.0,
@@ -254,7 +498,10 @@
         0.0,
         0.0
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 0,
+      "pair_consistency_strict_rate": 0.0,
+      "pair_consistency_relaxed_count": 0,
+      "pair_consistency_relaxed_rate": 0.0,
       "mean_tokens_in": 0.0,
       "mean_tokens_out": 0.0,
       "mean_total_tokens": 0.0,
@@ -308,7 +555,10 @@
         0.846,
         0.846
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 21,
+      "pair_consistency_strict_rate": 0.7,
+      "pair_consistency_relaxed_count": 25,
+      "pair_consistency_relaxed_rate": 0.833,
       "mean_tokens_in": 3578.6,
       "mean_tokens_out": 306.1,
       "mean_total_tokens": 3884.7,
@@ -362,7 +612,10 @@
         0.868,
         0.868
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 23,
+      "pair_consistency_strict_rate": 0.767,
+      "pair_consistency_relaxed_count": 27,
+      "pair_consistency_relaxed_rate": 0.9,
       "mean_tokens_in": 2922.2,
       "mean_tokens_out": 285.6,
       "mean_total_tokens": 3207.9,
@@ -416,7 +669,10 @@
         0.966,
         0.966
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 28,
+      "pair_consistency_strict_rate": 0.933,
+      "pair_consistency_relaxed_count": 28,
+      "pair_consistency_relaxed_rate": 0.933,
       "mean_tokens_in": 4942.3,
       "mean_tokens_out": 296.6,
       "mean_total_tokens": 5238.9,
@@ -470,7 +726,10 @@
         0.966,
         0.966
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 28,
+      "pair_consistency_strict_rate": 0.933,
+      "pair_consistency_relaxed_count": 28,
+      "pair_consistency_relaxed_rate": 0.933,
       "mean_tokens_in": 4276.9,
       "mean_tokens_out": 287.9,
       "mean_total_tokens": 4564.8,
@@ -524,7 +783,10 @@
         0.868,
         0.868
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 23,
+      "pair_consistency_strict_rate": 0.767,
+      "pair_consistency_relaxed_count": 23,
+      "pair_consistency_relaxed_rate": 0.767,
       "mean_tokens_in": 14242.0,
       "mean_tokens_out": 176.7,
       "mean_total_tokens": 14418.7,
@@ -578,7 +840,10 @@
         0.868,
         0.868
       ],
-      "pair_consistency": 0.0,
+      "pair_consistency_strict_count": 23,
+      "pair_consistency_strict_rate": 0.767,
+      "pair_consistency_relaxed_count": 23,
+      "pair_consistency_relaxed_rate": 0.767,
       "mean_tokens_in": 13381.1,
       "mean_tokens_out": 114.3,
       "mean_total_tokens": 13495.5,
@@ -671,64 +936,138 @@
     },
     "obfuscation": {
       "hybrid": {
-        "0": "9/9 (1.00)",
-        "1": "10/12 (0.83)",
-        "2": "9/9 (1.00)"
+        "0": {
+          "visible": "4/4 (1.00)",
+          "blinded": "5/5 (1.00)",
+          "total": "9/9 (1.00)"
+        },
+        "1": {
+          "visible": "8/10 (0.80)",
+          "blinded": "2/2 (1.00)",
+          "total": "10/12 (0.83)"
+        },
+        "2": {
+          "visible": "9/9 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "9/9 (1.00)"
+        }
       },
       "raw": {
-        "0": "4/9 (0.44)",
-        "1": "10/12 (0.83)",
-        "2": "9/9 (1.00)"
+        "0": {
+          "visible": "4/4 (1.00)",
+          "blinded": "0/5 (0.00)",
+          "total": "4/9 (0.44)"
+        },
+        "1": {
+          "visible": "10/10 (1.00)",
+          "blinded": "0/2 (0.00)",
+          "total": "10/12 (0.83)"
+        },
+        "2": {
+          "visible": "9/9 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "9/9 (1.00)"
+        }
       },
       "structured": {
-        "0": "8/9 (0.89)",
-        "1": "8/12 (0.67)",
-        "2": "6/9 (0.67)"
+        "0": {
+          "visible": "3/4 (0.75)",
+          "blinded": "5/5 (1.00)",
+          "total": "8/9 (0.89)"
+        },
+        "1": {
+          "visible": "6/10 (0.60)",
+          "blinded": "2/2 (1.00)",
+          "total": "8/12 (0.67)"
+        },
+        "2": {
+          "visible": "6/9 (0.67)",
+          "blinded": "0/0 (N/A)",
+          "total": "6/9 (0.67)"
+        }
       }
     },
     "placement": {
       "hybrid": {
-        "P1": "14/14 (1.00)",
-        "P3": "6/6 (1.00)",
-        "P4": "8/10 (0.80)"
+        "P1": {
+          "visible": "14/14 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "14/14 (1.00)"
+        },
+        "P2": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        },
+        "P3": {
+          "visible": "0/0 (N/A)",
+          "blinded": "6/6 (1.00)",
+          "total": "6/6 (1.00)"
+        },
+        "P4": {
+          "visible": "7/9 (0.78)",
+          "blinded": "1/1 (1.00)",
+          "total": "8/10 (0.80)"
+        },
+        "P5": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        }
       },
       "raw": {
-        "P1": "14/14 (1.00)",
-        "P3": "0/6 (0.00)",
-        "P4": "9/10 (0.90)"
+        "P1": {
+          "visible": "14/14 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "14/14 (1.00)"
+        },
+        "P2": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        },
+        "P3": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/6 (0.00)",
+          "total": "0/6 (0.00)"
+        },
+        "P4": {
+          "visible": "9/9 (1.00)",
+          "blinded": "0/1 (0.00)",
+          "total": "9/10 (0.90)"
+        },
+        "P5": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        }
       },
       "structured": {
-        "P1": "10/14 (0.71)",
-        "P3": "6/6 (1.00)",
-        "P4": "6/10 (0.60)"
-      }
-    },
-    "domain_type": {
-      "hybrid": {
-        "fabricated": "13/15 (0.87)",
-        "invalid": "15/15 (1.00)"
-      },
-      "raw": {
-        "fabricated": "9/15 (0.60)",
-        "invalid": "14/15 (0.93)"
-      },
-      "structured": {
-        "fabricated": "11/15 (0.73)",
-        "invalid": "11/15 (0.73)"
-      }
-    },
-    "omitted_region": {
-      "hybrid": {
-        "False": "21/23 (0.91)",
-        "True": "7/7 (1.00)"
-      },
-      "raw": {
-        "False": "23/23 (1.00)",
-        "True": "0/7 (0.00)"
-      },
-      "structured": {
-        "False": "15/23 (0.65)",
-        "True": "7/7 (1.00)"
+        "P1": {
+          "visible": "10/14 (0.71)",
+          "blinded": "0/0 (N/A)",
+          "total": "10/14 (0.71)"
+        },
+        "P2": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        },
+        "P3": {
+          "visible": "0/0 (N/A)",
+          "blinded": "6/6 (1.00)",
+          "total": "6/6 (1.00)"
+        },
+        "P4": {
+          "visible": "5/9 (0.56)",
+          "blinded": "1/1 (1.00)",
+          "total": "6/10 (0.60)"
+        },
+        "P5": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        }
       }
     }
   },

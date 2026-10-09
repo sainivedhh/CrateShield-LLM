@@ -189,30 +189,68 @@ def cluster_bootstrap_by_base(
 
 
 def compute_pair_consistency(results: list[dict[str, Any]], strict: bool = True) -> float:
-    """Computes pair consistency: percentage of base crates where both twins were classified correctly."""
-    clusters: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    """Computes pair consistency: percentage of base crates where both twins were classified correctly.
+    
+    Definition: A pair is consistent iff the malicious twin is classified MALICIOUS (or SUSPICIOUS under relaxed)
+    AND the benign twin is classified BENIGN.
+    """
+    pairs: dict[str, dict[str, str]] = defaultdict(dict)
     for r in results:
-        cluster_id = r.get("cluster_id") or r.get("base_crate")
-        if cluster_id:
-            clusters[cluster_id].append(r)
+        pair_key = r.get("pair_id") or r.get("cluster_id") or r.get("base_crate")
+        lbl = r.get("ground_truth") or r.get("label")
+        pred = (r.get("classification") or {}).get("classification")
+        if pair_key and lbl and pred:
+            pairs[pair_key][lbl] = pred
 
     perfect_pairs = 0
     total_valid_pairs = 0
 
-    for cluster_id, records in clusters.items():
-        if len(records) != 2:
+    for cluster_id, twins in pairs.items():
+        if "MALICIOUS" not in twins or "BENIGN" not in twins:
             continue
         total_valid_pairs += 1
-        all_correct = True
-        for r in records:
-            gt = r.get("ground_truth") or r.get("label")
-            pred = (r.get("classification") or {}).get("classification")
-            is_mal = (pred == "MALICIOUS") if strict else (pred in ("MALICIOUS", "SUSPICIOUS"))
-            expected_mal = (gt in ("MALICIOUS", "SUSPICIOUS"))
-            if is_mal != expected_mal:
-                all_correct = False
-                break
-        if all_correct:
+        mal_pred = twins["MALICIOUS"]
+        ben_pred = twins["BENIGN"]
+        
+        mal_ok = (mal_pred == "MALICIOUS") if strict else (mal_pred in ("MALICIOUS", "SUSPICIOUS"))
+        ben_ok = (ben_pred == "BENIGN")
+        
+        if mal_ok and ben_ok:
             perfect_pairs += 1
 
     return round((perfect_pairs / total_valid_pairs), 3) if total_valid_pairs > 0 else 0.0
+
+
+def compute_pair_consistency_stats(results: list[dict[str, Any]]) -> dict[str, Any]:
+    """Returns detailed pair consistency statistics including counts and fractions."""
+    pairs: dict[str, dict[str, str]] = defaultdict(dict)
+    for r in results:
+        pair_key = r.get("pair_id") or r.get("cluster_id") or r.get("base_crate")
+        lbl = r.get("ground_truth") or r.get("label")
+        pred = (r.get("classification") or {}).get("classification")
+        if pair_key and lbl and pred:
+            pairs[pair_key][lbl] = pred
+
+    strict_count = 0
+    relaxed_count = 0
+    total_pairs = 0
+
+    for cluster_id, twins in pairs.items():
+        if "MALICIOUS" not in twins or "BENIGN" not in twins:
+            continue
+        total_pairs += 1
+        mal_pred = twins["MALICIOUS"]
+        ben_pred = twins["BENIGN"]
+        
+        if mal_pred == "MALICIOUS" and ben_pred == "BENIGN":
+            strict_count += 1
+        if mal_pred in ("MALICIOUS", "SUSPICIOUS") and ben_pred == "BENIGN":
+            relaxed_count += 1
+
+    return {
+        "total_pairs": total_pairs,
+        "strict_count": strict_count,
+        "strict_fraction": round(strict_count / total_pairs, 3) if total_pairs > 0 else 0.0,
+        "relaxed_count": relaxed_count,
+        "relaxed_fraction": round(relaxed_count / total_pairs, 3) if total_pairs > 0 else 0.0,
+    }

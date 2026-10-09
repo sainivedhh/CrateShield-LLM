@@ -127,6 +127,21 @@ def verify_all() -> bool:
     # Regenerate final report
     generate_report()
 
+    # Assert Task 1 expected pair-consistency values
+    res_summary = json.loads((BENCH_V2_DIR / "results_summary.json").read_text(encoding="utf-8"))
+    t3_m = res_summary["tier3_metrics"]
+    expected_pairs = {
+        "hybrid": 28,
+        "grep": 25,
+        "raw": 23,
+        "structured": 21,
+        "size": 0,
+    }
+    for c_name, exp_cnt in expected_pairs.items():
+        actual_cnt = t3_m[c_name]["pair_consistency_strict_count"]
+        assert actual_cnt == exp_cnt, f"Pair consistency mismatch for {c_name}: expected {exp_cnt}, got {actual_cnt}"
+    logger.info("PASS: Task 1 pair consistency verified (hybrid 28/30, grep 25/30, raw 23/30, structured 21/30, size 0/30).")
+
     elapsed = time.time() - start_time
     logger.info("PASS: Report regenerated cleanly in %.2f seconds (limit < 60s).", elapsed)
     assert elapsed < 60.0, f"Reproduction took {elapsed:.1f}s, exceeding 60s limit"

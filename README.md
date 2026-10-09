@@ -76,12 +76,12 @@ The v2 evaluation benchmark addresses 8 critical confounders identified in earli
 
 | Confounder | v1 Limitation | v2 Resolution |
 | :--- | :--- | :--- |
-| **A. Injection Tells** | Fixed comments (`// Platform integration hook`), `routine_` prefix, fixed main entry point. | Dynamic identifier generation from 20,000+ verb/noun combinations, synthetic comments eliminated, varied placements (P1..P5 + secondary modules). |
-| **B. Defanging Confound** | Injected connections to `.invalid` triggered false negatives ("inert placeholder"). | 50/50 balance between `.invalid` and plausible fabricated hostnames (`pkg-telemetry-sink.net`, etc.) tested under Hypothesis H2. |
+| **A. Injection Tells** | Fixed comments (`// Platform integration hook`), `routine_` prefix, fixed main entry point. | Dynamic identifier generation from 20,000+ verb/noun combinations, synthetic comments eliminated, varied placements (P1, P3, P4; P2 and P5 not exercised in v2). |
+| **B. Defanging Confound** | Injected connections to `.invalid` triggered false negatives ("inert placeholder"). | 50/50 balance between `.invalid` and plausible fabricated hostnames (`pkg-telemetry-sink.net`, etc.); H2 reclassified as not testable as executed due to category alignment. |
 | **C. Author/Vocab Leak** | Payloads and baseline patterns shared identical vocabulary. | Independent re-authoring of C1..C8 templates from OSSF/RustSec incident descriptions; $\ge 70\%$ variants at obfuscation level $\ge 1$. |
 | **D. Line Endings** | Injected twins used Windows CRLF while base files used LF. | Native binary detection and preservation; diffs contain zero whole-file line ending churn. |
 | **E. Statistical Rigor** | Degenerate $[0, 0]$ CIs, no multiple testing correction, size gate cutoff. | Wilson score intervals, exact McNemar paired tests with Holm-Bonferroni correction, Fisher exact tests, and cluster bootstrap by base crate. |
-| **F. Reproducibility** | Historical discrepancy in Tier 2 sample count (6 vs 8). | Complete evaluation of all 8 historical reconstructions including `rustdecimal` and `faster_log`. |
+| **F. Reproducibility** | Historical discrepancy in Tier 2 sample count (6 vs 8). | True cache count verified at n=6 (discrepancy resolved: `rustdecimal` and `faster_log` failed Gate G1 leak checks in v1). |
 | **G. Split Hygiene** | 40 candidate crates used. | 30 fresh, completely disjoint evaluation base crates; 10 disjoint tune base crates (Gate G6). |
 | **H. Scale-Test Arm** | Payloads always placed in root files. | Explicit placement of payloads in modules omitted by standard character packing limits (Hypothesis H3). |
 
