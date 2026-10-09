@@ -1,6 +1,6 @@
 # CrateShield-LLM v2: Benchmark Evaluation Report
 
-**Date:** 2026-10-09T18:34:48.941002+00:00  
+**Date:** 2026-10-09T18:43:27.113286+00:00  
 **Model:** `gemini-3.5-flash-lite` (temperature 0.0)  
 **Git Snapshot:** `freeze-v2` / `prereg-v2`  
 
