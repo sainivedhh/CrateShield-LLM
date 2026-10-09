@@ -142,15 +142,23 @@ def render_payload_code(
     return rendered, fn_name, target_host
 
 
+CALL_TEMPLATES = [
+    "    {entrypoint}();{le}",
+    "    let _ = {entrypoint}();{le}",
+    "    drop({entrypoint}());{le}",
+]
+
+
 def inject_into_build_rs_v2(
     build_bytes: bytes,
     payload_code: str,
     entrypoint: str,
     call_position: str = "end",
+    seed: int = 42,
 ) -> bytes:
     """Injects payload code into build.rs preserving line endings and varying call site."""
     le = detect_line_ending(build_bytes)
-    content_str = build_bytes.decode("utf-8", errors="replace")
+    rng = random.Random(seed)
 
     tree = _PARSER.parse(build_bytes)
     root = tree.root_node
@@ -165,7 +173,8 @@ def inject_into_build_rs_v2(
                     main_fn = child
                     break
 
-    call_stmt = f"    let _ = {entrypoint}();{le}"
+    call_tpl = rng.choice(CALL_TEMPLATES)
+    call_stmt = call_tpl.format(entrypoint=entrypoint, le=le)
 
     if main_fn:
         body = main_fn.child_by_field_name("body")
@@ -195,14 +204,41 @@ def inject_into_lib_module_v2(
     payload_code: str,
     entrypoint: str,
     placement: str = "P2",
+    call_position: str = "end",
+    seed: int = 42,
 ) -> bytes:
-    """Injects payload code into a library module."""
+    """Injects payload code into a library module varying placement and call style."""
     le = detect_line_ending(file_bytes)
     norm_payload = payload_code.replace("\r\n", "\n").replace("\n", le)
+    rng = random.Random(seed)
 
-    # In library, export function or call from an internal initialization hook
-    call_hook = f"{le}#[doc(hidden)]{le}pub fn _runtime_init_hook() {{{le}    let _ = {entrypoint}();{le}}}{le}"
-    final_bytes = file_bytes + f"{le}{le}".encode() + norm_payload.encode() + call_hook.encode() + le.encode()
+    tree = _PARSER.parse(file_bytes)
+    root = tree.root_node
+
+    call_tpl = rng.choice(CALL_TEMPLATES)
+    call_stmt = call_tpl.format(entrypoint=entrypoint, le=le)
+
+    fns = [c for c in root.children if c.type == "function_item"]
+    if fns:
+        target_fn = rng.choice(fns)
+        body = target_fn.child_by_field_name("body")
+        if body and len(body.children) >= 2:
+            if call_position == "start":
+                insert_pos = body.children[0].end_byte
+                new_bytes = file_bytes[:insert_pos] + le.encode() + call_stmt.encode() + file_bytes[insert_pos:]
+            else:
+                insert_pos = body.children[-1].start_byte
+                new_bytes = file_bytes[:insert_pos] + call_stmt.encode() + file_bytes[insert_pos:]
+        else:
+            new_bytes = file_bytes + le.encode() + call_stmt.encode()
+    else:
+        # Export a dynamically named helper function
+        hook_name = f"_{rng.choice(FN_VERBS)}_{rng.choice(FN_NOUNS)}"
+        fn_kw = rng.choice(["fn", "pub fn"])
+        call_hook = f"{le}{fn_kw} {hook_name}() {{{le}{call_stmt}}}{le}"
+        new_bytes = file_bytes + call_hook.encode()
+
+    final_bytes = new_bytes + f"{le}{le}".encode() + norm_payload.encode() + le.encode()
     return final_bytes
 
 
@@ -213,6 +249,7 @@ def inject_payload_v2(
     variant_idx: int,
     placement: str = "P1",
     domain_type: str = "fabricated",
+    target_file_rel: str | None = None,
     seed: int = 42,
 ) -> dict[str, Any]:
     """Applies tell-free payload injection to base crate."""
@@ -231,18 +268,33 @@ def inject_payload_v2(
     build_rs_path = dest_dir / "build.rs"
     injected_file = None
 
-    if placement in ("P1", "P5") or not (dest_dir / "src" / "lib.rs").exists():
+    if target_file_rel and (dest_dir / target_file_rel).exists():
+        target_file = dest_dir / target_file_rel
+        orig_bytes = target_file.read_bytes()
+        call_pos = rng.choice(["start", "end"])
+        new_bytes = inject_into_lib_module_v2(
+            orig_bytes, rendered_code, entrypoint, placement="P3", call_position=call_pos, seed=seed
+        )
+        if not parse_and_verify(new_bytes):
+            le = detect_line_ending(orig_bytes)
+            norm_code = rendered_code.replace("\r\n", "\n").replace("\n", le)
+            new_bytes = orig_bytes + f"{le}{le}".encode() + norm_code.encode() + le.encode()
+        target_file.write_bytes(new_bytes)
+        injected_file = str(target_file.relative_to(dest_dir)).replace("\\", "/")
+
+    elif placement in ("P1", "P5") or not (dest_dir / "src" / "lib.rs").exists():
         # Inject into build.rs
         if not build_rs_path.exists():
             build_rs_path.write_bytes(b"fn main() {}\n")
 
         orig_bytes = build_rs_path.read_bytes()
         call_pos = rng.choice(["start", "end"])
-        new_bytes = inject_into_build_rs_v2(orig_bytes, rendered_code, entrypoint, call_position=call_pos)
+        new_bytes = inject_into_build_rs_v2(
+            orig_bytes, rendered_code, entrypoint, call_position=call_pos, seed=seed
+        )
         
         # Verify tree-sitter parse
         if not parse_and_verify(new_bytes):
-            # Fallback to simple safe append
             le = detect_line_ending(orig_bytes)
             norm_code = rendered_code.replace("\r\n", "\n").replace("\n", le)
             new_bytes = orig_bytes + f"{le}{le}".encode() + norm_code.encode() + le.encode()
@@ -255,21 +307,24 @@ def inject_payload_v2(
         lib_rs = dest_dir / "src" / "lib.rs"
         target_file = lib_rs
         
-        # If P3, check for secondary modules
+        # If P3, check for secondary modules across src
         if placement == "P3":
-            sub_modules = [p for p in (dest_dir / "src").glob("*.rs") if p.name != "lib.rs"]
+            sub_modules = [p for p in dest_dir.glob("src/**/*.rs") if p.name != "lib.rs"]
             if sub_modules:
                 target_file = rng.choice(sub_modules)
 
         orig_bytes = target_file.read_bytes()
-        new_bytes = inject_into_lib_module_v2(orig_bytes, rendered_code, entrypoint, placement=placement)
+        call_pos = rng.choice(["start", "end"])
+        new_bytes = inject_into_lib_module_v2(
+            orig_bytes, rendered_code, entrypoint, placement=placement, call_position=call_pos, seed=seed
+        )
         if not parse_and_verify(new_bytes):
             le = detect_line_ending(orig_bytes)
             norm_code = rendered_code.replace("\r\n", "\n").replace("\n", le)
             new_bytes = orig_bytes + f"{le}{le}".encode() + norm_code.encode() + le.encode()
 
         target_file.write_bytes(new_bytes)
-        injected_file = str(target_file.relative_to(dest_dir))
+        injected_file = str(target_file.relative_to(dest_dir)).replace("\\", "/")
 
     return {
         "template_id": template["id"],

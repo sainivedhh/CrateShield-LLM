@@ -14,6 +14,8 @@ from pathlib import Path
 from typing import Any
 
 
+import datetime
+
 @dataclass
 class SampleRecord:
     sample_id: str
@@ -32,6 +34,8 @@ class SampleRecord:
     placement: str | None = None         # P1..P5
     obfuscation_level: int = 0           # 0 plain, 1 encoded, 2 split/XOR
     surface_variant: str | None = None
+    domain_type: str | None = None       # "invalid", "fabricated", or "none"
+    payload_in_omitted_region: bool = False  # True if payload sits in omitted/truncated region
     payload_bytes: int = 0
     size_bytes: int = 0
     loc: int = 0
@@ -50,8 +54,8 @@ class SampleRecord:
 
 @dataclass
 class BenchmarkManifest:
-    version: str = "v1"
-    created_at: str = ""
+    version: str = "v2"
+    created_at: str = field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
     seed: int = 42
     target_scale: int = 40
     records: list[SampleRecord] = field(default_factory=list)
