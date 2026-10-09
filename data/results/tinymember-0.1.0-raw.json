@@ -1,0 +1,44 @@
+{
+  "crate": "tinymember",
+  "version": "0.1.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate contains a build.rs script that attempts to connect via TCP to a hardcoded external IP address (23.254.165.112:9089), references a remote URL payload, and executes an arbitrary binary from the /tmp directory (/tmp/rust-setup) during the build phase. This is a classic supply-chain attack pattern designed for remote code execution upon building the crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 1.0,
+    "security_risk_score": 1.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 4163,
+    "chars_out": 585
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

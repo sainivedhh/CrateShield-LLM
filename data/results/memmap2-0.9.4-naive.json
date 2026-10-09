@@ -1,0 +1,50 @@
+{
+  "crate": "memmap2",
+  "version": "0.9.4",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The provided code is the standard implementation of the well-known Rust crate 'memmap2', which provides a cross-platform API for memory-mapped file I/O. The code contains standard safe and unsafe wrappers around system memory mapping calls (like mmap on Unix or VirtualAlloc on Windows via its internal modules) and standard unit tests. There are no signs of malicious payloads, unauthorized network access, data exfiltration, or obfuscation.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [
+      "src/lib.rs (58819/69945 chars)"
+    ],
+    "omitted": [
+      "src/stub.rs",
+      "src/windows.rs",
+      "src/unix.rs",
+      "src/advice.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 4 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 6
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60362,
+    "chars_out": 517
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

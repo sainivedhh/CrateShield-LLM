@@ -1,0 +1,43 @@
+{
+  "crate": "cratebench-lib-keychain",
+  "version": "0.1.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate attempts to read sensitive local data (specifically 'Login Data', which is commonly used by browsers to store credentials) and attempts to connect to a local socket address, indicating an attempt to exfiltrate sensitive user data.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 2
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 616,
+    "chars_out": 318
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

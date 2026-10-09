@@ -1,0 +1,64 @@
+{
+  "crate": "bytes",
+  "version": "1.7.1",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate is `bytes`, a very popular, foundational, and open-source Rust library for managing byte buffers (part of the Tokio ecosystem). The code shown is standard library implementation code (structs, vtables for reference counting, trait implementations for `Buf`/`BufMut`, Serde support, etc.). There are no build scripts present in the provided file list, and the library source code contains no malicious patterns, network requests, process execution, or data exfiltration. It is entirely benign.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/loom.rs",
+      "src/serde.rs",
+      "src/bytes.rs",
+      "src/bytes_mut.rs"
+    ],
+    "partial": [
+      "src/bytes_mut.rs (8743/57927 chars)"
+    ],
+    "omitted": [
+      "src/fmt/mod.rs",
+      "src/buf/vec_deque.rs",
+      "src/fmt/hex.rs",
+      "src/buf/mod.rs",
+      "src/fmt/debug.rs",
+      "src/buf/reader.rs",
+      "src/buf/limit.rs",
+      "src/buf/writer.rs",
+      "src/buf/iter.rs",
+      "src/buf/take.rs",
+      "src/buf/chain.rs",
+      "src/buf/uninit_slice.rs",
+      "src/buf/buf_impl.rs",
+      "src/buf/buf_mut.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 14 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 20
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63931,
+    "chars_out": 700
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

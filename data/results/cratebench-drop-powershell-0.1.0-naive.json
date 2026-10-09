@@ -1,0 +1,44 @@
+{
+  "crate": "cratebench-drop-powershell",
+  "version": "0.1.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate utilizes a build.rs script to execute PowerShell with obfuscated arguments (-Enc ZWNobyB3aW4=, which decodes to 'echo win'), specifically hiding the window and bypassing execution policies. This is a common tactic used by malware authors to execute arbitrary payloads during the compilation phase.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 568,
+    "chars_out": 385
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

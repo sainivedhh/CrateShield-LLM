@@ -1,0 +1,129 @@
+[
+  {
+    "id": "incident-crate-depression-2022",
+    "type": "incident",
+    "title": "CrateDepression / rustdecimal (2022)",
+    "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+    "source": "RUSTSEC-2022-0042",
+    "crates": [
+      "rustdecimal"
+    ]
+  },
+  {
+    "id": "incident-phylum-2023",
+    "type": "incident",
+    "title": "Phylum-detected exfiltration campaign (2023)",
+    "text": "Seven malicious crates uploaded to crates.io, designed to exfiltrate operating system information and environment variables to an attacker-controlled HTTP endpoint from build.rs. Detected by Phylum's commercial monitoring service, not by crates.io's own controls. Attack category: build.rs network exfiltration, env var harvesting.",
+    "source": "Phylum research blog, 2023"
+  },
+  {
+    "id": "incident-xrvrv-2023",
+    "type": "incident",
+    "title": "xrvrv Telegram C2 (2023)",
+    "text": "Found via manual review of unusual outbound network calls across the crates.io registry's dynamic-analysis dataset. The crate 'xrvrv' established a Telegram bot API connection as a command-and-control channel. This was essentially the only clear confirmed hit from an exhaustive manual triage sweep of the entire registry's dynamic-analysis runs -- illustrating how rare confirmed intentional malware is in this ecosystem relative to npm/PyPI. Attack category: network C2 via third-party messaging API.",
+    "source": "manual triage, referenced in OSSF dynamic-analysis coverage discussion",
+    "crates": [
+      "xrvrv"
+    ]
+  },
+  {
+    "id": "incident-faster-log-2025",
+    "type": "incident",
+    "title": "faster_log / async_println (September 2025)",
+    "text": "Two crates impersonating legitimate logging libraries, downloaded approximately 8,500 times before detection. Their build.rs scripts scanned developer machines for cryptocurrency wallet private key files and exfiltrated any discovered secrets to an attacker-controlled server. Detected by Socket's Threat Research Team, an external commercial monitoring service, not by crates.io itself. Attack category: build.rs filesystem scan for secrets, network exfiltration, typosquatting/impersonation of a common utility category (logging).",
+    "source": "Socket.dev threat research, September 2025",
+    "crates": [
+      "faster_log",
+      "async_println"
+    ]
+  },
+  {
+    "id": "incident-finch-2025",
+    "type": "incident",
+    "title": "finch_cli_rust / sha-rst (December 2025)",
+    "text": "Three crates impersonating the 'finch' and 'finch_cli' crates, designed to exfiltrate developer credentials via build.rs. Detected by third-party commercial monitoring rather than crates.io's own upload controls. Attack category: typosquatting, credential exfiltration.",
+    "source": "vendor threat research, December 2025",
+    "crates": [
+      "finch_cli_rust",
+      "sha-rst"
+    ]
+  },
+  {
+    "id": "incident-trapdoor-2026",
+    "type": "incident",
+    "title": "TrapDoor campaign (May 2026)",
+    "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+    "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper"
+  },
+  {
+    "id": "incident-arrayref-2026",
+    "type": "incident",
+    "title": "arrayref / internment / append-only-vec trojanized via a malicious dependency (August 2026)",
+    "text": "On 2026-08-20, arrayref 0.3.10, internment 0.8.7 and append-only-vec 0.1.9 were published to crates.io from a maintainer account that appears to have been compromised. For arrayref the source was unchanged genuine code; the release added a dependency on the malicious crate proc-macro1. proc-macro1 typosquats proc-macro2 (its library source is a copy, so dependent builds succeed) and forges the real author's name in its metadata; its build.rs reconstructs a base64-encoded URL, downloads an architecture-specific remote binary over TLS with certificate validation disabled, and runs it detached with a command-and-control address as argument, unconditionally on every supported-platform build. internment and append-only-vec added a dependency on an attacker-controlled crate with the same kind of build-script payload. Further crates (aovine, arone, aronenao, proc-macro-en, tinymember) belong to the same campaign; their build scripts were attributed from the campaign rather than analyzed individually. Earlier releases of the trojanized crates are reported as unaffected, and the malicious releases were removed. Lesson: the trojanized crate's own code can be clean; the signal is a NEW dependency whose build script downloads and executes a remote binary.",
+    "source": "OSSF malicious-packages MAL-2026-14332 to MAL-2026-14340; SafeDep write-up https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/ ; RustSec advisory-db issue #3161",
+    "crates": [
+      "arrayref",
+      "internment",
+      "append_only_vec",
+      "proc_macro1",
+      "proc_macro_en",
+      "aovine",
+      "arone",
+      "aronenao",
+      "tinymember"
+    ]
+  },
+  {
+    "id": "pattern-build-rs-exfiltration",
+    "type": "pattern",
+    "title": "General pattern: build.rs data exfiltration",
+    "text": "The most common Rust-specific attack pattern. build.rs executes arbitrary code at `cargo build` time, before any runtime security control applies, with full access to the developer's filesystem, network, and environment variables. Typical sequence: (1) read a sensitive target -- SSH keys, cloud credentials (AWS_SECRET_ACCESS_KEY, GITHUB_TOKEN), cryptocurrency wallet files, or general environment variables; (2) establish an outbound network connection, often to a raw IP or a low-reputation domain rather than a well-known API endpoint; (3) transmit the harvested data. Legitimate build.rs scripts do sometimes make network calls (fetching a codegen schema) or read env vars (checking a target triple), so presence of a single signal alone is a weak indicator -- the co-occurrence of file/env access AND outbound network calls, especially to non-standard destinations, is the stronger signal.",
+    "source": "synthesized from documented incidents above"
+  },
+  {
+    "id": "pattern-typosquatting",
+    "type": "pattern",
+    "title": "General pattern: typosquatting / impersonation",
+    "text": "Attackers register crate names with small edit distances from popular, widely-trusted crates, relying on developer typos or visual similarity (underscore vs hyphen, 0 vs o, added/removed pluralization) to get pulled as an accidental dependency. A typosquat alone is not proof of malicious intent (some near-duplicate names are legitimate forks or abandoned-name reuse), but a typosquat COMBINED with any build.rs network/env signal, or with a very new/low-reputation publishing account, sharply raises confidence.",
+    "source": "synthesized from documented incidents above"
+  },
+  {
+    "id": "pattern-proc-macro-injection",
+    "type": "pattern",
+    "title": "General pattern: proc-macro compiler-level injection",
+    "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+    "source": "synthesized from documented incidents above"
+  },
+  {
+    "id": "pattern-benign-false-positive-build-rs",
+    "type": "pattern",
+    "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+    "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+    "source": "synthesized from observed benign build.rs behavior, e.g. serde"
+  },
+  {
+    "id": "incident-logs-update-2026",
+    "type": "incident",
+    "title": "logs-update: credential and file stealer in library code, no build script (September 2026)",
+    "text": "A crate published on 2026-09-10 that presents itself as a terminal progress-bar library but renders nothing. It has NO build script, so it does not run during `cargo build` of a dependent; it runs when its binary is executed (for example after `cargo install`) or when a dependent calls its run() function. It POSTs a machine fingerprint (username, OS, local IP) to an attacker web endpoint; reads the project's .env and trading-bot config files and POSTs them; walks the filesystem and POSTs the contents of .env, .json, .txt, .doc/.docx and .xlsx files; and on Linux appends an attacker's SSH public key to ~/.ssh/authorized_keys for remote login. It targets crypto trading-bot developers. Reported as malicious in every version. Lesson: a build-script-only detector sees nothing here; the tell-tale combination is network POSTs plus filesystem walking plus credential-file paths in library code.",
+    "source": "OSSF malicious-packages MAL-2026-16164; https://crates.io/crates/logs-update",
+    "crates": [
+      "logs_update"
+    ]
+  },
+  {
+    "id": "pattern-high-major-version-placeholders",
+    "type": "pattern",
+    "title": "General pattern: placeholder-style very high version numbers (99.x)",
+    "text": "Six of the twenty crates.io reports in the OSSF malicious-packages snapshot of 2026-09-24 concern versions numbered 99.x (99.0.1, 99.1.0, 99.1.1, 99.99.5), several under names that resemble vendor-internal packages (for example amzn-*). In each of those six reports the OpenSSF Package Analysis project states that the package communicated with a domain associated with malicious activity and executed commands associated with malicious behavior. A very high major version on a newly published crate is therefore a cheap metadata signal that is worth combining with other evidence. It is NOT proof of malice on its own: some legitimate crates (for example the rustc-ap-* family) also use very high major versions, so weigh it against crate age, downloads, content and behaviour.",
+    "source": "synthesized from OSSF malicious-packages reports MAL-2026-3101, -3102, -3103, -3126, -3129, -6959",
+    "crates": [
+      "amzn_codewhisperer_streaming_client",
+      "amzn_consolas_client",
+      "lsh",
+      "proton_pfff",
+      "semantic_search_client",
+      "supertag"
+    ]
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "crate": "once_cell",
+  "version": "1.19.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate `once_cell` is a well-known, legitimate library providing single-assignment cells and lazy values (largely standardized into `std::cell::OnceCell` and `std::sync::OnceLock` in recent Rust versions). The provided source files contain standard synchronization primitives, safe/unsafe wrappers, and documentation/examples matching its public repository. There is no malicious intent, hidden payload, network activity, filesystem tampering, or suspicious obfuscation.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/imp_cs.rs",
+      "src/imp_pl.rs",
+      "src/imp_std.rs"
+    ],
+    "partial": [
+      "src/imp_std.rs (2571/12743 chars)"
+    ],
+    "omitted": [
+      "src/race.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 1 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 6
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63935,
+    "chars_out": 671
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

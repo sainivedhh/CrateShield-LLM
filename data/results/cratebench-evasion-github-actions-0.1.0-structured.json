@@ -1,0 +1,138 @@
+{
+  "crate": "cratebench-evasion-github-actions",
+  "version": "0.1.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "cratebench-evasion-github-actions",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:19:09.343584+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call",
+        "env_var_read"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:4001\");"
+      ],
+      "file_writes": [],
+      "env_reads": [
+        "if env::var(\"GITHUB_ACTIONS\").is_ok() {"
+      ],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:4001\");",
+        "if env::var(\"GITHUB_ACTIONS\").is_ok() {"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.212,
+      "target": "async-trait",
+      "edit_distance": 26,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 7,
+      "total_bytes": 174
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "MEDIUM",
+    "reasoning": "Purpose: The crate has almost no meaningful code (7 lines in build.rs, 1 rust file, 8 meaningful lines total). Sources: It checks the `GITHUB_ACTIONS` environment variable via `env::var(\"GITHUB_ACTIONS\").is_ok()`. Sinks: It attempts a TCP connection to localhost (`127.0.0.1:4001`) inside `build.rs`. Flows: The build script conditionally probes for a CI/CD environment (GitHub Actions) and connects to a local port. Anomalies: Connecting to a local port when executed under CI/CD is characteristic of environment fingerprinting or testing whether specific services/interceptors are active in a pipeline, echoing patterns seen in sandbox evasion or CI-targeted payloads (though here directed at loopback). Conclusion: While connecting to `127.0.0.1` is not direct exfiltration to an external C2, conditionally executing network behavior based on `GITHUB_ACTIONS` in a near-empty crate is highly anomalous and suspicious.",
+    "primary_signals": [
+      "build_rs.network_call",
+      "build_rs.env_read"
+    ],
+    "retrieved_evidence_used": [
+      "incident-crate-depression-2022"
+    ],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.4,
+    "obfuscation_score": 0.1,
+    "confidence_score": 0.7,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.16427792920316248
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.16316813776436373
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.11838843607903368
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11562,
+    "chars_out": 1308
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

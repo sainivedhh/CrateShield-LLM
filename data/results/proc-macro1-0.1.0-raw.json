@@ -1,0 +1,44 @@
+{
+  "crate": "proc-macro1",
+  "version": "0.1.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate contains a build.rs script that executes external commands to download/run a payload from a hardcoded base64-encoded URL string, along with executing arbitrary script files and running a downloaded binary. This exhibits classic malicious behavior via a build script (supply-chain attack pattern).",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 1.0,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.4,
+    "confidence_score": 1.0,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 4265,
+    "chars_out": 526
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

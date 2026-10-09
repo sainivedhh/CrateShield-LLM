@@ -1,0 +1,65 @@
+{
+  "crate": "cc",
+  "version": "1.1.21",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The provided code is the official `cc` Rust crate (version 1.1.21) maintained by the Rust Language community (alex@alexcrichton.com / rust-lang/cc-rs). It is a standard and widely-used build-time dependency for Cargo build scripts to assist in invoking the native C/C++ compiler. There is no malicious payload, obfuscation, suspicious network activity, or unauthorized file system access present in the code.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [
+      "src/lib.rs (58358/171003 chars)"
+    ],
+    "omitted": [
+      "src/target_info.rs",
+      "src/utilities.rs",
+      "src/tempfile.rs",
+      "src/command_helpers.rs",
+      "src/tool.rs",
+      "src/parallel/mod.rs",
+      "src/windows/mod.rs",
+      "src/windows/windows_targets.rs",
+      "src/parallel/once_lock.rs",
+      "src/parallel/stderr.rs",
+      "src/windows/com.rs",
+      "src/parallel/async_executor.rs",
+      "src/windows/winapi.rs",
+      "src/windows/windows_sys.rs",
+      "src/windows/registry.rs",
+      "src/windows/vs_instances.rs",
+      "src/windows/setup_config.rs",
+      "src/parallel/job_token.rs",
+      "src/windows/find_tools.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 19 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 21
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60359,
+    "chars_out": 483
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

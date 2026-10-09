@@ -1,0 +1,52 @@
+{
+  "crate": "url",
+  "version": "2.5.2",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate is `url`, a well-known, legitimate URL parsing library for Rust based on the WHATWG URL Standard (developed by the Servo project and community). The source code and Cargo.toml inspected are standard, idiomatic Rust code implementing URL parsing logic with no malicious behaviors, suspicious build scripts, network connections, or credential harvesting routines. Although the file was truncated, the content shown is part of a widely used, trusted ecosystem crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [
+      "src/lib.rs (58093/102968 chars)"
+    ],
+    "omitted": [
+      "src/origin.rs",
+      "src/slicing.rs",
+      "src/path_segments.rs",
+      "src/quirks.rs",
+      "src/host.rs",
+      "src/parser.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 6 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 8
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63928,
+    "chars_out": 671
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

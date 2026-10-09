@@ -1,0 +1,44 @@
+{
+  "crate": "cratebench-drop-hex-stage",
+  "version": "0.1.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The build.rs script creates a file named '/tmp/drop_stage' and immediately attempts to execute it as a command. While the file is initially empty and execution will likely fail or do nothing harmful by default, this pattern is commonly used in staging malicious payloads (downloading or writing a binary to disk and executing it during the build phase), which bypasses normal review mechanisms.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 553,
+    "chars_out": 473
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

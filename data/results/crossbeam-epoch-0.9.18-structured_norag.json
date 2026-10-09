@@ -1,0 +1,112 @@
+{
+  "crate": "crossbeam-epoch",
+  "version": "0.9.18",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "crossbeam-epoch",
+    "version": {
+      "version": "0.9.18",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:26:52.204499+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 132,
+      "unsafe_per_kloc": 27.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.2,
+      "target": "serde",
+      "edit_distance": 12,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "crossbeam-utils",
+        "loom"
+      ],
+      "dev_dependency_count": 1,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 12,
+      "has_build_script": false,
+      "meaningful_lines": 2465,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 158500
+    },
+    "metadata": {
+      "publish_date": "2017-11-26T17:32:53.106278Z",
+      "age_days": 3236,
+      "description": "Epoch-based garbage collection",
+      "keywords": [
+        "garbage",
+        "rcu",
+        "atomic",
+        "lock-free"
+      ],
+      "downloads": 708221345,
+      "num_versions": 41,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `crossbeam-epoch` is a well-known, highly trusted library providing epoch-based garbage collection for concurrent data structures. Sources/Sinks: no build script, no network calls, no environment variable reads, no suspicious source scan findings or possible exfiltration shapes. Unsafe usage (132 blocks, 27 per KLOC) is fully expected and normal for a low-level concurrency and memory management primitive. Dependencies are standard (`crossbeam-utils`, `loom`). Metadata shows immense download counts (~700M) and an age of over 3,000 days. Conclusion: completely benign standard Rust crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9460,
+    "chars_out": 876
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

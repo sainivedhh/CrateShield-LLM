@@ -1,0 +1,147 @@
+{
+  "crate": "itertools",
+  "version": "0.13.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "itertools",
+    "version": {
+      "version": "0.13.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:13:31.886396+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 5,
+      "unsafe_per_kloc": 0.36,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.222,
+      "target": "chrono",
+      "edit_distance": 7,
+      "target_rank": 16,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "either"
+      ],
+      "dev_dependency_count": 5,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 49,
+      "has_build_script": false,
+      "meaningful_lines": 8174,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 415779
+    },
+    "metadata": {
+      "publish_date": "2014-11-21T19:56:41.399795Z",
+      "age_days": 4337,
+      "description": "Extra iterator adaptors, iterator methods, free functions, and macros.",
+      "keywords": [
+        "data-structure",
+        "iterator",
+        "zip",
+        "product"
+      ],
+      "downloads": 1607390273,
+      "num_versions": 131,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: 'itertools' is a foundational, highly popular, and legitimate crate on crates.io with over 1.6 billion downloads and an age of over 4300 days. Sources: None. Sinks: None. Flows: None. Anomalies: Zero malicious signals. No build script, no network activity, no suspicious dependencies (only depends on 'either'), minimal and standard use of unsafe blocks for performance (5 unsafe blocks across ~8,174 lines). No similarity to any active attacks. Retrieved context documents are not relevant.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.09487393461694586
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.07501173775986757
+    },
+    {
+      "id": "pattern-high-major-version-placeholders",
+      "type": "pattern",
+      "title": "General pattern: placeholder-style very high version numbers (99.x)",
+      "text": "Six of the twenty crates.io reports in the OSSF malicious-packages snapshot of 2026-09-24 concern versions numbered 99.x (99.0.1, 99.1.0, 99.1.1, 99.99.5), several under names that resemble vendor-internal packages (for example amzn-*). In each of those six reports the OpenSSF Package Analysis project states that the package communicated with a domain associated with malicious activity and executed commands associated with malicious behavior. A very high major version on a newly published crate is therefore a cheap metadata signal that is worth combining with other evidence. It is NOT proof of malice on its own: some legitimate crates (for example the rustc-ap-* family) also use very high major versions, so weigh it against crate age, downloads, content and behaviour.",
+      "source": "synthesized from OSSF malicious-packages reports MAL-2026-3101, -3102, -3103, -3126, -3129, -6959",
+      "crates": [
+        "amzn_codewhisperer_streaming_client",
+        "amzn_consolas_client",
+        "lsh",
+        "proton_pfff",
+        "semantic_search_client",
+        "supertag"
+      ],
+      "similarity": 0.07445293967565178
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11763,
+    "chars_out": 774
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

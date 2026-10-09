@@ -1,0 +1,48 @@
+{
+  "crate": "thiserror",
+  "version": "1.0.64",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate is `thiserror`, a well-known, highly trusted library written by David Tolnay for deriving the standard library's Error trait. Reviewing the Cargo.toml, build.rs, and source files shows standard feature-probing build logic used to detect nightly/unstable compiler features for backtrace support (`error_generic_member_access`), and completely clean source files implementing macro expansion helpers and traits for error handling. There are no malicious behaviors, network requests, suspicious environment variable exfiltration, obfuscation, or unauthorized file access.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/provide.rs",
+      "src/display.rs",
+      "build/probe.rs",
+      "src/aserror.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 7
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 22733,
+    "chars_out": 776
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,48 @@
+{
+  "naive": {
+    "precision": null,
+    "recall": 1.0,
+    "f1": null,
+    "fpr": null,
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "tn": 0,
+    "n_malicious": 1,
+    "n_benign": 0,
+    "n_llm_skipped_by_prescreen": 0,
+    "n_skipped_unanalyzable": 2,
+    "warnings": [
+      "no benign examples evaluated: precision, F1 and FPR are undefined",
+      "only 1 evaluated example(s): results are anecdotal, not statistical"
+    ],
+    "n_run": 1,
+    "n_failed": 0
+  },
+  "_meta": {
+    "n_dataset": 3,
+    "n_analyzable": 1,
+    "n_skipped_unanalyzable": 2,
+    "skipped": [
+      {
+        "name": "b",
+        "version": null,
+        "reason": "not analyzable"
+      },
+      {
+        "name": "c",
+        "version": "2.0.0",
+        "reason": "removed"
+      }
+    ],
+    "prescreen": false,
+    "usage": {
+      "naive": {
+        "calls": 0,
+        "chars_in": 0,
+        "chars_out": 0
+      }
+    },
+    "note": "cargo_audit matches RustSec malicious advisories by crate name. It is circular for dataset entries whose label_source is itself a RustSec advisory (it will trivially 'detect' them), and it is an advisory lookup, not a behavioural detector."
+  }
+}

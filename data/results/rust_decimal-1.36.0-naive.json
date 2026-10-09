@@ -1,0 +1,73 @@
+{
+  "crate": "rust_decimal",
+  "version": "1.36.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The inspected code belongs to the widely-used, legitimate `rust_decimal` crate v1.36.0, which implements a fixed-precision decimal number type in pure Rust. The analyzed files contain standard Rust code for arithmetic operations, serialization integrations, database drivers (Diesel/Postgres/MySQL), and mathematical helper functions. There are no signs of malicious payloads, obfuscation, unauthorized network connections, or suspicious system calls.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/postgres.rs",
+      "src/rocket.rs",
+      "src/fuzz.rs",
+      "src/proptest.rs",
+      "src/ops.rs",
+      "src/error.rs",
+      "src/constants.rs",
+      "src/mysql.rs",
+      "src/rand.rs",
+      "src/arithmetic_impls.rs",
+      "src/maths.rs"
+    ],
+    "partial": [
+      "src/maths.rs (21878/28422 chars)"
+    ],
+    "omitted": [
+      "src/serde.rs",
+      "src/str.rs",
+      "src/decimal.rs",
+      "make/scripts/version.rs",
+      "src/ops/cmp.rs",
+      "src/postgres/common.rs",
+      "src/ops/mul.rs",
+      "src/ops/rem.rs",
+      "src/postgres/diesel.rs",
+      "src/ops/add.rs",
+      "src/ops/array.rs",
+      "src/ops/common.rs",
+      "src/postgres/driver.rs",
+      "src/ops/div.rs",
+      "src/ops/legacy.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 15 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 29
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60369,
+    "chars_out": 526
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

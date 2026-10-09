@@ -1,0 +1,138 @@
+{
+  "crate": "cratebench-macro-fs-write",
+  "version": "0.1.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "cratebench-macro-fs-write",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:17:51.509747+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": true,
+      "proc_macro_suspicious_imports": [
+        "std::fs::write"
+      ]
+    },
+    "typosquatting": {
+      "score": 0.28,
+      "target": "async-trait",
+      "edit_distance": 18,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 3,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 87
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "MEDIUM",
+    "reasoning": "Purpose: A procedural macro crate (`cratebench-macro-fs-write`) consisting of only 3 meaningful lines. Sources/Sinks: The crate imports `std::fs::write` inside a procedural macro (`proc_macro.proc_macro_suspicious_imports`). As outlined in [pattern-proc-macro-injection], procedural macros execute inside the compiler during compilation and should not need filesystem or network operations unless performing explicit build-time tasks, but here `std::fs::write` inside a macro can write arbitrary files to the local disk during compilation. Anomalies: Very small crate (3 lines) with a proc-macro importing filesystem write capabilities, which is a structural red flag for compile-time interference. However, there are no network calls, environment variable reads, or known typosquat targets flagged with high confidence (typosquat score is low at 0.28). Therefore, it warrants a suspicious rating due to compile-time filesystem write capabilities.",
+    "primary_signals": [
+      "proc_macro.proc_macro_suspicious_imports"
+    ],
+    "retrieved_evidence_used": [
+      "pattern-proc-macro-injection"
+    ],
+    "recommended_action": "Manual review",
+    "malware_score": 0.4,
+    "security_risk_score": 0.6,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.7,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.4070997780151556
+    },
+    {
+      "id": "incident-arrayref-2026",
+      "type": "incident",
+      "title": "arrayref / internment / append-only-vec trojanized via a malicious dependency (August 2026)",
+      "text": "On 2026-08-20, arrayref 0.3.10, internment 0.8.7 and append-only-vec 0.1.9 were published to crates.io from a maintainer account that appears to have been compromised. For arrayref the source was unchanged genuine code; the release added a dependency on the malicious crate proc-macro1. proc-macro1 typosquats proc-macro2 (its library source is a copy, so dependent builds succeed) and forges the real author's name in its metadata; its build.rs reconstructs a base64-encoded URL, downloads an architecture-specific remote binary over TLS with certificate validation disabled, and runs it detached with a command-and-control address as argument, unconditionally on every supported-platform build. internment and append-only-vec added a dependency on an attacker-controlled crate with the same kind of build-script payload. Further crates (aovine, arone, aronenao, proc-macro-en, tinymember) belong to the same campaign; their build scripts were attributed from the campaign rather than analyzed individually. Earlier releases of the trojanized crates are reported as unaffected, and the malicious releases were removed. Lesson: the trojanized crate's own code can be clean; the signal is a NEW dependency whose build script downloads and executes a remote binary.",
+      "source": "OSSF malicious-packages MAL-2026-14332 to MAL-2026-14340; SafeDep write-up https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/ ; RustSec advisory-db issue #3161",
+      "crates": [
+        "arrayref",
+        "internment",
+        "append_only_vec",
+        "proc_macro1",
+        "proc_macro_en",
+        "aovine",
+        "arone",
+        "aronenao",
+        "tinymember"
+      ],
+      "similarity": 0.16237106263701095
+    },
+    {
+      "id": "pattern-typosquatting",
+      "type": "pattern",
+      "title": "General pattern: typosquatting / impersonation",
+      "text": "Attackers register crate names with small edit distances from popular, widely-trusted crates, relying on developer typos or visual similarity (underscore vs hyphen, 0 vs o, added/removed pluralization) to get pulled as an accidental dependency. A typosquat alone is not proof of malicious intent (some near-duplicate names are legitimate forks or abandoned-name reuse), but a typosquat COMBINED with any build.rs network/env signal, or with a very new/low-reputation publishing account, sharply raises confidence.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.08323083372775904
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 12023,
+    "chars_out": 1324
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

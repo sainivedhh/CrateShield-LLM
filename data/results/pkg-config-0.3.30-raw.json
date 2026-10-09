@@ -1,0 +1,43 @@
+{
+  "crate": "pkg-config",
+  "version": "0.3.30",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is the legitimate, well-known `pkg-config` crate authored by Alex Crichton. It contains standard logic for interfacing with the `pkg-config` system utility during cargo build scripts. There are no suspicious network connections, attempts to access credentials, obfuscated payloads, or unauthorized file system modifications. Normal use of std::process::Command is present exclusively for invoking the expected system tool.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 2
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 49261,
+    "chars_out": 657
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

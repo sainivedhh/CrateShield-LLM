@@ -1,0 +1,149 @@
+{
+  "crate": "cmake",
+  "version": "0.1.51",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cmake",
+    "version": {
+      "version": "0.1.51",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:25:51.444266+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.4,
+      "target": "clap",
+      "edit_distance": 3,
+      "target_rank": 5,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "cc"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "process_spawn": 8,
+        "sensitive_paths": 7
+      },
+      "categories": [
+        "process_spawn",
+        "sensitive_paths"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "process_spawn": [
+          {
+            "file": "src/lib.rs",
+            "line": 56,
+            "snippet": "use std::process::Command;"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 592,
+            "snippet": "let has_msys2 = Command::new(\"make\")"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 598,
+            "snippet": "let has_mingw32 = Command::new(\"mingw32-make\")"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/lib.rs",
+            "line": 360,
+            "snippet": "self.env"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 808,
+            "snippet": "for (k, v) in c_compiler.env().iter().chain(&self.env) {"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 809,
+            "snippet": "cmd.env(k, v);"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 801,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 42290
+    },
+    "metadata": {
+      "publish_date": "2015-07-31T23:01:59.165496Z",
+      "age_days": 4085,
+      "description": "A build dependency for running `cmake` to build a native library\n",
+      "keywords": [
+        "build-dependencies"
+      ],
+      "downloads": 336297395,
+      "num_versions": 59,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is the well-known `cmake` build dependency, which automates running `cmake` to build native libraries. Sources: The source scan flags process spawns (`make`, `mingw32-make`) and environment handling (`self.env`), which are entirely expected for a build helper that needs to invoke external build tools and pass environment variables to compilers. Sinks: Commands are executed to build native software locally, and environment variables are passed to compiler invocations. Flow: Local build configuration flows into standard build processes. Anomalies: None. The crate has massive download counts (~336 million downloads), is over 11 years old (publish date 2015), has zero network activity, and uses process spawning exclusively for legitimate build-tool discovery and execution.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10767,
+    "chars_out": 1073
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

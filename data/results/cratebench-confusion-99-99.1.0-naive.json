@@ -1,0 +1,44 @@
+{
+  "crate": "cratebench-confusion-99",
+  "version": "99.1.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate attempts to establish an outbound TCP connection to localhost during the build process (build.rs). While this specific IP and port (127.0.0.1:8888) are typically used for local testing or benchmarks (as suggested by the crate name 'cratebench-confusion-99'), network activity inside a build script is a strong indicator of potential data exfiltration or unintended side effects, warranting a suspicious classification.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 479,
+    "chars_out": 507
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

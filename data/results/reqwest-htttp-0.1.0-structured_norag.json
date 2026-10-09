@@ -1,0 +1,105 @@
+{
+  "crate": "reqwest-htttp",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "reqwest-htttp",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:31:00.436003+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "process_spawn"
+      ],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [
+        "let _ = Command::new(\"calc.exe\");"
+      ],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = Command::new(\"calc.exe\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.538,
+      "target": "reqwest",
+      "edit_distance": 6,
+      "target_rank": 6,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 5,
+      "meaningful_lines_build_script": 4,
+      "total_bytes": 96
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is named `reqwest-htttp`, which closely mimics the popular HTTP crate `reqwest` (and also bears a strong resemblance to `reqwest-http` typosquats), but contains almost no meaningful library code (only 1 rust file, 5 meaningful lines total). Sources/Sinks/Flows: The build script (`build.rs`) spawns a process executing `calc.exe`. Anomalies: Spawning `calc.exe` (a classic proof-of-concept payload execution indicator) inside a build script of a newly published, near-empty crate with a name resembling a popular library is a hallmark of malicious supply-chain testing or placeholder attacks. Build scripts run automatically during `cargo build` prior to compilation, making execution of arbitrary commands like `calc.exe` a severe security risk.",
+    "primary_signals": [
+      "build_rs.process_spawns",
+      "typosquatting.target",
+      "content.meaningful_lines"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.95,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.95,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9241,
+    "chars_out": 1138
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

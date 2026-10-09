@@ -1,0 +1,116 @@
+{
+  "crate": "rand",
+  "version": "0.8.5",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "rand",
+    "version": {
+      "version": "0.8.5",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:21:49.755187+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 16,
+      "unsafe_per_kloc": 1.85,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": [
+        "libc"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.333,
+      "target": "chrono",
+      "edit_distance": 4,
+      "target_rank": 16,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 6,
+      "names": [
+        "log",
+        "packed_simd_2",
+        "rand_chacha",
+        "rand_core",
+        "serde",
+        "libc"
+      ],
+      "dev_dependency_count": 2,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 26,
+      "has_build_script": false,
+      "meaningful_lines": 5273,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 298099
+    },
+    "metadata": {
+      "publish_date": "2015-02-03T06:17:14.147783Z",
+      "age_days": 4264,
+      "description": "Random number generators and other randomness functionality.\n",
+      "keywords": [
+        "random",
+        "rng"
+      ],
+      "downloads": 1850319975,
+      "num_versions": 94,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is 'rand', the standard and most widely used random number generation library in the Rust ecosystem, boasting massive download counts (~1.85 billion downloads) and an age of over 11 years (4264 days). Sources: There are no suspicious environment variable reads, credential access, or network calls. Sinks: No network connections, file writes, or data exfiltration paths exist. Flow: The crate implements standard random number generation algorithms, utilizing unsafe blocks strictly for FFI interactions with 'libc' and performance-related operations, which is normal for low-level math and system-access libraries. Anomalies: None. The code has zero flagged snippets, no build script (`has_build_rs: false`), clean dependencies, and no prompt injection or typosquatting flags. Conclusion: This is the legitimate, highly trusted 'rand' crate, completely benign.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9531,
+    "chars_out": 1154
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

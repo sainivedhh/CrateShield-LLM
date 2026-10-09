@@ -1,0 +1,131 @@
+{
+  "crate": "thiserror",
+  "version": "1.0.64",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "thiserror",
+    "version": {
+      "version": "1.0.64",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:22:40.280462+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "env_var_read",
+        "process_spawn"
+      ],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [
+        "if let Ok(rustflags) = env::var(\"CARGO_ENCODED_RUSTFLAGS\") {",
+        "if env::var_os(\"RUSTC_STAGE\").is_some() {",
+        "env::var_os(\"RUSTC_WORKSPACE_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+        "env::var_os(key).unwrap_or_else(|| {"
+      ],
+      "process_spawns": [
+        "let mut cmd = Command::new(rustc.next().unwrap());"
+      ],
+      "benign_explained": {
+        "env_var_read": [
+          "} else if let Some(rustc_bootstrap) = env::var_os(\"RUSTC_BOOTSTRAP\") {",
+          "let rustc_wrapper = env::var_os(\"RUSTC_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+          "if let Some(target) = env::var_os(\"TARGET\") {"
+        ]
+      },
+      "flagged_snippets": [
+        "if let Ok(rustflags) = env::var(\"CARGO_ENCODED_RUSTFLAGS\") {",
+        "if env::var_os(\"RUSTC_STAGE\").is_some() {",
+        "env::var_os(\"RUSTC_WORKSPACE_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+        "let mut cmd = Command::new(rustc.next().unwrap());"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.333,
+      "target": "serde",
+      "edit_distance": 6,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "thiserror-impl"
+      ],
+      "dev_dependency_count": 4,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 5,
+      "has_build_script": true,
+      "meaningful_lines": 224,
+      "meaningful_lines_build_script": 88,
+      "total_bytes": 16574
+    },
+    "metadata": {
+      "publish_date": "2019-10-09T18:05:40.346377Z",
+      "age_days": 2554,
+      "description": "derive(Error)",
+      "keywords": [
+        "error",
+        "derive",
+        "error-handling"
+      ],
+      "downloads": 1578959413,
+      "num_versions": 92,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `thiserror` is an extremely well-known, highly downloaded (over 1.5 billion downloads) and trusted crate for deriving error types in Rust. Sources & Sinks: The build script (`build.rs`) reads standard Cargo and rustc environment variables such as `CARGO_ENCODED_RUSTFLAGS`, `RUSTC_STAGE`, and `TARGET`, and runs `rustc` to probe compiler features and versions (indicated by `Command::new`). This is standard, documented behavior for build scripts that need to adapt to different compiler configurations (often using `rustc-version` or similar probe logic). Flows: No sensitive credential or secret files are read, and no network calls or file writes outside of OUT_DIR are performed. Anomalies: None. The crate is mature, has a long history (over 2550 days old), and exhibits zero malicious indicators.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10568,
+    "chars_out": 1086
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

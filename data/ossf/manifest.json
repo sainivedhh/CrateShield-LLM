@@ -1,0 +1,11 @@
+{
+  "source_repo": "https://github.com/ossf/malicious-packages",
+  "source_path": "osv/malicious/crates.io",
+  "commit": "2ed8c041c05d4e589a291e6f4dc9f05c8043e4f3",
+  "commit_date": "2026-09-24T13:47:38+10:00",
+  "retrieved_at": "2026-09-24",
+  "n_reports": 20,
+  "license": "Apache-2.0 (see LICENSE in this directory; copied from the source repository root)",
+  "format": "OSV schema JSON reports (advisory metadata). The repository does NOT contain the malicious crates' source code.",
+  "note": "Files under crates.io/ are verbatim copies. Do not edit; refresh with `python -m crateshield refresh-ossf`."
+}

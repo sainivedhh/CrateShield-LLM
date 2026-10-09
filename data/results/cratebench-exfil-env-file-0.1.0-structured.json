@@ -1,0 +1,131 @@
+{
+  "crate": "cratebench-exfil-env-file",
+  "version": "0.1.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "cratebench-exfil-env-file",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:17:03.098885+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call"
+      ],
+      "network_calls": [
+        "if let Ok(socket) = UdpSocket::bind(\"0.0.0.0:0\") {"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "if let Ok(socket) = UdpSocket::bind(\"0.0.0.0:0\") {"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.2,
+      "target": "rust_decimal",
+      "edit_distance": 20,
+      "target_rank": 42,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 10,
+      "meaningful_lines_build_script": 9,
+      "total_bytes": 274
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate 'cratebench-exfil-env-file' has a tiny codebase (10 lines of code) and exists solely to test or demonstrate build script network activity. Sources: none explicitly captured in env_reads, but the crate name explicitly declares an intent to exfiltrate environment/file data. Sinks: build.rs contains a network call using `UdpSocket::bind(\"0.0.0.0:0\")`. Flow: Network socket creation inside `build.rs` runs automatically upon `cargo build`. Anomalies: Crate named 'cratebench-exfil-env-file' performing socket binding in a build script without any legitimate library features (only 10 meaningful lines). Although no secret/file reading was captured in env_reads, the combination of an explicitly malicious name and build script network socket capability points to malicious/benchmark-malware intent. Following the build.rs exfiltration pattern [pattern-build-rs-exfiltration], executing arbitrary code and network capabilities inside build.rs represents a high-risk malicious vector.",
+    "primary_signals": [
+      "build_rs.network_call",
+      "crate name indicating exfiltration intent"
+    ],
+    "retrieved_evidence_used": [
+      "pattern-build-rs-exfiltration"
+    ],
+    "recommended_action": "Block",
+    "malware_score": 0.85,
+    "security_risk_score": 0.8,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.9,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-build-rs-exfiltration",
+      "type": "pattern",
+      "title": "General pattern: build.rs data exfiltration",
+      "text": "The most common Rust-specific attack pattern. build.rs executes arbitrary code at `cargo build` time, before any runtime security control applies, with full access to the developer's filesystem, network, and environment variables. Typical sequence: (1) read a sensitive target -- SSH keys, cloud credentials (AWS_SECRET_ACCESS_KEY, GITHUB_TOKEN), cryptocurrency wallet files, or general environment variables; (2) establish an outbound network connection, often to a raw IP or a low-reputation domain rather than a well-known API endpoint; (3) transmit the harvested data. Legitimate build.rs scripts do sometimes make network calls (fetching a codegen schema) or read env vars (checking a target triple), so presence of a single signal alone is a weak indicator -- the co-occurrence of file/env access AND outbound network calls, especially to non-standard destinations, is the stronger signal.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.1728515733078681
+    },
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.15683727655429258
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.13256604961216392
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11784,
+    "chars_out": 1399
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

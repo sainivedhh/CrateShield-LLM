@@ -1,0 +1,109 @@
+{
+  "crate": "quote",
+  "version": "1.0.37",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "quote",
+    "version": {
+      "version": "1.0.37",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:27:53.753942+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.286,
+      "target": "futures",
+      "edit_distance": 5,
+      "target_rank": 13,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "proc-macro2"
+      ],
+      "dev_dependency_count": 2,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 7,
+      "has_build_script": false,
+      "meaningful_lines": 1492,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 83347
+    },
+    "metadata": {
+      "publish_date": "2016-09-03T05:42:05.484129Z",
+      "age_days": 3686,
+      "description": "Quasi-quoting macro quote!(...)",
+      "keywords": [
+        "macros",
+        "syn"
+      ],
+      "downloads": 1723752408,
+      "num_versions": 95,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is `quote`, a foundational and extremely popular Rust library for quasi-quoting macros (associated with `syn` and David Tolnay), with billions of downloads and years of history. Sources & Sinks: Zero build script signals, zero unsafe blocks or FFI, zero proc-macro declaration (it depends on proc-macro2), and zero source-scan or prompt-injection anomalies. Flows: No data flows or suspicious network/file operations. Anomalies: None; all metrics reflect a legitimate, well-established, and clean Rust crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9397,
+    "chars_out": 801
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

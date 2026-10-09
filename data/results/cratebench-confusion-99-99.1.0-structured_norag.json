@@ -1,0 +1,106 @@
+{
+  "crate": "cratebench-confusion-99",
+  "version": "99.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-confusion-99",
+    "version": {
+      "version": "99.1.0",
+      "major": 99,
+      "high_major_version": true,
+      "note": "major version 99 >= 99: a pattern used by dependency-confusion placeholders, but some legitimate crates (e.g. rustc-ap-*) also use very high majors -- weigh with crate age and downloads"
+    },
+    "analysis_timestamp": "2026-10-07T17:30:48.580739+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8888\");"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8888\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.217,
+      "target": "chrono",
+      "edit_distance": 18,
+      "target_rank": 16,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 5,
+      "meaningful_lines_build_script": 4,
+      "total_bytes": 107
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "MEDIUM",
+    "reasoning": "Purpose: The crate 'cratebench-confusion-99' has an extremely high major version (99.1.0) and virtually no substantive code (only 5 meaningful lines of code total and 4 lines in the build script). Sources: None explicitly reading credentials. Sinks: The build script makes a network call via `TcpStream::connect(\"127.0.0.1:8888\")`. Flow: A build script initiating an outbound TCP connection during compilation (even to localhost) is highly unusual for a library containing essentially no functionality. Anomalies: The high version number pattern combined with an empty implementation and an active network connection in `build.rs` strongly suggests a placeholder, test, or telemetry-gathering crate. Conclusion: While connecting to loopback may not be an external data leak, arbitrary network calls in build scripts without a clear benign purpose are suspicious indicators of supply-chain probing or placeholder behavior.",
+    "primary_signals": [
+      "high_major_version",
+      "build_rs.network_call",
+      "minimal_content"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.3,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.7,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9490,
+    "chars_out": 1293
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

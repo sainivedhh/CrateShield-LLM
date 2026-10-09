@@ -1,0 +1,83 @@
+{
+  "crate": "serde_json",
+  "version": "1.0.128",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The provided files belong to `serde_json` version 1.0.128, which is a standard, highly popular, and legitimate JSON serialization/deserialization crate for Rust created by David Tolnay and Erick Tryzelaar. The source code, build scripts (`build.rs`), macros, error definitions, and package metadata are consistent with official releases of `serde_json` and contain no malicious code, hidden payloads, or suspicious instructions.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/iter.rs",
+      "src/macros.rs",
+      "src/error.rs",
+      "src/raw.rs"
+    ],
+    "partial": [
+      "src/raw.rs (12329/21174 chars)"
+    ],
+    "omitted": [
+      "src/number.rs",
+      "src/read.rs",
+      "src/map.rs",
+      "src/ser.rs",
+      "src/de.rs",
+      "src/lexical/large_powers.rs",
+      "src/lexical/digit.rs",
+      "src/lexical/bignum.rs",
+      "src/io/mod.rs",
+      "src/lexical/mod.rs",
+      "src/lexical/shift.rs",
+      "src/lexical/small_powers.rs",
+      "src/lexical/exponent.rs",
+      "src/io/core.rs",
+      "src/lexical/cached.rs",
+      "src/lexical/parse.rs",
+      "src/value/partial_eq.rs",
+      "src/lexical/errors.rs",
+      "src/lexical/float.rs",
+      "src/lexical/cached_float80.rs",
+      "src/lexical/algorithm.rs",
+      "src/value/from.rs",
+      "src/lexical/bhcomp.rs",
+      "src/lexical/rounding.rs",
+      "src/value/index.rs",
+      "src/lexical/num.rs",
+      "src/lexical/large_powers32.rs",
+      "src/lexical/large_powers64.rs",
+      "src/lexical/math.rs",
+      "src/value/ser.rs",
+      "src/value/mod.rs",
+      "src/value/de.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 32 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 39
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60368,
+    "chars_out": 503
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

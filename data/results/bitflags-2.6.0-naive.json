@@ -1,0 +1,81 @@
+{
+  "crate": "bitflags",
+  "version": "2.6.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The inspected files belong to `bitflags` v2.6.0, which is a well-known, legitimate, and widely used official Rust crate maintained by the Rust Project Developers for generating C-style bitflags. The source code contains standard macro definitions, trait implementations, parsers, and iterators matching the public repository with no indicators of malicious behavior or backdoors.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/example_generated.rs",
+      "src/tests.rs",
+      "src/iter.rs",
+      "src/internal.rs",
+      "src/external.rs",
+      "src/parser.rs",
+      "src/traits.rs"
+    ],
+    "partial": [
+      "src/traits.rs (1366/11400 chars)"
+    ],
+    "omitted": [
+      "src/public.rs",
+      "src/tests/eq.rs",
+      "src/external/bytemuck.rs",
+      "src/tests/empty.rs",
+      "src/tests/all.rs",
+      "src/tests/is_all.rs",
+      "src/tests/is_empty.rs",
+      "src/external/arbitrary.rs",
+      "src/tests/from_bits_retain.rs",
+      "src/tests/extend.rs",
+      "src/tests/flags.rs",
+      "src/tests/bits.rs",
+      "src/tests/from_bits.rs",
+      "src/tests/from_bits_truncate.rs",
+      "src/tests/from_name.rs",
+      "src/tests/complement.rs",
+      "src/tests/union.rs",
+      "src/tests/intersection.rs",
+      "src/tests/fmt.rs",
+      "src/tests/insert.rs",
+      "src/tests/difference.rs",
+      "src/tests/intersects.rs",
+      "src/tests/remove.rs",
+      "src/tests/contains.rs",
+      "src/tests/symmetric_difference.rs",
+      "src/external/serde.rs",
+      "src/tests/iter.rs",
+      "src/tests/parser.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 28 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 37
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60364,
+    "chars_out": 454
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

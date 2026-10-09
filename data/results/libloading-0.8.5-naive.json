@@ -1,0 +1,55 @@
+{
+  "crate": "libloading",
+  "version": "0.8.5",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate `libloading` is a well-known, legitimate, and widely used Rust library for safely loading dynamic/shared libraries (acting as bindings around `dlopen`, `LoadLibrary`, etc.). The inspected source code contains standard safe and unsafe abstractions around OS-specific dynamic linking primitives, complete documentation, tests, and version history. There is no evidence of malicious behavior such as unauthorized network access, data exfiltration, or obfuscated payloads.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/test_helpers.rs",
+      "src/util.rs",
+      "src/error.rs",
+      "src/safe.rs",
+      "src/changelog.rs",
+      "src/os/mod.rs",
+      "src/os/unix/consts.rs",
+      "src/os/unix/mod.rs"
+    ],
+    "partial": [
+      "src/os/unix/mod.rs (11520/20006 chars)"
+    ],
+    "omitted": [
+      "src/os/windows/mod.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 1 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 11
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60365,
+    "chars_out": 553
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

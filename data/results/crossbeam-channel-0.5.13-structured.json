@@ -1,0 +1,143 @@
+{
+  "crate": "crossbeam-channel",
+  "version": "0.5.13",
+  "condition": "structured",
+  "signals": {
+    "crate": "crossbeam-channel",
+    "version": {
+      "version": "0.5.13",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:15:41.954547+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 41,
+      "unsafe_per_kloc": 5.27,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.294,
+      "target": "once_cell",
+      "edit_distance": 12,
+      "target_rank": 15,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "crossbeam-utils"
+      ],
+      "dev_dependency_count": 3,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 16,
+      "has_build_script": false,
+      "meaningful_lines": 4288,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 241249
+    },
+    "metadata": {
+      "publish_date": "2017-11-26T19:20:24.266475Z",
+      "age_days": 3236,
+      "description": "Multi-producer multi-consumer channels for message passing",
+      "keywords": [
+        "channel",
+        "select",
+        "mpmc",
+        "golang",
+        "message"
+      ],
+      "downloads": 626891752,
+      "num_versions": 44,
+      "version_yanked": true
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `crossbeam-channel` is a well-known, foundational, and highly popular Rust library for multi-producer multi-consumer message passing (millions of downloads, over 3000 days of age). Sources: none. Sinks: none. Flow: no data flows. Anomalies: none. Unsafe blocks (41 across 4.2k lines, 5.27 per kloc) are entirely expected for a concurrent channel implementation requiring low-level atomics and memory synchronization. The retrieved context documents unrelated past incidents (Telegram C2 in `xrvrv`, proc-macro injection patterns, and `rustdecimal` typosquatting) which bear zero relevance to this legitimate crate. All signals indicate normal, highly trusted crate behavior.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "incident-xrvrv-2023",
+      "type": "incident",
+      "title": "xrvrv Telegram C2 (2023)",
+      "text": "Found via manual review of unusual outbound network calls across the crates.io registry's dynamic-analysis dataset. The crate 'xrvrv' established a Telegram bot API connection as a command-and-control channel. This was essentially the only clear confirmed hit from an exhaustive manual triage sweep of the entire registry's dynamic-analysis runs -- illustrating how rare confirmed intentional malware is in this ecosystem relative to npm/PyPI. Attack category: network C2 via third-party messaging API.",
+      "source": "manual triage, referenced in OSSF dynamic-analysis coverage discussion",
+      "crates": [
+        "xrvrv"
+      ],
+      "similarity": 0.12749234733733775
+    },
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.09487393461694586
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.07501173775986757
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11413,
+    "chars_out": 957
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

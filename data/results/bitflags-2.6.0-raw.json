@@ -1,0 +1,81 @@
+{
+  "crate": "bitflags",
+  "version": "2.6.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate 'bitflags' is a well-known, legitimate library in the Rust ecosystem for generating types with C-style bitflags. Inspection of the provided source files (Cargo.toml, src/lib.rs, src/iter.rs, src/internal.rs, src/external.rs, src/parser.rs, etc.) shows standard macro definitions, trait implementations, and parsing/formatting logic. There are no build scripts making network requests, no obfuscation, no unauthorized file access, and no malicious supply-chain attack patterns.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/example_generated.rs",
+      "src/tests.rs",
+      "src/iter.rs",
+      "src/internal.rs",
+      "src/external.rs",
+      "src/parser.rs",
+      "src/traits.rs"
+    ],
+    "partial": [
+      "src/traits.rs (1366/11400 chars)"
+    ],
+    "omitted": [
+      "src/public.rs",
+      "src/tests/eq.rs",
+      "src/external/bytemuck.rs",
+      "src/tests/empty.rs",
+      "src/tests/all.rs",
+      "src/tests/is_all.rs",
+      "src/tests/is_empty.rs",
+      "src/external/arbitrary.rs",
+      "src/tests/from_bits_retain.rs",
+      "src/tests/extend.rs",
+      "src/tests/flags.rs",
+      "src/tests/bits.rs",
+      "src/tests/from_bits.rs",
+      "src/tests/from_bits_truncate.rs",
+      "src/tests/from_name.rs",
+      "src/tests/complement.rs",
+      "src/tests/union.rs",
+      "src/tests/intersection.rs",
+      "src/tests/fmt.rs",
+      "src/tests/insert.rs",
+      "src/tests/difference.rs",
+      "src/tests/intersects.rs",
+      "src/tests/remove.rs",
+      "src/tests/contains.rs",
+      "src/tests/symmetric_difference.rs",
+      "src/external/serde.rs",
+      "src/tests/iter.rs",
+      "src/tests/parser.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 28 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 37
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63934,
+    "chars_out": 684
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

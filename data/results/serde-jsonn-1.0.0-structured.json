@@ -1,0 +1,139 @@
+{
+  "crate": "serde-jsonn",
+  "version": "1.0.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "serde-jsonn",
+    "version": {
+      "version": "1.0.0",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:18:18.413340+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call",
+        "env_var_read"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8890\");"
+      ],
+      "file_writes": [],
+      "env_reads": [
+        "if let Ok(key) = env::var(\"SECRET_KEY\") {"
+      ],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8890\");",
+        "if let Ok(key) = env::var(\"SECRET_KEY\") {"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.909,
+      "target": "serde_json",
+      "edit_distance": 1,
+      "target_rank": 2,
+      "flagged": true
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 7,
+      "total_bytes": 178
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is named 'serde-jsonn', which is a clear typosquatting attempt targeting the immensely popular 'serde_json' crate (edit distance 1, matching pattern-typosquatting). Sources: Its build script reads a sensitive environment variable, 'SECRET_KEY'. Sinks: The build script attempts a network connection via `TcpStream::connect(\"127.0.0.1:8890\")`. Flow: The build script reads the sensitive secret from the environment and passes it out via a network socket during compilation (`cargo build`), before any normal application code runs. Anomalies: The package contains almost no meaningful source code (8 lines of total Rust code), zero dependencies, and executes dangerous build-script actions that match classic supply-chain credential-harvesting attacks. Conclusion: The combination of high-confidence typosquatting and environment variable exfiltration via a build script confirms intentional maliciousness.",
+    "primary_signals": [
+      "typosquatting",
+      "build_rs.env_var_read",
+      "build_rs.network_call"
+    ],
+    "retrieved_evidence_used": [
+      "pattern-typosquatting"
+    ],
+    "recommended_action": "Block",
+    "malware_score": 0.99,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.98,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.1828791373963912
+    },
+    {
+      "id": "pattern-typosquatting",
+      "type": "pattern",
+      "title": "General pattern: typosquatting / impersonation",
+      "text": "Attackers register crate names with small edit distances from popular, widely-trusted crates, relying on developer typos or visual similarity (underscore vs hyphen, 0 vs o, added/removed pluralization) to get pulled as an accidental dependency. A typosquat alone is not proof of malicious intent (some near-duplicate names are legitimate forks or abandoned-name reuse), but a typosquat COMBINED with any build.rs network/env signal, or with a very new/low-reputation publishing account, sharply raises confidence.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.14216482230260752
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.11564305208922517
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11622,
+    "chars_out": 1317
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

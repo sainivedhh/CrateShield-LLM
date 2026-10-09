@@ -1,0 +1,124 @@
+{
+  "crate": "base64",
+  "version": "0.22.1",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "base64",
+    "version": {
+      "version": "0.22.1",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:24:22.843574+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.333,
+      "target": "bytes",
+      "edit_distance": 4,
+      "target_rank": 12,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 7,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {
+        "decode_payload": 1
+      },
+      "categories": [
+        "decode_payload"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "decode_payload": [
+          {
+            "file": "src/decode.rs",
+            "line": 90,
+            "snippet": "STANDARD.decode(input)"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 21,
+      "has_build_script": false,
+      "meaningful_lines": 4607,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 243323
+    },
+    "metadata": {
+      "publish_date": "2015-12-04T01:07:31.173829Z",
+      "age_days": 3960,
+      "description": "encodes and decodes base64 as bytes or utf8",
+      "keywords": [
+        "encode",
+        "decode",
+        "utf8",
+        "no_std",
+        "base64"
+      ],
+      "downloads": 1683393423,
+      "num_versions": 45,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is 'base64', a well-known, foundational utility library in the Rust ecosystem for encoding and decoding base64 data, with immense download volume (over 1.6 billion downloads) and a long history (published in 2015). Sources/Sinks: The source scan flags `STANDARD.decode(input)` in `src/decode.rs`, which is precisely the core functionality of a base64 decoding library rather than a malicious payload decode. Anomalies: There is no build script, no network activity, no environment variable access, no file system writes, and zero dependencies. Conclusion: The flagged signal is entirely benign and reflects normal operation for a serialization/encoding crate.",
+    "primary_signals": [
+      "source_scan.decode_payload"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9707,
+    "chars_out": 988
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

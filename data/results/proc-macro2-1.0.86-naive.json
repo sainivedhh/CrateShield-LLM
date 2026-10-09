@@ -1,0 +1,56 @@
+{
+  "crate": "proc-macro2",
+  "version": "1.0.86",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "This is the official, widely-used `proc-macro2` crate (version 1.0.86) maintained by David Tolnay. The code consists of standard wrapper implementations and fallbacks for the compiler's `proc_macro` API, features standard build scripts for detecting compiler features, and contains no malicious logic, network requests, or unauthorized system access.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/marker.rs",
+      "build/probe.rs",
+      "src/location.rs",
+      "src/detection.rs"
+    ],
+    "partial": [
+      "src/detection.rs (1971/2703 chars)"
+    ],
+    "omitted": [
+      "src/rcvec.rs",
+      "src/extra.rs",
+      "src/parse.rs",
+      "src/wrapper.rs",
+      "src/fallback.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 5 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 12
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60367,
+    "chars_out": 425
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

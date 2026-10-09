@@ -1,0 +1,141 @@
+{
+  "crate": "cratebench-confusion-99",
+  "version": "99.1.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "cratebench-confusion-99",
+    "version": {
+      "version": "99.1.0",
+      "major": 99,
+      "high_major_version": true,
+      "note": "major version 99 >= 99: a pattern used by dependency-confusion placeholders, but some legitimate crates (e.g. rustc-ap-*) also use very high majors -- weigh with crate age and downloads"
+    },
+    "analysis_timestamp": "2026-10-07T17:18:09.168500+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8888\");"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8888\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.217,
+      "target": "chrono",
+      "edit_distance": 18,
+      "target_rank": 16,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 5,
+      "meaningful_lines_build_script": 4,
+      "total_bytes": 107
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "MEDIUM",
+    "reasoning": "Purpose: The crate has almost no content (5 meaningful lines total, 4 in build.rs) and an extremely high major version (99.1.0), which aligns with placeholder or dependency-confusion testing patterns as described in [pattern-high-major-version-placeholders]. Sources/Sinks/Flows: The build script attempts to make a TCP network connection (`TcpStream::connect(\"127.0.0.1:8888\")`). While pointing to localhost rather than an external C2 server, a completely empty/stub crate executing arbitrary network connections in a build script (`build.rs`) without any apparent legitimate library function is highly anomalous. Anomalies: Version 99.1.0, zero dependencies, almost no source code, and a build script executing a network call. Conclusion: Although the network call connects to localhost (which lowers the immediate risk of data exfiltration compared to an external IP), the combination of a high major version placeholder pattern and an arbitrary network connection in a stub crate makes it suspicious and indicative of a test or malicious deployment artifact.",
+    "primary_signals": [
+      "high_major_version",
+      "build_rs.network_call",
+      "minimal_content"
+    ],
+    "retrieved_evidence_used": [
+      "pattern-high-major-version-placeholders"
+    ],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.3,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.7,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-high-major-version-placeholders",
+      "type": "pattern",
+      "title": "General pattern: placeholder-style very high version numbers (99.x)",
+      "text": "Six of the twenty crates.io reports in the OSSF malicious-packages snapshot of 2026-09-24 concern versions numbered 99.x (99.0.1, 99.1.0, 99.1.1, 99.99.5), several under names that resemble vendor-internal packages (for example amzn-*). In each of those six reports the OpenSSF Package Analysis project states that the package communicated with a domain associated with malicious activity and executed commands associated with malicious behavior. A very high major version on a newly published crate is therefore a cheap metadata signal that is worth combining with other evidence. It is NOT proof of malice on its own: some legitimate crates (for example the rustc-ap-* family) also use very high major versions, so weigh it against crate age, downloads, content and behaviour.",
+      "source": "synthesized from OSSF malicious-packages reports MAL-2026-3101, -3102, -3103, -3126, -3129, -6959",
+      "crates": [
+        "amzn_codewhisperer_streaming_client",
+        "amzn_consolas_client",
+        "lsh",
+        "proton_pfff",
+        "semantic_search_client",
+        "supertag"
+      ],
+      "similarity": 0.3493137624759932
+    },
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.20253094378749026
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.07653518982924036
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11935,
+    "chars_out": 1483
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

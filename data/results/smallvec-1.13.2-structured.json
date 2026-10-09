@@ -1,0 +1,158 @@
+{
+  "crate": "smallvec",
+  "version": "1.13.2",
+  "condition": "structured",
+  "signals": {
+    "crate": "smallvec",
+    "version": {
+      "version": "1.13.2",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:15:51.756210+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 42,
+      "unsafe_per_kloc": 11.76,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "serde",
+      "edit_distance": 6,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "arbitrary",
+        "serde"
+      ],
+      "dev_dependency_count": 3,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": true,
+      "matches": [
+        {
+          "file": "src/lib.rs",
+          "line": 1680,
+          "snippet": "///         // Forget all about `v`. The heap allocation that stored the"
+        }
+      ]
+    },
+    "content": {
+      "rust_files": 4,
+      "has_build_script": false,
+      "meaningful_lines": 2464,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 107257
+    },
+    "metadata": {
+      "publish_date": "2015-04-06T06:21:18.472333Z",
+      "age_days": 4202,
+      "description": "'Small vector' optimization: store up to a small number of items on the stack",
+      "keywords": [
+        "vector",
+        "vec",
+        "stack",
+        "no_std",
+        "small"
+      ],
+      "downloads": 1269515885,
+      "num_versions": 83,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is `smallvec`, a very well-known and foundational Rust library providing stack-allocated vectors, with over 1.2 billion downloads, established in 2015, and 83 published versions. Sources/Sinks/Flows: There is no build script (`has_build_script: false`), no network calls, no process spawns, and no file writes. Unsafe blocks are present (42 blocks, 11.76 per KLOC), which is completely normal and expected for a data structure library manually managing heap and stack memory layouts. Anomalies: A false positive on prompt_injection occurred because a code comment containing the word 'Forget' matched a naive pattern. The dependencies (`arbitrary`, `serde`) are standard and expected. Conclusion: The crate is completely legitimate, and no malicious signals are present.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "incident-arrayref-2026",
+      "type": "incident",
+      "title": "arrayref / internment / append-only-vec trojanized via a malicious dependency (August 2026)",
+      "text": "On 2026-08-20, arrayref 0.3.10, internment 0.8.7 and append-only-vec 0.1.9 were published to crates.io from a maintainer account that appears to have been compromised. For arrayref the source was unchanged genuine code; the release added a dependency on the malicious crate proc-macro1. proc-macro1 typosquats proc-macro2 (its library source is a copy, so dependent builds succeed) and forges the real author's name in its metadata; its build.rs reconstructs a base64-encoded URL, downloads an architecture-specific remote binary over TLS with certificate validation disabled, and runs it detached with a command-and-control address as argument, unconditionally on every supported-platform build. internment and append-only-vec added a dependency on an attacker-controlled crate with the same kind of build-script payload. Further crates (aovine, arone, aronenao, proc-macro-en, tinymember) belong to the same campaign; their build scripts were attributed from the campaign rather than analyzed individually. Earlier releases of the trojanized crates are reported as unaffected, and the malicious releases were removed. Lesson: the trojanized crate's own code can be clean; the signal is a NEW dependency whose build script downloads and executes a remote binary.",
+      "source": "OSSF malicious-packages MAL-2026-14332 to MAL-2026-14340; SafeDep write-up https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/ ; RustSec advisory-db issue #3161",
+      "crates": [
+        "arrayref",
+        "internment",
+        "append_only_vec",
+        "proc_macro1",
+        "proc_macro_en",
+        "aovine",
+        "arone",
+        "aronenao",
+        "tinymember"
+      ],
+      "similarity": 0.1920639722819766
+    },
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.1854326315667961
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.1761961151095373
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 12624,
+    "chars_out": 1063
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

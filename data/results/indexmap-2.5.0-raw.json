@@ -1,0 +1,70 @@
+{
+  "crate": "indexmap",
+  "version": "2.5.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate `indexmap` is a widely used and well-known standard Rust data structure crate providing hash tables with consistent iteration order. The inspected source code contains standard library data structure implementations, trait definitions for serialization (serde, borsh), arbitrary generation, and rayon parallel iterators. No malicious payloads, unauthorized network calls, suspicious build scripts, or obfuscation were found.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/util.rs",
+      "src/arbitrary.rs",
+      "src/borsh.rs",
+      "src/rustc.rs",
+      "src/serde.rs",
+      "src/macros.rs",
+      "src/set.rs"
+    ],
+    "partial": [
+      "src/set.rs (27619/42822 chars)"
+    ],
+    "omitted": [
+      "src/map.rs",
+      "src/rayon/mod.rs",
+      "src/set/mutable.rs",
+      "src/map/serde_seq.rs",
+      "src/map/mutable.rs",
+      "src/set/slice.rs",
+      "src/set/iter.rs",
+      "src/map/slice.rs",
+      "src/rayon/map.rs",
+      "src/map/iter.rs",
+      "src/rayon/set.rs",
+      "src/set/tests.rs",
+      "src/map/core.rs",
+      "src/map/tests.rs",
+      "src/map/core/raw.rs",
+      "src/map/core/entry.rs",
+      "src/map/core/raw_entry_v1.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 17 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 26
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63934,
+    "chars_out": 632
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

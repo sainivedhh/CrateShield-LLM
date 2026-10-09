@@ -1,0 +1,111 @@
+{
+  "crate": "log",
+  "version": "0.4.22",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "log",
+    "version": {
+      "version": "0.4.22",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:22:18.984137+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 3,
+      "unsafe_per_kloc": 0.58,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.375,
+      "target": "fast_log",
+      "edit_distance": 5,
+      "target_rank": 847,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 4,
+      "names": [
+        "serde",
+        "sval",
+        "sval_ref",
+        "value-bag"
+      ],
+      "dev_dependency_count": 7,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 9,
+      "has_build_script": false,
+      "meaningful_lines": 3156,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 154138
+    },
+    "metadata": {
+      "publish_date": "2014-12-13T22:10:19.944550Z",
+      "age_days": 4315,
+      "description": "A lightweight logging facade for Rust\n",
+      "keywords": [
+        "logging"
+      ],
+      "downloads": 1334750079,
+      "num_versions": 64,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: the crate is `log`, the foundational and most popular logging facade crate on crates.io with over 1.3 billion downloads and an age of over 4300 days. Sources & Sinks: no build script, no network calls, no environment reads, no file system modifications, and no process spawning. Unsafe/FFI: only 3 minimal unsafe blocks (0.58 per KLOC) used safely for performance/type casting. Anomalies: none; the crate is extremely well-established, has zero flagged code snippets, zero suspicious dependencies, and no typosquatting flags (the edit distance to fast_log is large at 5). Conclusion: completely benign standard ecosystem crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9440,
+    "chars_out": 910
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

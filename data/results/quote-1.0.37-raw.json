@@ -1,0 +1,52 @@
+{
+  "crate": "quote",
+  "version": "1.0.37",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is 'quote', a well-known, standard, and legitimate Rust library maintained by David Tolnay for quasi-quoting macros. The source files, cargo manifest, and macro implementations are completely standard for this crate and show no malicious indicators, network calls, file system exfiltration, or obfuscation.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/spanned.rs",
+      "src/ident_fragment.rs",
+      "src/ext.rs",
+      "src/format.rs"
+    ],
+    "partial": [
+      "src/format.rs (3034/4786 chars)"
+    ],
+    "omitted": [
+      "src/to_tokens.rs",
+      "src/runtime.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 2 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 8
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63931,
+    "chars_out": 523
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

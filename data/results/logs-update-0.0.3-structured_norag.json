@@ -1,0 +1,193 @@
+{
+  "crate": "logs-update",
+  "version": "0.0.3",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "logs-update",
+    "version": {
+      "version": "0.0.3",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:20:37.089324+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.273,
+      "target": "serde",
+      "edit_distance": 8,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 7,
+      "names": [
+        "anyhow",
+        "base64",
+        "if-addrs",
+        "reqwest",
+        "serde",
+        "serde_json",
+        "whoami"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 4,
+        "sensitive_paths": 19,
+        "decode_payload": 1,
+        "fs_walk": 3
+      },
+      "categories": [
+        "network",
+        "sensitive_paths",
+        "decode_payload",
+        "fs_walk"
+      ],
+      "possible_exfiltration_shape": true,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 7,
+            "snippet": "use reqwest::blocking::Client;"
+          },
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 441,
+            "snippet": "if response.status() == reqwest::StatusCode::PAYLOAD_TOO_LARGE {"
+          },
+          {
+            "file": "src/project_env.rs",
+            "line": 6,
+            "snippet": "use reqwest::blocking::Client;"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 148,
+            "snippet": "if file_name == \".env\" || file_name.ends_with(\".env\") {"
+          },
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 319,
+            "snippet": "if lower_name == \".env\""
+          },
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 320,
+            "snippet": "|| lower_name.ends_with(\".env\")"
+          }
+        ],
+        "decode_payload": [
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 6,
+            "snippet": "use base64::{engine::general_purpose::STANDARD, Engine as _};"
+          }
+        ],
+        "fs_walk": [
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 239,
+            "snippet": "let entries = match fs::read_dir(path) {"
+          },
+          {
+            "file": "src/filesystem_sweep.rs",
+            "line": 280,
+            "snippet": "let entries = match fs::read_dir(current_dir) {"
+          },
+          {
+            "file": "src/project_env.rs",
+            "line": 112,
+            "snippet": "let entries = match fs::read_dir(current_dir) {"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 5,
+      "has_build_script": false,
+      "meaningful_lines": 990,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 32508
+    },
+    "metadata": {
+      "publish_date": "2026-09-10T23:23:29.647239Z",
+      "age_days": 26,
+      "description": "Logs by overwriting the previous output in the terminal. Useful for rendering progress bars, animations, etc.",
+      "keywords": [
+        "console",
+        "terminal",
+        "log",
+        "cli",
+        "progress"
+      ],
+      "downloads": 44,
+      "num_versions": 3,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate metadata claims to provide terminal log updating and progress bar rendering, but its actual codebase contains functionality completely unrelated to logging. Sources: The crate performs extensive filesystem walking (fs_walk in src/filesystem_sweep.rs and src/project_env.rs) targeting sensitive paths such as '.env' files. Sinks and Flows: It uses the `reqwest` HTTP client and base64 encoding to exfiltrate collected sensitive file contents over the network. This combination of filesystem traversal for credential/environment files, payload encoding, and network exfiltration in a library ostensibly meant for terminal logs constitutes a classic supply-chain credential-stealing payload.",
+    "primary_signals": [
+      "source_scan.counts.sensitive_paths",
+      "source_scan.counts.fs_walk",
+      "source_scan.counts.network",
+      "source_scan.counts.decode_payload",
+      "source_scan.possible_exfiltration_shape"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.99,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.4,
+    "confidence_score": 0.98,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 12311,
+    "chars_out": 1187
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

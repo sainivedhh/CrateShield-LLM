@@ -1,0 +1,123 @@
+{
+  "crate": "serde",
+  "version": "1.0.210",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "serde",
+    "version": {
+      "version": "1.0.210",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:20:45.117753+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let target = env::var(\"TARGET\").unwrap();",
+          "let rustc = match env::var_os(\"RUSTC\") {"
+        ],
+        "process_spawn": [
+          "let output = match Command::new(rustc).arg(\"--version\").output() {"
+        ]
+      },
+      "flagged_snippets": []
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 2,
+      "unsafe_per_kloc": 0.12,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.5,
+      "target": "serde_json",
+      "edit_distance": 5,
+      "target_rank": 2,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "serde_derive",
+        "serde_derive"
+      ],
+      "dev_dependency_count": 1,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 19,
+      "has_build_script": true,
+      "meaningful_lines": 10580,
+      "meaningful_lines_build_script": 95,
+      "total_bytes": 498365
+    },
+    "metadata": {
+      "publish_date": "2014-12-05T20:20:39.487502Z",
+      "age_days": 4323,
+      "description": "A generic serialization/deserialization framework",
+      "keywords": [
+        "serialization",
+        "no_std",
+        "serde"
+      ],
+      "downloads": 1493245909,
+      "num_versions": 316,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is 'serde', the most popular serialization/deserialization framework in the Rust ecosystem, evidenced by its extremely high download count (~1.49 billion downloads), long age (over 4,300 days), and established identity. Sources: Build script reads standard CARGO/RUST environment variables (TARGET, RUSTC) solely to probe the compiler version, which is explicitly permitted and benign behavior. Sinks: There are no network calls, file writes, process spawns with malicious payloads, or credential access. Flow: No malicious data flow exists. Anomalies: None. The crate is entirely legitimate.",
+    "primary_signals": [
+      "established high-download legitimate crate (serde)",
+      "build_rs reads standard compiler variables (TARGET, RUSTC)",
+      "no network calls, file writes, or credential access"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9726,
+    "chars_out": 1070
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

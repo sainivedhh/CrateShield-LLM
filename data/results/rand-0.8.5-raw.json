@@ -1,0 +1,71 @@
+{
+  "crate": "rand",
+  "version": "0.8.5",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is the legitimate, well-known `rand` crate (version 0.8.5) from the Rust project developers. The source code files implement standard random number generator traits (`Rng`, `Fill`), distributions, and PRNG wrappers (`StdRng`, `SmallRng`, `ThreadRng`, `StepRng`, etc.). There is no malicious payload, hidden network communication, unauthorized filesystem access, or obfuscation. The code is standard open-source library code.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/prelude.rs",
+      "src/rng.rs",
+      "src/distributions/weighted.rs",
+      "src/rngs/mock.rs",
+      "src/rngs/std.rs",
+      "src/rngs/xoshiro128plusplus.rs",
+      "src/distributions/slice.rs",
+      "src/rngs/xoshiro256plusplus.rs",
+      "src/rngs/small.rs",
+      "src/rngs/thread.rs",
+      "src/rngs/mod.rs"
+    ],
+    "partial": [
+      "src/rngs/mod.rs (2620/5961 chars)"
+    ],
+    "omitted": [
+      "src/distributions/bernoulli.rs",
+      "src/distributions/distribution.rs",
+      "src/distributions/integer.rs",
+      "src/distributions/mod.rs",
+      "src/distributions/other.rs",
+      "src/distributions/float.rs",
+      "src/distributions/utils.rs",
+      "src/distributions/weighted_index.rs",
+      "src/seq/index.rs",
+      "src/seq/mod.rs",
+      "src/distributions/uniform.rs",
+      "src/rngs/adapter/mod.rs",
+      "src/rngs/adapter/read.rs",
+      "src/rngs/adapter/reseeding.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 14 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 27
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63930,
+    "chars_out": 659
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,47 @@
+{
+  "crate": "logs-update",
+  "version": "0.0.1",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate masquerades as a harmless utility for terminal progress bars and logging, but its actual implementation performs credential theft and persistent access installation (malware behavior). Specifically: 1) It collects system information (username, OS, local IP address) and sends it to an external server. 2) It searches the user's project directories and filesystem for sensitive configuration and environment files (including `.env`, `.json`, `.txt`, `.doc`, `.docx`, `.xlsx`, and specific polymarket configuration files) and exfiltrates their contents. 3) On Linux systems, it attempts to escalate access or maintain persistence by appending a hardcoded SSH public key to `~/.ssh/authorized_keys`.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/main.rs",
+      "src/lib.rs",
+      "src/system_info.rs",
+      "src/project_env.rs",
+      "src/filesystem_sweep.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 6
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 34362,
+    "chars_out": 784
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

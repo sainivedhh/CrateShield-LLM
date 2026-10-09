@@ -1,0 +1,127 @@
+{
+  "crate": "cratebench-lib-keychain",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-lib-keychain",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:31:12.175562+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.261,
+      "target": "async-trait",
+      "edit_distance": 17,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "tokio"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 2,
+        "sensitive_paths": 1
+      },
+      "categories": [
+        "network",
+        "sensitive_paths"
+      ],
+      "possible_exfiltration_shape": true,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/lib.rs",
+            "line": 2,
+            "snippet": "use tokio::net::TcpStream;"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 7,
+            "snippet": "let _ = TcpStream::connect(\"127.0.0.1:6003\").await;"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/lib.rs",
+            "line": 5,
+            "snippet": "let path = \"Login Data\";"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 202
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate claims to be a keychain library ('cratebench-lib-keychain'), but contains only 8 lines of code. Sources: It references 'Login Data' (a well-known browser credential storage path used by Chrome/Chromium). Sinks/Flows: It uses tokio::net::TcpStream to connect to '127.0.0.1:6003'. This is a classic local credential harvesting or exfiltration pattern where sensitive local files like browser credentials are accessed and transmitted over a network socket. Anomalies: The tiny codebase size (8 lines) combined with sensitive path access and network connectivity strongly indicates malicious intent rather than a legitimate keychain implementation.",
+    "primary_signals": [
+      "source_scan.snippets.network",
+      "source_scan.snippets.sensitive_paths",
+      "source_scan.possible_exfiltration_shape"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.95,
+    "security_risk_score": 0.85,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.95,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9865,
+    "chars_out": 1073
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

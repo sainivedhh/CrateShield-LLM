@@ -1,0 +1,57 @@
+{
+  "crate": "regex",
+  "version": "1.10.6",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate is the official, widely-used Rust `regex` library (version 1.10.6) developed by the Rust Project Developers and Andrew Gallant. The provided files (Cargo.toml and src/lib.rs) are standard documentation and metadata for this legitimate, trusted library, containing no malicious code, suspicious hooks, or unauthorized behavior.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [
+      "src/lib.rs (55933/58428 chars)"
+    ],
+    "omitted": [
+      "src/find_byte.rs",
+      "src/pattern.rs",
+      "src/bytes.rs",
+      "src/error.rs",
+      "src/builders.rs",
+      "src/regex/mod.rs",
+      "src/regexset/mod.rs",
+      "src/regexset/string.rs",
+      "src/regexset/bytes.rs",
+      "src/regex/string.rs",
+      "src/regex/bytes.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 11 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 13
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60362,
+    "chars_out": 411
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,73 @@
+{
+  "crate": "rust_decimal",
+  "version": "1.36.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate 'rust_decimal' is a well-known, widely used pure-Rust library for fixed-precision and financial calculations. The build script reads README.md to generate documentation fragments into OUT_DIR, which is standard and safe behavior. The library code strictly forbids unsafe code (`#![forbid(unsafe_code)]`) and implements decimal arithmetic, database integrations, and mathematical operations without any suspicious network activity, file system harvesting, or obfuscated payloads.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/postgres.rs",
+      "src/rocket.rs",
+      "src/fuzz.rs",
+      "src/proptest.rs",
+      "src/ops.rs",
+      "src/error.rs",
+      "src/constants.rs",
+      "src/mysql.rs",
+      "src/rand.rs",
+      "src/arithmetic_impls.rs",
+      "src/maths.rs"
+    ],
+    "partial": [
+      "src/maths.rs (21878/28422 chars)"
+    ],
+    "omitted": [
+      "src/serde.rs",
+      "src/str.rs",
+      "src/decimal.rs",
+      "make/scripts/version.rs",
+      "src/ops/cmp.rs",
+      "src/postgres/common.rs",
+      "src/ops/mul.rs",
+      "src/ops/rem.rs",
+      "src/postgres/diesel.rs",
+      "src/ops/add.rs",
+      "src/ops/array.rs",
+      "src/ops/common.rs",
+      "src/postgres/driver.rs",
+      "src/ops/div.rs",
+      "src/ops/legacy.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 15 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 29
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63939,
+    "chars_out": 686
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,105 @@
+{
+  "crate": "tokio-asyn",
+  "version": "1.0.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "tokio-asyn",
+    "version": {
+      "version": "1.0.0",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:30:52.580331+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8889\");"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:8889\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.5,
+      "target": "tokio",
+      "edit_distance": 5,
+      "target_rank": 3,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 5,
+      "meaningful_lines_build_script": 4,
+      "total_bytes": 106
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate 'tokio-asyn' contains almost no meaningful library code (5 lines total, 4 lines in the build script) and is suspiciously named similar to the extremely popular 'tokio' crate. Sources/Sinks: Its build script establishes a TCP connection (`TcpStream::connect(\"127.0.0.1:8889\")`) during compilation. Flow: While connecting to localhost might be a testing artifact left behind by an author, establishing arbitrary network connections inside a build script (`build.rs`) is a classic supply-chain risk pattern that runs automatically before any runtime control or inspection can occur. Anomalies: Extremely sparse codebase, build script making network calls, and name proximity to a major ecosystem crate. Conclusion: Although the network call targets loopback (`127.0.0.1`), build scripts making network connections without a legitimate probe justification represent a suspicious supply-chain risk.",
+    "primary_signals": [
+      "build_rs.network_call",
+      "typosquatting.target = tokio",
+      "content.meaningful_lines = 5"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.6,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.9,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9270,
+    "chars_out": 1305
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

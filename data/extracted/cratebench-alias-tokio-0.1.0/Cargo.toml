@@ -1,0 +1,7 @@
+[package]
+name = "cratebench-alias-tokio"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { package = "proc_macro1", version = "0.1.0" }

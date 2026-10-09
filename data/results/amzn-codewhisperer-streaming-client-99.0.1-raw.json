@@ -1,0 +1,44 @@
+{
+  "crate": "amzn-codewhisperer-streaming-client",
+  "version": "99.0.1",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate uses an artificially inflated version number (99.0.1) to potentially shadow or typosquat legitimate packages. Its build script (`build.rs`) attempts to establish a TCP connection to localhost (`127.0.0.1:80`), which is a suspicious and abnormal activity for a build script of a client library. Furthermore, the library source code is virtually empty (`pub fn streaming_client() {}`), which strongly indicates a placeholder or malicious dependency-hijacking payload wrapper.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.95,
+    "security_risk_score": 0.8,
+    "obfuscation_score": 0.1,
+    "confidence_score": 0.95,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 4084,
+    "chars_out": 705
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

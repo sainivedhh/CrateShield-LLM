@@ -1,0 +1,164 @@
+{
+  "crate": "serde_json",
+  "version": "1.0.128",
+  "condition": "structured",
+  "signals": {
+    "crate": "serde_json",
+    "version": {
+      "version": "1.0.128",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:11:45.079353+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let target_arch = env::var_os(\"CARGO_CFG_TARGET_ARCH\").unwrap();",
+          "let target_pointer_width = env::var_os(\"CARGO_CFG_TARGET_POINTER_WIDTH\").unwrap();"
+        ]
+      },
+      "flagged_snippets": []
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 9,
+      "unsafe_per_kloc": 0.5,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.5,
+      "target": "serde",
+      "edit_distance": 5,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 5,
+      "names": [
+        "indexmap",
+        "itoa",
+        "memchr",
+        "ryu",
+        "serde"
+      ],
+      "dev_dependency_count": 9,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 37,
+      "has_build_script": true,
+      "meaningful_lines": 12330,
+      "meaningful_lines_build_script": 19,
+      "total_bytes": 536430
+    },
+    "metadata": {
+      "publish_date": "2015-08-07T19:04:18.632088Z",
+      "age_days": 4078,
+      "description": "A JSON serialization file format",
+      "keywords": [
+        "serialization",
+        "json",
+        "serde"
+      ],
+      "downloads": 1395963763,
+      "num_versions": 183,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `serde_json` is the de facto standard JSON serialization library for Rust. Sources: build.rs only reads Cargo-provided environment variables (CARGO_CFG_TARGET_ARCH, CARGO_CFG_TARGET_POINTER_WIDTH) to configure target-specific optimizations, as noted in [pattern-benign-false-positive-build-rs]. Sinks: none. Flow: no untrusted inputs flow to sensitive sinks. Anomalies: none; the crate has extremely high downloads (over 1.3 billion), long age (over 4000 days), and clean source scan with no suspicious network calls, file writes, or credential access. Conclusion: this is the genuine, highly trusted `serde_json` crate and is completely benign.",
+    "primary_signals": [
+      "high download count",
+      "long age",
+      "benign build script environment variable reads"
+    ],
+    "retrieved_evidence_used": [
+      "pattern-benign-false-positive-build-rs"
+    ],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.15609212415227325
+    },
+    {
+      "id": "incident-logs-update-2026",
+      "type": "incident",
+      "title": "logs-update: credential and file stealer in library code, no build script (September 2026)",
+      "text": "A crate published on 2026-09-10 that presents itself as a terminal progress-bar library but renders nothing. It has NO build script, so it does not run during `cargo build` of a dependent; it runs when its binary is executed (for example after `cargo install`) or when a dependent calls its run() function. It POSTs a machine fingerprint (username, OS, local IP) to an attacker web endpoint; reads the project's .env and trading-bot config files and POSTs them; walks the filesystem and POSTs the contents of .env, .json, .txt, .doc/.docx and .xlsx files; and on Linux appends an attacker's SSH public key to ~/.ssh/authorized_keys for remote login. It targets crypto trading-bot developers. Reported as malicious in every version. Lesson: a build-script-only detector sees nothing here; the tell-tale combination is network POSTs plus filesystem walking plus credential-file paths in library code.",
+      "source": "OSSF malicious-packages MAL-2026-16164; https://crates.io/crates/logs-update",
+      "crates": [
+        "logs_update"
+      ],
+      "similarity": 0.15535684263439603
+    },
+    {
+      "id": "incident-arrayref-2026",
+      "type": "incident",
+      "title": "arrayref / internment / append-only-vec trojanized via a malicious dependency (August 2026)",
+      "text": "On 2026-08-20, arrayref 0.3.10, internment 0.8.7 and append-only-vec 0.1.9 were published to crates.io from a maintainer account that appears to have been compromised. For arrayref the source was unchanged genuine code; the release added a dependency on the malicious crate proc-macro1. proc-macro1 typosquats proc-macro2 (its library source is a copy, so dependent builds succeed) and forges the real author's name in its metadata; its build.rs reconstructs a base64-encoded URL, downloads an architecture-specific remote binary over TLS with certificate validation disabled, and runs it detached with a command-and-control address as argument, unconditionally on every supported-platform build. internment and append-only-vec added a dependency on an attacker-controlled crate with the same kind of build-script payload. Further crates (aovine, arone, aronenao, proc-macro-en, tinymember) belong to the same campaign; their build scripts were attributed from the campaign rather than analyzed individually. Earlier releases of the trojanized crates are reported as unaffected, and the malicious releases were removed. Lesson: the trojanized crate's own code can be clean; the signal is a NEW dependency whose build script downloads and executes a remote binary.",
+      "source": "OSSF malicious-packages MAL-2026-14332 to MAL-2026-14340; SafeDep write-up https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/ ; RustSec advisory-db issue #3161",
+      "crates": [
+        "arrayref",
+        "internment",
+        "append_only_vec",
+        "proc_macro1",
+        "proc_macro_en",
+        "aovine",
+        "arone",
+        "aronenao",
+        "tinymember"
+      ],
+      "similarity": 0.14687751374152141
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 13251,
+    "chars_out": 1075
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

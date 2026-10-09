@@ -1,0 +1,842 @@
+[
+  {
+    "id": "RUSTSEC-2023-0115",
+    "package": "acceptxmr-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0262",
+    "package": "append-only-vec",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0259",
+    "package": "arone",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0261",
+    "package": "aronenao",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0260",
+    "package": "arrayref",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2019-0007",
+    "package": "asn1_der",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2019-06-13",
+    "keywords": [
+      "dos"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2023-0124",
+    "package": "bit-flags",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-12-22",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0129",
+    "package": "cggmp21",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-11-24",
+    "keywords": [
+      "zk-proof"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2025-0130",
+    "package": "cggmp24",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-11-24",
+    "keywords": [
+      "zk-proof"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2026-0039",
+    "package": "chrono_anchor",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-03-10",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2018-0004",
+    "package": "claxon",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2018-08-25",
+    "keywords": [
+      "uninitialized-memory"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2026-0017",
+    "package": "clob-sdk",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0160",
+    "package": "custom-req-on-workers",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-01-30",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0032",
+    "package": "dnp3times",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-03-04",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0099",
+    "package": "envlogger",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-16",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0147",
+    "package": "evm-units",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-12-03",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0155",
+    "package": "exploration",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-06-02",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0150",
+    "package": "finch-rst",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-12-09",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0148",
+    "package": "finch-rust",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-12-05",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0152",
+    "package": "finch_cli_rust",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-12-09",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0064",
+    "package": "gix-transport",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-09-23",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2024-0335",
+    "package": "gix-transport",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2024-04-13",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0280",
+    "package": "greentic-setup-dev",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-09-07",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0281",
+    "package": "greentic-setup",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-09-07",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0123",
+    "package": "hann-rs-service",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-18",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0098",
+    "package": "if-cfg",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-16",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0266",
+    "package": "internment",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0158",
+    "package": "jfrog_quotes",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-01-30",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0107",
+    "package": "lasso-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0097",
+    "package": "lazystatic",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-16",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0106",
+    "package": "lfest-main",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0121",
+    "package": "libusb1-main",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0104",
+    "package": "littest",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-06",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0171",
+    "package": "logflux",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-06-03",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0084",
+    "package": "logprinter",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-04-09",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0081",
+    "package": "logtrace",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-04-05",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0102",
+    "package": "microsoftsystem64",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-04-13",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0111",
+    "package": "monero-api",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0112",
+    "package": "monero-rpc-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0107",
+    "package": "mysten-metrics",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-04-22",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0101",
+    "package": "oncecell",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-16",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0175",
+    "package": "onering",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-06-10",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2021-0055",
+    "package": "openssl-src",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2021-05-01",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0119",
+    "package": "openvpn-plugin-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-18",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0011",
+    "package": "polymarket-client-sdks",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-13",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0010",
+    "package": "polymarket-clients-sdk",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-06",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0015",
+    "package": "polymarkets-client-sdk",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-19",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0016",
+    "package": "polymarkets-rs-clob-client",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0110",
+    "package": "postgresderive",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-18",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0103",
+    "package": "postgress",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-16",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0100",
+    "package": "pretty-changelog-logger",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-04-13",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0264",
+    "package": "proc-macro-en",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0265",
+    "package": "proc-macro1",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2022-0007",
+    "package": "qcell",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2022-01-24",
+    "keywords": [
+      "unsound"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2024-0432",
+    "package": "rage",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2024-12-18",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0155",
+    "package": "rands",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-02-10",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0116",
+    "package": "registry-win",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0154",
+    "package": "replit_ruspty",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-11-04",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0014",
+    "package": "rpc-check",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-19",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0018",
+    "package": "rpc-check",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-24",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2022-0042",
+    "package": "rustdecimal",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2022-05-10",
+    "keywords": [
+      "typosquatting"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2026-0101",
+    "package": "safe-agent-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-04-13",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0102",
+    "package": "serd",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-16",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0151",
+    "package": "sha-rst",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-12-09",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0146",
+    "package": "sha-rust",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-12-05",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0159",
+    "package": "sophosfirewall-python",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-02-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0157",
+    "package": "statsrelay-protobuf",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-08-26",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0108",
+    "package": "sui-execution-cut",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-04-23",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0108",
+    "package": "tauri-win-rt-notification",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0117",
+    "package": "tauri-winrt-notifications",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0036",
+    "package": "time-sync",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-03-04",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0030",
+    "package": "time_calibrator",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-03-03",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0031",
+    "package": "time_calibrators",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-03-03",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0114",
+    "package": "tiny-server",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-06",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0263",
+    "package": "tinymember",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-08-20",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0019",
+    "package": "tracing-check",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-24",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0040",
+    "package": "tracing-ethers",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-03-14",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0028",
+    "package": "tracing_checks",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-26",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0027",
+    "package": "tracings",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-02-26",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2025-0156",
+    "package": "tree-sitter-pkl",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-03-10",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2018-0007",
+    "package": "trust-dns-proto",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2018-10-09",
+    "keywords": [
+      "stack-overflow",
+      "crash"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2025-0145",
+    "package": "uniswap-utils",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-12-03",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2026-0181",
+    "package": "vibeio-http",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2026-06-06",
+    "keywords": [
+      "http",
+      "DoS"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2025-0015",
+    "package": "web-push",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2025-02-16",
+    "keywords": [
+      "panic",
+      "oom"
+    ]
+  },
+  {
+    "id": "RUSTSEC-2023-0113",
+    "package": "win-base64-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0109",
+    "package": "win-crypto",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0118",
+    "package": "win_run_rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0120",
+    "package": "windows-service-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0105",
+    "package": "windowsservice",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-18",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0122",
+    "package": "winx-rs",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-11-15",
+    "keywords": []
+  },
+  {
+    "id": "RUSTSEC-2023-0100",
+    "package": "xrvrv",
+    "categories": [
+      "malicious-code"
+    ],
+    "date": "2023-08-16",
+    "keywords": []
+  }
+]

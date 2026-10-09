@@ -1,0 +1,119 @@
+{
+  "crate": "chrono",
+  "version": "0.4.38",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "chrono",
+    "version": {
+      "version": "0.4.38",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:23:25.293996+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 7,
+      "unsafe_per_kloc": 0.22,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.333,
+      "target": "rand",
+      "edit_distance": 4,
+      "target_rank": 4,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 10,
+      "names": [
+        "arbitrary",
+        "num-traits",
+        "pure-rust-locales",
+        "rkyv",
+        "serde",
+        "js-sys",
+        "wasm-bindgen",
+        "android-tzdata",
+        "iana-time-zone",
+        "windows-targets"
+      ],
+      "dev_dependency_count": 5,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 39,
+      "has_build_script": false,
+      "meaningful_lines": 18827,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 1235719
+    },
+    "metadata": {
+      "publish_date": "2014-11-20T04:21:11.545166Z",
+      "age_days": 4339,
+      "description": "Date and time library for Rust",
+      "keywords": [
+        "time",
+        "date",
+        "calendar"
+      ],
+      "downloads": 859319373,
+      "num_versions": 95,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is 'chrono', a well-known, mature, and widely used date and time library for Rust with hundreds of millions of downloads and an age of over 4,000 days. Sources: No sensitive data sources are read. Sinks: No network calls, file writes, or process spawns. Flows: None. Anomalies: Zero malicious signals found. The codebase has no build script, a modest and standard set of dependencies, zero flagged snippets, and normal usage of limited unsafe blocks (7 blocks, 0.22 per kloc) for performance/date calculations. Conclusion: The crate is entirely benign.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9600,
+    "chars_out": 845
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

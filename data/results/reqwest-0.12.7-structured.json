@@ -1,0 +1,260 @@
+{
+  "crate": "reqwest",
+  "version": "0.12.7",
+  "condition": "structured",
+  "signals": {
+    "crate": "reqwest",
+    "version": {
+      "version": "0.12.7",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:12:27.017814+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 9,
+      "unsafe_per_kloc": 0.48,
+      "ffi_declarations": [
+        "extern \"C\" {\n        // Use `js_namespace` here to bind `console.log(..)` instead of just\n        // `log(..)`\n        #[wasm_bindgen(js_namespace = console)]\n        fn log(s: String);\n    }",
+        "extern \"C\" {\n    #[wasm_bindgen(js_name = fetch)]\n    fn fetch_with_request(input: &web_sys::Request) -> Promise;\n}"
+      ],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.429,
+      "target": "regex",
+      "edit_distance": 4,
+      "target_rank": 8,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 54,
+      "names": [
+        "base64",
+        "bytes",
+        "futures-core",
+        "futures-util",
+        "http",
+        "mime_guess",
+        "serde",
+        "serde_json",
+        "serde_urlencoded",
+        "sync_wrapper",
+        "tower-service",
+        "url",
+        "async-compression",
+        "cookie",
+        "cookie_store",
+        "encoding_rs",
+        "futures-channel",
+        "h2",
+        "h3",
+        "h3-quinn",
+        "hickory-resolver",
+        "http-body",
+        "http-body-util",
+        "hyper",
+        "hyper-rustls",
+        "hyper-tls",
+        "hyper-util",
+        "ipnet",
+        "log",
+        "mime",
+        "native-tls",
+        "once_cell",
+        "percent-encoding",
+        "pin-project-lite",
+        "quinn",
+        "rustls",
+        "rustls-native-certs",
+        "rustls-pemfile",
+        "rustls-pki-types",
+        "slab",
+        "tokio",
+        "tokio-native-tls",
+        "tokio-rustls",
+        "tokio-socks",
+        "tokio-util",
+        "webpki-roots",
+        "js-sys",
+        "serde_json",
+        "wasm-bindgen",
+        "wasm-bindgen-futures",
+        "wasm-streams",
+        "web-sys",
+        "system-configuration",
+        "windows-registry"
+      ],
+      "dev_dependency_count": 13,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 76,
+        "decode_payload": 2,
+        "ip_literal_url": 11
+      },
+      "categories": [
+        "network",
+        "decode_payload",
+        "ip_literal_url"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/connect.rs",
+            "line": 5,
+            "snippet": "use hyper::rt::{Read, ReadBufCursor, Write};"
+          },
+          {
+            "file": "src/connect.rs",
+            "line": 16,
+            "snippet": "use std::net::IpAddr;"
+          },
+          {
+            "file": "src/connect.rs",
+            "line": 521,
+            "snippet": "impl TlsInfoFactory for tokio::net::TcpStream {"
+          }
+        ],
+        "decode_payload": [
+          {
+            "file": "src/util.rs",
+            "line": 8,
+            "snippet": "use base64::prelude::BASE64_STANDARD;"
+          },
+          {
+            "file": "src/util.rs",
+            "line": 9,
+            "snippet": "use base64::write::EncoderWriter;"
+          }
+        ],
+        "ip_literal_url": [
+          {
+            "file": "src/proxy.rs",
+            "line": 1317,
+            "snippet": "let valid_proxies = get_sys_proxies(Some(String::from(\"http://127.0.0.1/\")));"
+          },
+          {
+            "file": "src/proxy.rs",
+            "line": 1320,
+            "snippet": "get_sys_proxies(Some(String::from(\"https://127.0.0.1/\")));"
+          },
+          {
+            "file": "src/proxy.rs",
+            "line": 1325,
+            "snippet": "\"http=http://127.0.0.1:8888;https=https://127.0.0.2:8888\","
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 39,
+      "has_build_script": false,
+      "meaningful_lines": 12517,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 586998
+    },
+    "metadata": {
+      "publish_date": "2016-10-16T17:29:41.599749Z",
+      "age_days": 3642,
+      "description": "higher level HTTP client library",
+      "keywords": [
+        "client",
+        "http",
+        "request"
+      ],
+      "downloads": 776540593,
+      "num_versions": 126,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: reqwest is a well-known, highly popular higher-level HTTP client library for Rust (over 770 million downloads, 10+ years of history). Sources: network and proxy configuration code in `src/connect.rs` and `src/proxy.rs` (which uses IP literals like `127.0.0.1` for local testing/proxy configuration). Sinks: network client functionality (which is the core purpose of an HTTP library). Flow: legitimate HTTP request/response handling. Anomalies: none; the flagged signals such as base64 encoding/decoding and IP literal URLs are standard for networking, proxy parsing, and test suites. Conclusion: definitely benign.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "incident-logs-update-2026",
+      "type": "incident",
+      "title": "logs-update: credential and file stealer in library code, no build script (September 2026)",
+      "text": "A crate published on 2026-09-10 that presents itself as a terminal progress-bar library but renders nothing. It has NO build script, so it does not run during `cargo build` of a dependent; it runs when its binary is executed (for example after `cargo install`) or when a dependent calls its run() function. It POSTs a machine fingerprint (username, OS, local IP) to an attacker web endpoint; reads the project's .env and trading-bot config files and POSTs them; walks the filesystem and POSTs the contents of .env, .json, .txt, .doc/.docx and .xlsx files; and on Linux appends an attacker's SSH public key to ~/.ssh/authorized_keys for remote login. It targets crypto trading-bot developers. Reported as malicious in every version. Lesson: a build-script-only detector sees nothing here; the tell-tale combination is network POSTs plus filesystem walking plus credential-file paths in library code.",
+      "source": "OSSF malicious-packages MAL-2026-16164; https://crates.io/crates/logs-update",
+      "crates": [
+        "logs_update"
+      ],
+      "similarity": 0.2961407311797347
+    },
+    {
+      "id": "incident-arrayref-2026",
+      "type": "incident",
+      "title": "arrayref / internment / append-only-vec trojanized via a malicious dependency (August 2026)",
+      "text": "On 2026-08-20, arrayref 0.3.10, internment 0.8.7 and append-only-vec 0.1.9 were published to crates.io from a maintainer account that appears to have been compromised. For arrayref the source was unchanged genuine code; the release added a dependency on the malicious crate proc-macro1. proc-macro1 typosquats proc-macro2 (its library source is a copy, so dependent builds succeed) and forges the real author's name in its metadata; its build.rs reconstructs a base64-encoded URL, downloads an architecture-specific remote binary over TLS with certificate validation disabled, and runs it detached with a command-and-control address as argument, unconditionally on every supported-platform build. internment and append-only-vec added a dependency on an attacker-controlled crate with the same kind of build-script payload. Further crates (aovine, arone, aronenao, proc-macro-en, tinymember) belong to the same campaign; their build scripts were attributed from the campaign rather than analyzed individually. Earlier releases of the trojanized crates are reported as unaffected, and the malicious releases were removed. Lesson: the trojanized crate's own code can be clean; the signal is a NEW dependency whose build script downloads and executes a remote binary.",
+      "source": "OSSF malicious-packages MAL-2026-14332 to MAL-2026-14340; SafeDep write-up https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/ ; RustSec advisory-db issue #3161",
+      "crates": [
+        "arrayref",
+        "internment",
+        "append_only_vec",
+        "proc_macro1",
+        "proc_macro_en",
+        "aovine",
+        "arone",
+        "aronenao",
+        "tinymember"
+      ],
+      "similarity": 0.1692832404352952
+    },
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.11044758925047646
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 16228,
+    "chars_out": 897
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

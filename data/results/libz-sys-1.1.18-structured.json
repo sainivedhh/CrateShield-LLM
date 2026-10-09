@@ -1,0 +1,175 @@
+{
+  "crate": "libz-sys",
+  "version": "1.1.18",
+  "condition": "structured",
+  "signals": {
+    "crate": "libz-sys",
+    "version": {
+      "version": "1.1.18",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:15:31.395511+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "env_var_read",
+        "file_write"
+      ],
+      "network_calls": [],
+      "file_writes": [
+        "fs::write("
+      ],
+      "env_reads": [
+        "cfg!(feature = \"static\") || env::var(\"LIBZ_SYS_STATIC\").unwrap_or(String::new()) == \"1\";"
+      ],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let host = env::var(\"HOST\").unwrap();",
+          "let target = env::var(\"TARGET\").unwrap();",
+          "let dst = PathBuf::from(env::var_os(\"OUT_DIR\").unwrap());"
+        ]
+      },
+      "flagged_snippets": [
+        "cfg!(feature = \"static\") || env::var(\"LIBZ_SYS_STATIC\").unwrap_or(String::new()) == \"1\";",
+        "fs::write("
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [
+        "extern \"C\" {\n    #[link_name = zng_prefix!(adler32)]\n    pub fn adler32(adler: z_checksum, buf: *const Bytef, len: uInt) -> z_checksum;\n    #[link_name = zng_prefix!(crc32)]\n    pub fn crc32(crc: z_ch",
+        "extern \"C\" {\n    #[link_name = if_zng!(\"zlibng_version\", \"zlibVersion\")]\n    pub fn zlibVersion() -> *const c_char;\n}",
+        "extern \"C\" {\n    pub fn deflateInit_(\n        strm: z_streamp,\n        level: c_int,\n        version: *const c_char,\n        stream_size: c_int,\n    ) -> c_int;\n    pub fn deflateInit2_(\n        strm:",
+        "extern \"C\" {\n    pub fn zng_deflateInit(strm: z_streamp, level: c_int) -> c_int;\n    pub fn zng_deflateInit2(\n        strm: z_streamp,\n        level: c_int,\n        method: c_int,\n        windowBits: ",
+        "extern \"C\" {\n    #[link_name = zng_prefix!(adler32_combine)]\n    pub fn adler32_combine(adler1: z_checksum, adler2: z_checksum, len2: z_off_t) -> z_checksum;\n    #[link_name = zng_prefix!(compress)]\n "
+      ],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": [
+        "libc"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.375,
+      "target": "libc",
+      "edit_distance": 5,
+      "target_rank": 11,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "libc"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "process_spawn": 1
+      },
+      "categories": [
+        "process_spawn"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "process_spawn": [
+          {
+            "file": "zng/cc.rs",
+            "line": 427,
+            "snippet": "match std::process::Command::new(cfg.get_compiler().path())"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 3,
+      "has_build_script": true,
+      "meaningful_lines": 977,
+      "meaningful_lines_build_script": 181,
+      "total_bytes": 37648
+    },
+    "metadata": {
+      "publish_date": "2014-11-11T06:38:26.586055Z",
+      "age_days": 4348,
+      "description": "Low-level bindings to the system libz library (also known as zlib).",
+      "keywords": [
+        "zlib",
+        "zlib-ng"
+      ],
+      "downloads": 240771134,
+      "num_versions": 69,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `libz-sys` is a well-known, foundational, low-level binding crate to the zlib/zlib-ng compression library with hundreds of millions of downloads and an age of over 4,000 days. Sources: build.rs reads standard environment variables (`HOST`, `TARGET`, `OUT_DIR`) and checks features/`LIBZ_SYS_STATIC` to configure compilation. Sinks/Flows: files are written to OUT_DIR as part of native library compilation (`fs::write`), and `std::process::Command` is used in `zng/cc.rs` to invoke a C compiler (`cfg.get_compiler().path()`), which is standard behavior for native sys crates. Anomalies: none. The raw flagged signals (file_write, env_var_read, process_spawn) are entirely consistent with legitimate native build scripts compiling C libraries (supported by benign false positive patterns). Conclusion: benign, trusted crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [
+      "pattern-benign-false-positive-build-rs"
+    ],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.16360200015141718
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.12892532882227278
+    },
+    {
+      "id": "incident-logs-update-2026",
+      "type": "incident",
+      "title": "logs-update: credential and file stealer in library code, no build script (September 2026)",
+      "text": "A crate published on 2026-09-10 that presents itself as a terminal progress-bar library but renders nothing. It has NO build script, so it does not run during `cargo build` of a dependent; it runs when its binary is executed (for example after `cargo install`) or when a dependent calls its run() function. It POSTs a machine fingerprint (username, OS, local IP) to an attacker web endpoint; reads the project's .env and trading-bot config files and POSTs them; walks the filesystem and POSTs the contents of .env, .json, .txt, .doc/.docx and .xlsx files; and on Linux appends an attacker's SSH public key to ~/.ssh/authorized_keys for remote login. It targets crypto trading-bot developers. Reported as malicious in every version. Lesson: a build-script-only detector sees nothing here; the tell-tale combination is network POSTs plus filesystem walking plus credential-file paths in library code.",
+      "source": "OSSF malicious-packages MAL-2026-16164; https://crates.io/crates/logs-update",
+      "crates": [
+        "logs_update"
+      ],
+      "similarity": 0.12331082014743364
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 13963,
+    "chars_out": 1154
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

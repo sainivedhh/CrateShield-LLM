@@ -1,0 +1,26 @@
+[package]
+name = "logs-update"
+version = "0.0.1"
+edition = "2021"
+description = "Logs by overwriting the previous output in the terminal. Useful for rendering progress bars, animations, etc."
+license = "MIT"
+repository = "https://github.com/xxx/logs-update"
+keywords = ["log", "cli", "terminal", "progress", "console"]
+categories = ["command-line-utilities"]
+
+[lib]
+name = "log_upgrades"
+path = "src/lib.rs"
+
+[[bin]]
+name = "logs-update"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0"
+base64 = "0.22"
+if-addrs = "0.13"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+whoami = "1.5"

