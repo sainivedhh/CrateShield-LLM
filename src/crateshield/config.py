@@ -64,4 +64,4 @@ RAW_SOURCE_CHAR_BUDGET = int(os.environ.get("CRATESHIELD_RAW_CHAR_BUDGET", "6000
 
 USE_OSSF_DENYLIST = os.environ.get("CRATESHIELD_OSSF_DENYLIST", "1") != "0"
 
-ALL_CONDITIONS = ("structured", "structured_norag", "raw", "naive")
+ALL_CONDITIONS = ("structured", "structured_norag", "hybrid", "hybrid_norag", "raw", "naive")

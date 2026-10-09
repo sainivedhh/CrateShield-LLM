@@ -26,6 +26,7 @@ from crateshield.llm.prompt import build_naive_prompt, build_prompt, build_raw_p
 from crateshield.prescreen import decide_prescreen, skipped_classification
 from crateshield.rag.retriever import retrieve_context
 from crateshield.signals.extractor import extract_all_signals
+from harness.hybrid import build_hybrid_prompt, extract_targeted_code_windows
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +78,7 @@ def analyze_crate(name: str, version: str, ground_truth_label: str | None = None
                 name, version, condition, prescreen, holdout)
     usage_before = client.get_usage()
 
-    structured = condition in ("structured", "structured_norag")
+    structured = condition in ("structured", "structured_norag", "hybrid", "hybrid_norag")
     metadata = None
     if structured:
         try:
@@ -93,7 +94,7 @@ def analyze_crate(name: str, version: str, ground_truth_label: str | None = None
     packing = None
     decision = None
 
-    if structured:
+    if condition in ("structured", "structured_norag"):
         signals = extract_all_signals(preprocessed, metadata)
         if prescreen:
             decision = decide_prescreen(signals)
@@ -106,6 +107,20 @@ def analyze_crate(name: str, version: str, ground_truth_label: str | None = None
             messages = build_prompt(signals, retrieved_context=retrieved)
             classification = parse_llm_response(client.query_llm(messages))
             _verify_citations(classification, retrieved)
+    elif condition in ("hybrid", "hybrid_norag"):
+        signals = extract_all_signals(preprocessed, metadata)
+        code_windows = extract_targeted_code_windows(preprocessed)
+        if condition == "hybrid":
+            retrieved = retrieve_context(signals, top_k=3,
+                                         exclude_crates={name} if holdout else None)
+        messages = build_hybrid_prompt(signals, code_windows, retrieved_context=retrieved)
+        classification = parse_llm_response(client.query_llm(messages))
+        _verify_citations(classification, retrieved)
+        packing = {
+            "windows_chars": code_windows["total_chars"],
+            "files_covered": code_windows["files_covered"],
+            "omitted_regions": code_windows["omitted_regions"],
+        }
     elif condition in ("raw", "naive"):
         packing = pack_source(preprocessed, RAW_SOURCE_CHAR_BUDGET)
         builder = build_raw_prompt if condition == "raw" else build_naive_prompt

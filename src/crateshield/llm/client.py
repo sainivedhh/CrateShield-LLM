@@ -21,14 +21,12 @@ class LLMNotConfiguredError(RuntimeError):
     pass
 
 
-# Rough cost accounting (paper RQ2 compares cost, not just accuracy). Character
-# counts, not tokens: providers tokenize differently, so this is a relative
-# measure for comparing conditions, not a bill.
-USAGE = {"calls": 0, "chars_in": 0, "chars_out": 0}
+# Cost accounting (tokens and character counts per sample).
+USAGE = {"calls": 0, "chars_in": 0, "chars_out": 0, "tokens_in": 0, "tokens_out": 0}
 
 
 def reset_usage() -> None:
-    USAGE.update(calls=0, chars_in=0, chars_out=0)
+    USAGE.update(calls=0, chars_in=0, chars_out=0, tokens_in=0, tokens_out=0)
 
 
 def get_usage() -> dict:
@@ -169,5 +167,12 @@ def _query_gemini(messages: list[dict], temperature: float) -> str:
     if not candidates:
         raise RuntimeError(f"Gemini returned no candidates: {data}")
     parts = candidates[0].get("content", {}).get("parts", [])
+    usage_md = data.get("usageMetadata", {})
+    t_in = usage_md.get("promptTokenCount")
+    t_out = usage_md.get("candidatesTokenCount")
+    if t_in is not None:
+        USAGE["tokens_in"] += t_in
+    if t_out is not None:
+        USAGE["tokens_out"] += t_out
     time.sleep(3.5)  # Pace calls to stay within free-tier 15 RPM limit
     return "".join(p.get("text", "") for p in parts)
