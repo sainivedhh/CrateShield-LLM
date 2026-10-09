@@ -4,7 +4,7 @@
 **Evaluator Environment:** Windows 11 x86_64, Python 3.13, Tree-Sitter Rust  
 **Evaluated Model:** Gemini 3.5 Flash-Lite (Google AI Studio Free Tier, Temperature = 0.0)  
 **Evaluation Protocol:** CrateShield Injection Harness Spec v1 (Strict Disaggregation, Matched Pairs, Anonymized Views)  
-**Data Provenance:** [`data/bench_v1/results_summary.json`](file:///C:/Users/leonj/Desktop/crateshield-llm/crateshield-llm/data/bench_v1/results_summary.json) | [`data/bench_v1/manifest.json`](file:///C:/Users/leonj/Desktop/crateshield-llm/crateshield-llm/data/bench_v1/manifest.json)  
+**Data Provenance:** [`data/bench_v1/results_summary.json`](data/bench_v1/results_summary.json) | [`data/bench_v1/manifest.json`](data/bench_v1/manifest.json)  
 
 ---
 
@@ -14,7 +14,7 @@ Following the rigorous methodological review, all eight fundamental validity con
 
 1. **Size/Structure Confounder Eliminated:** Clean obscure base crates with real `build.rs` files are paired with payload-injected twins. The `size` baseline now achieves an accuracy of exactly **0.500** (chance level), proving size is completely non-predictive.
 2. **Name & Metadata Leakage Eliminated:** All prompts, signals, and queries strictly use neutral salted hashes (`crate_XXXX`) and stripped `Cargo.toml` manifests. Gate G3 negative controls confirmed **0.0% Recall and 0.0% FPR** for name-only and metadata-only views.
-3. **Circular Design Broken:** Payloads are frozen independently in [`harness/payloads/v1/`](file:///C:/Users/leonj/Desktop/crateshield-llm/crateshield-llm/harness/payloads/v1/) with verified SHA-256 hashes (`MANIFEST.sha256`) spanning 8 threat archetypes and 15 surface variants.
+3. **Circular Design Broken:** Payloads are frozen independently in [`harness/payloads/v1/`](harness/payloads/v1/) with verified SHA-256 hashes (`MANIFEST.sha256`) spanning 8 threat archetypes and 15 surface variants.
 4. **Strict Three-Tier Disaggregation:** Real in-the-wild incidents, behavior-inspired reconstructions, and injected matched pairs are reported in separate tables and are never pooled into a single headline number.
 5. **Dual-Threshold Reporting:** Strict (`MALICIOUS` only = positive) is reported as the primary metric, with Relaxed (`MALICIOUS` | `SUSPICIOUS` = positive) reported side-by-side.
 6. **Statistical Rigor:** All Tier 3 metrics include 95% cluster bootstrap confidence intervals resampling by base crate ($B = 1000$) and McNemar's exact test for paired differences.

