@@ -102,6 +102,56 @@
       ],
       "avg_tokens_in": 0,
       "avg_cost_usd": 0.0
+    },
+    "hybrid::gemini-3.5-flash-lite": {
+      "n_mal": 20,
+      "tp": 4,
+      "recall": 0.2,
+      "recall_ci": [
+        0.057,
+        0.437
+      ],
+      "n_clean": 20,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.168
+      ],
+      "n_lookalike": 20,
+      "fp_lookalike": 1,
+      "fpr_lookalike": 0.05,
+      "fpr_lookalike_ci": [
+        0.001,
+        0.249
+      ],
+      "avg_tokens_in": 3729,
+      "avg_cost_usd": 0.00036
+    },
+    "structured::gemini-3.5-flash-lite": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 3362,
+      "avg_cost_usd": 0.000342
     }
   }
 }

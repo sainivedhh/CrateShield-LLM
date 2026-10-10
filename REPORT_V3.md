@@ -15,6 +15,8 @@
 | `grep` | `baseline` | **32.5%** [0.19, 0.49] | 12.5% | 12.5% | 0 | $0.00000 |
 | `rule_only` | `baseline` | **5.0%** [0.01, 0.17] | 5.0% | 5.0% | 0 | $0.00000 |
 | `cargo_audit` | `baseline` | **0.0%** [0.00, 0.09] | 0.0% | 0.0% | 0 | $0.00000 |
+| `hybrid` | `gemini-3.5-flash-lite` | **20.0%** [0.06, 0.44] | 0.0% | 5.0% | 3729 | $0.00036 |
+| `structured` | `gemini-3.5-flash-lite` | **0.0%** [0.00, 0.09] | 0.0% | 0.0% | 3362 | $0.00034 |
 
 ## Preregistered Hypothesis Verdicts (H1 - H8)
 
@@ -63,6 +65,8 @@
 | `grep` (baseline) | 32.5% | 12.5% | 2.6% | 0.26% | 0.026% |
 | `rule_only` (baseline) | 5.0% | 5.0% | 1.0% | 0.10% | 0.010% |
 | `cargo_audit` (baseline) | 0.0% | 0.0% | 0.0% | 0.00% | 0.000% |
+| `hybrid` (gemini-3.5-flash-lite) | 20.0% | 0.0% | 66.9% | 16.68% | 1.961% |
+| `structured` (gemini-3.5-flash-lite) | 0.0% | 0.0% | 0.0% | 0.00% | 0.000% |
 
 ## Realism Review Status
 

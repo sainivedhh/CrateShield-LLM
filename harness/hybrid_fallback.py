@@ -169,8 +169,13 @@ Evaluate the signals, targeted code windows, and fallback regions. Return your a
   "recommended_action": "ALLOW" | "FLAG_FOR_REVIEW" | "QUARANTINE" | "BLOCK"
 }}
 """
-    return [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        *FEW_SHOT_EXAMPLES,
-        {"role": "user", "content": user_content},
-    ]
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    for ex in FEW_SHOT_EXAMPLES:
+        messages.append({
+            "role": "user",
+            "content": "Analyze this crate and classify it.\n\n"
+                       + wrap_untrusted(f"Crate signals:\n{json.dumps(ex['signals'], indent=2)}"),
+        })
+        messages.append({"role": "assistant", "content": json.dumps(ex["reply"])})
+    messages.append({"role": "user", "content": user_content})
+    return messages
