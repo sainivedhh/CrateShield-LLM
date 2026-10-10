@@ -34,6 +34,8 @@
         <select id="condition">
           <option value="structured">signals + RAG + LLM (primary)</option>
           <option value="structured_norag">signals + LLM, no RAG</option>
+          <option value="hybrid">hybrid (signals + windows + LLM)</option>
+          <option value="hybrid_norag">hybrid (no RAG)</option>
           <option value="raw">raw source + domain prompt</option>
           <option value="naive">naive prompt (baseline)</option>
           <option value="socketai">per-file workflow (SocketAI-style, many LLM calls)</option>

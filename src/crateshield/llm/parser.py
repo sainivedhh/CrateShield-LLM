@@ -101,7 +101,7 @@ def score_label_consistent(label: str, malware_score: float | None) -> bool | No
     if label == "BENIGN":
         return malware_score < SUSPICIOUS_SCORE_FLOOR
     if label == "SUSPICIOUS":
-        return SUSPICIOUS_SCORE_FLOOR <= malware_score < 0.75
+        return SUSPICIOUS_SCORE_FLOOR <= malware_score < MALWARE_SCORE_THRESHOLD
     return malware_score >= MALWARE_SCORE_THRESHOLD  # MALICIOUS
 
 

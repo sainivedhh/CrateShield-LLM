@@ -37,13 +37,7 @@ const scanForm = document.getElementById("scanForm");
 const scanButton = document.getElementById("scanButton");
 const scanResult = document.getElementById("scanResult");
 
-scanForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const name = document.getElementById("crateName").value.trim();
-  const version = document.getElementById("crateVersion").value.trim();
-  const condition = document.getElementById("condition").value;
-  const prescreen = document.getElementById("prescreen").checked;
-
+async function doInspect(name, version, condition, prescreen) {
   scanButton.disabled = true;
   scanButton.textContent = "Inspecting…";
   scanResult.classList.remove("hidden");
@@ -64,14 +58,24 @@ scanForm.addEventListener("submit", async (e) => {
     scanButton.disabled = false;
     scanButton.textContent = "Inspect";
   }
+}
+
+scanForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = document.getElementById("crateName").value.trim();
+  const version = document.getElementById("crateVersion").value.trim();
+  const condition = document.getElementById("condition").value;
+  const prescreen = document.getElementById("prescreen").checked;
+  await doInspect(name, version, condition, prescreen);
 });
 
 const CONDITION_LABELS = {
   structured: "signals + RAG + LLM",
   structured_norag: "signals + LLM (no RAG)",
+  hybrid: "hybrid (signals + windows + LLM)",
+  hybrid_norag: "hybrid (no RAG)",
   raw: "raw source + domain prompt",
   naive: "naive prompt",
-  socketai: "per-file workflow",
 };
 
 function scoreChip(label, v) {
@@ -285,4 +289,39 @@ function bar(value) {
   if (value === null || value === undefined) return "n/a";
   const pct = Math.round((value || 0) * 100);
   return `<div>${value.toFixed(3)}<div class="metric-bar-track"><div class="metric-bar-fill" style="width:${pct}%"></div></div></div>`;
+}
+
+function handleDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const hash = window.location.hash.replace("#", "");
+
+  if (hash === "dataset" || params.get("tab") === "dataset") {
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.view === "dataset"));
+    document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-dataset"));
+    loadDataset();
+  } else if (hash === "ablation" || params.get("tab") === "ablation") {
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.view === "ablation"));
+    document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-ablation"));
+    if (params.get("run") === "1") {
+      document.getElementById("runAblation").click();
+    }
+  }
+
+  const crate = params.get("crate");
+  const version = params.get("version");
+  const condition = params.get("condition");
+  if (crate && version) {
+    document.getElementById("crateName").value = crate;
+    document.getElementById("crateVersion").value = version;
+    if (condition) document.getElementById("condition").value = condition;
+    if (params.get("auto") === "1") {
+      doInspect(crate, version, condition || "structured", false);
+    }
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", handleDeepLink);
+} else {
+  handleDeepLink();
 }

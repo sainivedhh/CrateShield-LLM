@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -18,7 +19,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from crateshield.config import (
-    ALL_CONDITIONS, ANTHROPIC_API_KEY, DATASET_PATH, GEMINI_API_KEY, LLM_MODEL, LLM_PROVIDER,
+    ALL_CONDITIONS, ANTHROPIC_API_KEY, DATASET_PATH, GEMINI_API_KEY, GEMINI_MODEL, LLM_MODEL, LLM_PROVIDER,
     OPENAI_API_KEY,
 )
 from crateshield.evaluation.ablation import run_full_ablation
@@ -49,13 +50,15 @@ class AblationRequest(BaseModel):
 
 @app.get("/api/health")
 def health():
+    is_gemini = LLM_PROVIDER == "gemini" or LLM_PROVIDER.startswith("gemini")
     configured = {
         "openai": bool(OPENAI_API_KEY),
         "anthropic": bool(ANTHROPIC_API_KEY),
         "gemini": bool(GEMINI_API_KEY),
-    }.get(LLM_PROVIDER, False)
+    }.get(LLM_PROVIDER, bool(GEMINI_API_KEY) if is_gemini else False)
+    model = (GEMINI_MODEL if is_gemini and not os.environ.get("CRATESHIELD_LLM_MODEL") else LLM_MODEL)
     return {
-        "status": "ok", "llm_provider": LLM_PROVIDER, "llm_model": LLM_MODEL,
+        "status": "ok", "llm_provider": LLM_PROVIDER, "llm_model": model,
         "llm_configured": configured,
         "note": None if configured else (
             f"No API key set for provider '{LLM_PROVIDER}'. "
@@ -70,7 +73,7 @@ def analyze(req: AnalyzeRequest):
     if req.condition not in ALL_CONDITIONS:
         raise HTTPException(status_code=422, detail=f"condition must be one of {list(ALL_CONDITIONS)}")
     try:
-        result = analyze_crate(req.name, req.version, condition=req.condition, prescreen=req.prescreen)
+        result = analyze_crate(req.name, req.version, condition=req.condition, prescreen=req.prescreen, reuse_cached=True)
         return result
     except LLMNotConfiguredError as e:
         raise HTTPException(status_code=503, detail=str(e))
@@ -89,6 +92,14 @@ def get_dataset():
 @app.post("/api/ablation")
 def ablation(req: AblationRequest | None = None):
     req = req or AblationRequest()
+    summary_path = Path(__file__).resolve().parents[2] / "data" / "results" / "ablation_summary.json"
+    if summary_path.exists():
+        try:
+            cached = json.loads(summary_path.read_text(encoding="utf-8"))
+            if "structured" in cached:
+                return cached
+        except Exception:
+            pass
     if not DATASET_PATH.exists():
         raise HTTPException(status_code=404, detail="No dataset found at data/dataset.json")
     dataset = json.loads(DATASET_PATH.read_text()).get("crates", [])

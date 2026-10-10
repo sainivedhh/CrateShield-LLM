@@ -20,6 +20,13 @@ data/bench_v1/pairs/
 data/bench_v1/base_candidates/
 data/bench_v2/pairs/
 data/bench_v2/base_candidates/
+data/bench_v3/corpus_private/
+data/bench_v3/pairs/
+data/bench_v3/base_candidates/
+data/bench_v3/cache/
+data/prod_v1/cache/
+*.egg-info/
+*.npy
 
 # Scratch & temporary logs
 scratch/

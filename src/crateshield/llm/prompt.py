@@ -41,7 +41,7 @@ _SCORING_TEXT = """Scores are numbers in [0,1] and are independent of each other
 - security_risk_score = severity of ordinary vulnerabilities or unsafe practice (bugs are NOT malware; score them here, and keep malware_score low unless the intent is malicious).
 - obfuscation_score = how much the code hides its intent (encoded strings decoded at runtime, misleading names). Plain minification-free Rust is 0.
 - confidence_score = how sure you are of the verdict given the evidence you were shown.
-The label must agree with malware_score: BENIGN below 0.25, SUSPICIOUS from 0.25 to below 0.75, MALICIOUS at 0.5 or above."""
+The label must agree with malware_score: BENIGN below 0.25, SUSPICIOUS from 0.25 to below 0.50, MALICIOUS at 0.50 or above."""
 
 _RUST_GUIDANCE = """Rust supply-chain attack patterns:
 - build.rs (or a renamed build script) that makes network connections, downloads and executes binaries, reads credentials or dumps environment variables, or writes outside OUT_DIR (it runs at `cargo build`, before any runtime control)

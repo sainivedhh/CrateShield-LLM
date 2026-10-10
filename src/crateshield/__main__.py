@@ -47,6 +47,7 @@ def main():
 
     p_serve = sub.add_parser("serve")
     p_serve.add_argument("--port", type=int, default=8000)
+    p_serve.add_argument("--host", default="0.0.0.0")
 
     args = parser.parse_args()
 
@@ -87,7 +88,7 @@ def main():
 
     elif args.cmd == "serve":
         import uvicorn
-        uvicorn.run("crateshield.api:app", host="0.0.0.0", port=args.port, reload=True)
+        uvicorn.run("crateshield.api:app", host=args.host, port=args.port, reload=False)
 
 
 if __name__ == "__main__":

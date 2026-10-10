@@ -99,8 +99,9 @@ def run_rule_only_baseline(preprocessed: dict[str, Any], metadata: dict[str, Any
         reasons.append(f"dependencies: flagged dependency ({signals['dependencies']['suspicious']})")
 
     # Rule 4: Adversarial prompt injection detected
-    if signals.get("injection", {}).get("detected"):
-        reasons.append("injection: prompt injection delimiter/instructions detected")
+    inj = signals.get("prompt_injection") or signals.get("injection") or {}
+    if inj.get("detected"):
+        reasons.append("prompt_injection: prompt injection delimiter/instructions detected")
 
     is_flagged = len(reasons) > 0
     label = "MALICIOUS" if is_flagged else "BENIGN"

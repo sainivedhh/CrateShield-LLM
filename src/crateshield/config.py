@@ -33,7 +33,11 @@ OSSF_CRATES_PATH = "osv/malicious/crates.io"
 # This project is intentionally LLM-primary: no RandomForest/XGBoost/any
 # trained classifier is used anywhere in the decision path. The LLM
 # (reasoning over structured static signals) IS the classifier.
-LLM_PROVIDER = os.environ.get("CRATESHIELD_LLM_PROVIDER", "gemini" if os.environ.get("GEMINI_API_KEY") else "openai")
+VALID_LLM_PROVIDERS = {"openai", "anthropic", "gemini"}
+_env_p = os.environ.get("CRATESHIELD_LLM_PROVIDER")
+if _env_p and _env_p not in VALID_LLM_PROVIDERS and not _env_p.startswith("gemini"):
+    raise ValueError(f"Invalid CRATESHIELD_LLM_PROVIDER '{_env_p}'. Must be one of {sorted(VALID_LLM_PROVIDERS)}")
+LLM_PROVIDER = _env_p if _env_p else ("gemini" if os.environ.get("GEMINI_API_KEY") else "openai")
 LLM_MODEL = os.environ.get("CRATESHIELD_LLM_MODEL", "gpt-4o-2024-11-20")
 GEMINI_MODEL = os.environ.get("CRATESHIELD_GEMINI_MODEL", "gemini-3.5-flash-lite")
 LLM_TEMPERATURE = 0.0  # deterministic-as-possible, per L3 in the proposal's limitations
