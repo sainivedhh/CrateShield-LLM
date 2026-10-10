@@ -131,15 +131,23 @@ def call_model_api(
             "max_tokens": 1024,
         }
         resp = None
-        for attempt in range(4):
+        for attempt in range(6):
             try:
                 resp = requests.post(url, headers=headers, json=payload, timeout=30)
                 if resp.status_code in (429, 503):
-                    time.sleep(3 * (attempt + 1))
+                    delay = 4 * (attempt + 1)
+                    retry_after = resp.headers.get("Retry-After")
+                    if retry_after:
+                        try:
+                            delay = max(delay, float(retry_after))
+                        except ValueError:
+                            pass
+                    logger.warning("Groq rate limit (%d), waiting %.1fs (attempt %d/6)...", resp.status_code, delay, attempt + 1)
+                    time.sleep(delay)
                     continue
                 break
             except requests.RequestException:
-                time.sleep(2 * (attempt + 1))
+                time.sleep(3 * (attempt + 1))
         if resp is None or resp.status_code != 200:
             err_msg = resp.text[:300] if resp is not None else "No response"
             logger.warning("Groq call failed: %s; falling back to gemini-3.5-flash-lite", err_msg)
@@ -456,8 +464,10 @@ def run_evaluation_suite(dry_run: bool = False, seed: int = 42) -> dict[str, Any
     # 2. Run Primary Model (gemini-3.5-flash-lite) across all 6 conditions
     for cond in primary_conditions:
         print(f"Evaluating Primary Model ({primary_model}) on condition: {cond}...")
-        for s in eval_samples:
+        for i, s in enumerate(eval_samples, 1):
             evaluate_sample_v3(s, cond, primary_model, cache, repeat=0, temperature=0.0, dry_run=dry_run)
+            if i % 10 == 0:
+                save_eval_cache(cache, dry_run=dry_run)
         save_eval_cache(cache, dry_run=dry_run)
 
         # 3 repeats on 20% subset at T=0.0 (H7 determinism)
@@ -477,8 +487,10 @@ def run_evaluation_suite(dry_run: bool = False, seed: int = 42) -> dict[str, Any
     # 3. Run Secondary Model (qwen/qwen3.8-27b on Groq) on raw, structured, hybrid (H6 model transfer)
     for cond in secondary_conditions:
         print(f"Evaluating Secondary Model ({secondary_model}) on condition: {cond}...")
-        for s in eval_samples:
+        for i, s in enumerate(eval_samples, 1):
             evaluate_sample_v3(s, cond, secondary_model, cache, repeat=0, temperature=0.0, dry_run=dry_run)
+            if i % 10 == 0:
+                save_eval_cache(cache, dry_run=dry_run)
         save_eval_cache(cache, dry_run=dry_run)
 
     usage = TRACKER.get_summary()
