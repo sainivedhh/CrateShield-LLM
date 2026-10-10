@@ -82,6 +82,11 @@ def test_dry_run_cache_isolation(tmp_path, monkeypatch):
     assert live_res["classification"]["classification"] == "MALICIOUS"
     assert live_res["finish_reason"] == "STOP"
 
+    # 3. Run second live pass: must hit the live cache entry (call_count remains 1)
+    second_live_res = evaluate_sample_v3(sample_meta, "raw", "gemini-3.5-flash-lite", cache, repeat=0, dry_run=False)
+    assert call_count == 1, "Second live pass must hit live cache without calling API!"
+    assert second_live_res["classification"]["classification"] == "MALICIOUS"
+
 
 def test_exceeds_context_writes_cache(tmp_path, monkeypatch):
     """Test that exceeds_context branch (~332-363) writes to cache before returning."""
