@@ -21,6 +21,7 @@ from crateshield.config import MALWARE_SCORE_THRESHOLD, RECONCILE_SCORES, SUSPIC
 
 logger = logging.getLogger(__name__)
 
+PARSER_CLASSIFICATION_KEY = "classification"
 VALID_CLASSIFICATIONS = {"MALICIOUS", "SUSPICIOUS", "BENIGN"}
 VALID_CONFIDENCE = {"HIGH", "MEDIUM", "LOW"}
 
@@ -120,7 +121,8 @@ def parse_llm_response(response_text: str, reconcile: bool | None = None) -> dic
             "parse_error": True,
         }
 
-    llm_label = str(result.get("classification", "SUSPICIOUS")).upper()
+    raw_val = result.get("classification") or result.get("verdict")
+    llm_label = str(raw_val if raw_val is not None else "SUSPICIOUS").upper()
     if llm_label not in VALID_CLASSIFICATIONS:
         logger.warning("Unexpected classification value %r, defaulting to SUSPICIOUS", llm_label)
         llm_label = "SUSPICIOUS"

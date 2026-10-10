@@ -67,6 +67,16 @@ def cohen_kappa(arr1: list[int], arr2: list[int]) -> float:
     return float((po - pe) / (1 - pe))
 
 
+from crateshield.llm.parser import PARSER_CLASSIFICATION_KEY
+
+REPORT_CLASSIFICATION_KEY = "classification"
+
+
+def is_malicious(entry: dict[str, Any]) -> bool:
+    clf = entry.get("classification") or {}
+    return (clf.get(REPORT_CLASSIFICATION_KEY) or clf.get("verdict")) == "MALICIOUS"
+
+
 def compute_metrics_for_condition(
     entries: list[dict[str, Any]],
 ) -> dict[str, Any]:
@@ -76,10 +86,10 @@ def compute_metrics_for_condition(
     lookalike_entries = [e for e in entries if e["twin_type"] == "lookalike_benign"]
 
     # Strict classification: MALICIOUS = positive
-    tp = sum(1 for e in mal_entries if e["classification"].get("verdict") == "MALICIOUS")
+    tp = sum(1 for e in mal_entries if is_malicious(e))
     fn = len(mal_entries) - tp
-    fp_clean = sum(1 for e in clean_entries if e["classification"].get("verdict") == "MALICIOUS")
-    fp_look = sum(1 for e in lookalike_entries if e["classification"].get("verdict") == "MALICIOUS")
+    fp_clean = sum(1 for e in clean_entries if is_malicious(e))
+    fp_look = sum(1 for e in lookalike_entries if is_malicious(e))
 
     n_mal = len(mal_entries)
     n_clean = len(clean_entries)
@@ -176,7 +186,7 @@ def generate_report_v3() -> dict[str, Any]:
 
     # H1: Non-saturation on L2-L4
     l2_l4_mal = [e for e in raw_full_primary if e["twin_type"] == "malicious" and e["ladder_level"] in ("L2", "L3", "L4")]
-    h1_tp = sum(1 for e in l2_l4_mal if e["classification"].get("verdict") == "MALICIOUS")
+    h1_tp = sum(1 for e in l2_l4_mal if is_malicious(e))
     h1_recall = h1_tp / len(l2_l4_mal) if l2_l4_mal else 0.0
     h1_verdict = "CONFIRMED (NON-SATURATED)" if h1_recall <= 0.85 else "BENCHMARK SATURATED"
 
@@ -185,7 +195,7 @@ def generate_report_v3() -> dict[str, Any]:
         out = {}
         for lvl in ("L0", "L1", "L2", "L3", "L4"):
             m = [e for e in entries if e["twin_type"] == "malicious" and e["ladder_level"] == lvl]
-            tp = sum(1 for e in m if e["classification"].get("verdict") == "MALICIOUS")
+            tp = sum(1 for e in m if is_malicious(e))
             out[lvl] = round(tp / len(m), 3) if m else 0.0
         return out
 
@@ -203,8 +213,8 @@ def generate_report_v3() -> dict[str, Any]:
     c_h3 = 0  # hf incorrect (0), rf correct (1)
     for sid, hf_e in hf_dict.items():
         if sid in rf_dict:
-            hf_c = int(hf_e["classification"].get("verdict") == "MALICIOUS")
-            rf_c = int(rf_dict[sid]["classification"].get("verdict") == "MALICIOUS")
+            hf_c = int(is_malicious(hf_e))
+            rf_c = int(is_malicious(rf_dict[sid]))
             if hf_c == 1 and rf_c == 0:
                 b_h3 += 1
             elif hf_c == 0 and rf_c == 1:
@@ -220,8 +230,8 @@ def generate_report_v3() -> dict[str, Any]:
     b_h4, c_h4 = 0, 0
     for sid, rf_e in rf_dict.items():
         if sid in nf_dict:
-            rf_c = int(rf_e["classification"].get("verdict") == "MALICIOUS")
-            nf_c = int(nf_dict[sid]["classification"].get("verdict") == "MALICIOUS")
+            rf_c = int(is_malicious(rf_e))
+            nf_c = int(is_malicious(nf_dict[sid]))
             if rf_c == 1 and nf_c == 0:
                 b_h4 += 1
             elif rf_c == 0 and nf_c == 1:
@@ -234,8 +244,8 @@ def generate_report_v3() -> dict[str, Any]:
     # H5: Generalisation (Held-out vs Seen families)
     seen_m = [e for e in raw_full_primary if e["twin_type"] == "malicious" and e["seen_or_heldout"] == "SEEN"]
     held_m = [e for e in raw_full_primary if e["twin_type"] == "malicious" and e["seen_or_heldout"] == "HELD-OUT"]
-    rec_seen = sum(1 for e in seen_m if e["classification"].get("verdict") == "MALICIOUS") / len(seen_m) if seen_m else 0.0
-    rec_held = sum(1 for e in held_m if e["classification"].get("verdict") == "MALICIOUS") / len(held_m) if held_m else 0.0
+    rec_seen = sum(1 for e in seen_m if is_malicious(e)) / len(seen_m) if seen_m else 0.0
+    rec_held = sum(1 for e in held_m if is_malicious(e)) / len(held_m) if held_m else 0.0
     gen_diff = rec_held - rec_seen
     h5_verdict = "GENERALISATION SUPPORTED (|delta| <= 0.10)" if abs(gen_diff) <= 0.10 else f"GENERALISATION GAP ({gen_diff:+.3f})"
 
@@ -257,8 +267,8 @@ def generate_report_v3() -> dict[str, Any]:
     kappa_scores = {}
     for mod, reps in rep_cache.items():
         if 1 in reps and 2 in reps:
-            c1 = [int(e["classification"].get("verdict") == "MALICIOUS") for e in reps[1]]
-            c2 = [int(e["classification"].get("verdict") == "MALICIOUS") for e in reps[2]]
+            c1 = [int(is_malicious(e)) for e in reps[1]]
+            c2 = [int(is_malicious(e)) for e in reps[2]]
             kappa_scores[mod] = round(cohen_kappa(c1, c2), 3)
 
     h8_verdict = f"HIGH REPEAT AGREEMENT (Cohen's kappa: {kappa_scores})"

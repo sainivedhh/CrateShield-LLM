@@ -46,6 +46,7 @@ BENCH_V3 = ROOT / "data" / "bench_v3"
 CORPUS_DIR = BENCH_V3 / "corpus_private"
 MANIFEST_PATH = BENCH_V3 / "manifest.json"
 CACHE_PATH = BENCH_V3 / "eval_cache.json"
+DISCARDED_PATH = BENCH_V3 / "eval_cache_dryrun_discarded.json"
 
 
 def compute_prompt_hash(messages: list[dict[str, str]]) -> str:
@@ -73,9 +74,23 @@ def load_eval_cache() -> dict[str, Any]:
     return {}
 
 
-def save_eval_cache(cache: dict[str, Any]) -> None:
+def save_eval_cache(cache: dict[str, Any], dry_run: bool = False) -> None:
+    if dry_run:
+        DISCARDED_PATH.parent.mkdir(parents=True, exist_ok=True)
+        existing = {}
+        if DISCARDED_PATH.exists():
+            try:
+                existing = json.loads(DISCARDED_PATH.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+        dry_entries = {k: v for k, v in cache.items() if v.get("dry_run") is True or v.get("finish_reason") == "dry_run"}
+        existing.update(dry_entries)
+        DISCARDED_PATH.write_text(json.dumps(existing, indent=2), encoding="utf-8")
+        return
+
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    CACHE_PATH.write_text(json.dumps(cache, indent=2), encoding="utf-8")
+    live_entries = {k: v for k, v in cache.items() if not (v.get("dry_run") is True or v.get("finish_reason") == "dry_run")}
+    CACHE_PATH.write_text(json.dumps(live_entries, indent=2), encoding="utf-8")
 
 
 def call_model_api(
@@ -271,6 +286,7 @@ def evaluate_sample_v3(
             "temperature": 0.0,
             "repeat": repeat,
             "classification": verdict,
+            "dry_run": False,
             "usage": {"calls": 0, "tokens_in": 0, "tokens_out": 0, "cost_usd": 0.0},
             "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         }
@@ -331,7 +347,9 @@ def evaluate_sample_v3(
 
     if exceeds_context:
         prompt_hash = "exceeds_context"
+        cache_key = make_cache_key(sample_id, condition, prompt_hash, model, temperature, repeat)
         verdict = {
+            "classification": "BENIGN",
             "verdict": "BENIGN",
             "confidence": 0.0,
             "malware_score": 0.0,
@@ -357,16 +375,23 @@ def evaluate_sample_v3(
             "repeat": repeat,
             "prompt_hash": prompt_hash,
             "classification": verdict,
+            "finish_reason": "exceeds_context",
+            "dry_run": dry_run,
             "usage": {"calls": 0, "tokens_in": 0, "tokens_out": 0, "cost_usd": 0.0},
             "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         }
+        cache[cache_key] = res
         return res
 
     prompt_hash = compute_prompt_hash(messages)
     cache_key = make_cache_key(sample_id, condition, prompt_hash, model, temperature, repeat)
 
     if cache_key in cache:
-        return cache[cache_key]
+        cached_entry = cache[cache_key]
+        if not dry_run and (cached_entry.get("dry_run", False) or cached_entry.get("finish_reason") == "dry_run"):
+            logger.info("Ignoring dry-run cache entry for %s; making live call.", cache_key)
+        else:
+            return cached_entry
 
     raw_resp, t_in, t_out, call_cost, finish_reason = call_model_api(
         model=model, messages=messages, temperature=temperature, dry_run=dry_run
@@ -390,7 +415,8 @@ def evaluate_sample_v3(
         "prompt_hash": prompt_hash,
         "classification": verdict,
         "finish_reason": finish_reason,
-        "usage": {"calls": 1, "tokens_in": t_in, "tokens_out": t_out, "cost_usd": round(call_cost, 6)},
+        "dry_run": dry_run,
+        "usage": {"calls": 1 if not dry_run else 0, "tokens_in": t_in, "tokens_out": t_out, "cost_usd": round(call_cost, 6) if not dry_run else 0.0},
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     }
 
@@ -425,35 +451,35 @@ def run_evaluation_suite(dry_run: bool = False, seed: int = 42) -> dict[str, Any
         print(f"Evaluating Baseline: {b}...")
         for s in eval_samples:
             evaluate_sample_v3(s, b, "baseline", cache, repeat=0, dry_run=dry_run)
-        save_eval_cache(cache)
+        save_eval_cache(cache, dry_run=dry_run)
 
     # 2. Run Primary Model (gemini-3.5-flash-lite) across all 6 conditions
     for cond in primary_conditions:
         print(f"Evaluating Primary Model ({primary_model}) on condition: {cond}...")
         for s in eval_samples:
             evaluate_sample_v3(s, cond, primary_model, cache, repeat=0, temperature=0.0, dry_run=dry_run)
-        save_eval_cache(cache)
+        save_eval_cache(cache, dry_run=dry_run)
 
         # 3 repeats on 20% subset at T=0.0 (H7 determinism)
         print(f"  Running 3 repeats (T=0.0) for {cond} x {primary_model} on 20% subset...")
         for rep in (1, 2, 3):
             for s in repeat_subset:
                 evaluate_sample_v3(s, cond, primary_model, cache, repeat=rep, temperature=0.0, dry_run=dry_run)
-            save_eval_cache(cache)
+            save_eval_cache(cache, dry_run=dry_run)
 
         # 3 repeats on 20% subset at T=0.7 (H8 sampling variance)
         print(f"  Running 3 repeats (T=0.7) for {cond} x {primary_model} on 20% subset...")
         for rep in (1, 2, 3):
             for s in repeat_subset:
                 evaluate_sample_v3(s, cond, primary_model, cache, repeat=rep, temperature=0.7, dry_run=dry_run)
-            save_eval_cache(cache)
+            save_eval_cache(cache, dry_run=dry_run)
 
     # 3. Run Secondary Model (qwen/qwen3.8-27b on Groq) on raw, structured, hybrid (H6 model transfer)
     for cond in secondary_conditions:
         print(f"Evaluating Secondary Model ({secondary_model}) on condition: {cond}...")
         for s in eval_samples:
             evaluate_sample_v3(s, cond, secondary_model, cache, repeat=0, temperature=0.0, dry_run=dry_run)
-        save_eval_cache(cache)
+        save_eval_cache(cache, dry_run=dry_run)
 
     usage = TRACKER.get_summary()
     print("--- Evaluation Suite Completed ---")
