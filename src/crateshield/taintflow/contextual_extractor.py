@@ -83,6 +83,7 @@ def extract_taint_contextual(
     manifest_sample: Optional[dict[str, Any]] = None,
     max_total_chars: int = CONTEXTUAL_CHAR_BUDGET,
     build_rs_max_chars: int = BUILD_RS_SIZE_CAP_CHARS,
+    omit_absence_notes: bool = True,
 ) -> dict[str, Any]:
     """Extracts taint-guided code context enriched with static module and call-site context."""
     source_files = dict(view.get("source_files") or {})
@@ -128,6 +129,7 @@ def extract_taint_contextual(
         impl_note = f" (in impl {fn.impl_type})" if fn.impl_type else ""
 
         # (b) Static call-site note (from callgraph reverse edges)
+        call_site_note = ""
         callers = sorted(list(callgraph.reverse_edges.get(fn.id, set())))
         if callers:
             caller_fn = callgraph.nodes.get(callers[0])
@@ -138,13 +140,14 @@ def extract_taint_contextual(
             else:
                 call_site_note = f"// Static call-site: called from {callers[0]}"
         elif fn.rel_path.endswith("build.rs") and fn.name == "main":
-            call_site_note = "// Static call-site: Cargo build script entry point (executed automatically during build)"
+            call_site_note = "// Scope: Cargo build script entry point (executed automatically during build)"
         elif fn.name == "main":
-            call_site_note = "// Static call-site: Crate binary entry point (fn main)"
+            call_site_note = "// Scope: Crate binary entry point (fn main)"
         elif fn.rel_path.endswith("lib.rs") or "pub " in fn.code[:30]:
-            call_site_note = "// Static call-site: Library public entry point / exported function"
+            call_site_note = "// Scope: Library public entry point / exported function"
         else:
-            call_site_note = "// Static call-site: Unreferenced internally within crate (possible entry point or dead code)"
+            if not omit_absence_notes:
+                call_site_note = "// Static call-site: Unreferenced internally within crate (possible entry point or dead code)"
 
         # (c) Top-of-file doc comments (purpose)
         file_doc = ""
@@ -167,7 +170,14 @@ def extract_taint_contextual(
             line_txt = file_lines[l_idx - 1] if l_idx - 1 < len(file_lines) else ""
             numbered_lines.append(f"{l_idx:4d}: {line_txt}")
 
-        meta_block = f"// Module: {mod_path}\n{call_site_note}\n{file_doc}{fn_doc}"
+        meta_lines = [f"// Module: {mod_path}"]
+        if call_site_note:
+            meta_lines.append(call_site_note)
+        if file_doc:
+            meta_lines.append(file_doc.rstrip("\n"))
+        if fn_doc:
+            meta_lines.append(fn_doc.rstrip("\n"))
+        meta_block = "\n".join(meta_lines) + "\n"
         return f"{fn_header}\n{meta_block}" + "\n".join(numbered_lines)
 
     if paths:

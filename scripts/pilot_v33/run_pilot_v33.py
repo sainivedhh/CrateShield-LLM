@@ -42,6 +42,7 @@ from harness.pilot_v33.candidate_a import build_candidate_a_prompt
 from harness.pilot_v33.candidate_b import (
     extract_crate_declared_purpose, build_candidate_b_prompt,
 )
+from harness.pilot_v33.combined import build_combined_prompt
 from harness.view import build_anonymized_view
 from scripts.v3.run_eval import call_model_api
 
@@ -127,6 +128,17 @@ def evaluate_tune_sample(
         messages = build_candidate_b_prompt(signals, taint_context, purpose_info, retrieved_context=retrieved)
         meta_info["purpose_fallback_used"] = purpose_info.get("fallback_used", False)
         meta_info["has_readme"] = bool(purpose_info.get("readme_snippet") and purpose_info["readme_snippet"] != "(No README provided)")
+    elif condition in ("combined", "contextual_purpose_consistency"):
+        signals = extract_all_signals(view)
+        signals.pop("analysis_timestamp", None)
+        purpose_info = extract_crate_declared_purpose(crate_dir, view, sample_meta)
+        taint_context = extract_taint_contextual(view, manifest_sample=sample_meta, omit_absence_notes=True)
+        retrieved = retrieve_context(signals, top_k=3, exclude_crates={sample_meta["cluster_id"]})
+        messages = build_combined_prompt(signals, taint_context, purpose_info, retrieved_context=retrieved)
+        meta_info["purpose_fallback_used"] = purpose_info.get("fallback_used", False)
+        meta_info["has_readme"] = bool(purpose_info.get("readme_snippet") and purpose_info["readme_snippet"] != "(No README provided)")
+        meta_info["paths_found"] = taint_context.get("paths_found", 0)
+        meta_info["fallback_used"] = taint_context.get("fallback_used", False)
         meta_info["context_chars"] = taint_context.get("total_chars", 0)
 
     else:

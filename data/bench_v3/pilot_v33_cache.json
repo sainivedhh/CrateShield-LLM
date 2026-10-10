@@ -5530,5 +5530,1498 @@
     },
     "meta": {},
     "timestamp": "2026-10-10T19:55:16.177283+00:00"
+  },
+  "s3_0001_clean:combined:2ed2755e2967e729:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0001_clean",
+    "pair_id": "pair_v3_inline-const",
+    "cluster_id": "inline-const",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L0",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "2ed2755e2967e729",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's declared purpose is to provide inline const functionality via macros. The build script uses the standard 'autocfg' library solely to probe the installed rustc version in order to conditionally enable features (const generics). This is a completely standard and benign pattern in Rust libraries supporting older compiler versions, and aligns fully with the crate's stated purpose.",
+      "primary_signals": [
+        "benign_build_script"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's declared purpose is to provide inline const functionality via macros. The build script uses the standard 'autocfg' library solely to probe the installed rustc version in order to conditionally enable features (const generics). This is a completely standard and benign pattern in Rust libraries supporting older compiler versions, and aligns fully with the crate's stated purpose.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_build_script\"\n  ],\n  \"reasoning\": \"The crate's declared purpose is to provide inline const functionality via macros. The build script uses the standard 'autocfg' library solely to probe the installed rustc version in order to conditionally enable features (const generics). This is a completely standard and benign pattern in Rust libraries supporting older compiler versions, and aligns fully with the crate's stated purpose.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2302,
+      "tokens_out": 175,
+      "cost_usd": 0.00022514999999999997
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 547
+    },
+    "timestamp": "2026-10-10T20:04:02.383103+00:00"
+  },
+  "s3_0002_malicious:combined:8b0ca03ebae850be:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0002_malicious",
+    "pair_id": "pair_v3_inline-const",
+    "cluster_id": "inline-const",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L0",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "8b0ca03ebae850be",
+    "classification": {
+      "classification": "MALICIOUS",
+      "llm_classification": "MALICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate claims to be a macro-based implementation of inline consts. However, its build.rs script reads an environment variable named 'CARGO_PKG_AUTH' (which is not a standard Cargo-provided environment variable) and writes its contents to 'target/.auth_cache'. Harvesting custom authentication tokens during the build phase is inconsistent with the declared utility purpose and strongly indicates unauthorized credential exfiltration or token harvesting.",
+      "primary_signals": [
+        "env_var_read",
+        "file_write_in_build",
+        "suspicious_auth_caching",
+        "purpose_violation"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "BLOCK",
+      "malware_score": 0.9,
+      "security_risk_score": 0.85,
+      "obfuscation_score": 0.3,
+      "confidence_score": 0.95,
+      "flagged_by_score": true,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate claims to be a macro-based implementation of inline consts. However, its build.rs script reads an environment variable named 'CARGO_PKG_AUTH' (which is not a standard Cargo-provided environment variable) and writes its contents to 'target/.auth_cache'. Harvesting custom authentication tokens during the build phase is inconsistent with the declared utility purpose and strongly indicates unauthorized credential exfiltration or token harvesting.",
+    "raw_response": "{\n  \"classification\": \"MALICIOUS\",\n  \"confidence\": 0.95,\n  \"malware_score\": 0.9,\n  \"obfuscation_score\": 0.3,\n  \"security_risk_score\": 0.85,\n  \"primary_signals\": [\n    \"env_var_read\",\n    \"file_write_in_build\",\n    \"suspicious_auth_caching\",\n    \"purpose_violation\"\n  ],\n  \"reasoning\": \"The crate claims to be a macro-based implementation of inline consts. However, its build.rs script reads an environment variable named 'CARGO_PKG_AUTH' (which is not a standard Cargo-provided environment variable) and writes its contents to 'target/.auth_cache'. Harvesting custom authentication tokens during the build phase is inconsistent with the declared utility purpose and strongly indicates unauthorized credential exfiltration or token harvesting.\",\n  \"recommended_action\": \"BLOCK\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2638,
+      "tokens_out": 218,
+      "cost_usd": 0.00026325000000000003
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 1,
+      "fallback_used": false,
+      "context_chars": 755
+    },
+    "timestamp": "2026-10-10T20:04:06.547720+00:00"
+  },
+  "s3_0003_lookalike_benign:combined:13339c608953c182:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0003_lookalike_benign",
+    "pair_id": "pair_v3_inline-const",
+    "cluster_id": "inline-const",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L0",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "13339c608953c182",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The build script uses autocfg to probe the rustc version for feature gating (const generics) and checks for a test/diagnostic environment variable (`CRATESHIELD_TEST_ENDPOINT`) solely to print a cargo informational message. There are no malicious network calls, file system modifications, credential exfiltrations, or code inconsistencies. The behavior is fully consistent with the declared purpose of providing macro-based inline const features.",
+      "primary_signals": [
+        "benign_env_var_read"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.95,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The build script uses autocfg to probe the rustc version for feature gating (const generics) and checks for a test/diagnostic environment variable (`CRATESHIELD_TEST_ENDPOINT`) solely to print a cargo informational message. There are no malicious network calls, file system modifications, credential exfiltrations, or code inconsistencies. The behavior is fully consistent with the declared purpose of providing macro-based inline const features.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.95,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_env_var_read\"\n  ],\n  \"reasoning\": \"The build script uses autocfg to probe the rustc version for feature gating (const generics) and checks for a test/diagnostic environment variable (`CRATESHIELD_TEST_ENDPOINT`) solely to print a cargo informational message. There are no malicious network calls, file system modifications, credential exfiltrations, or code inconsistencies. The behavior is fully consistent with the declared purpose of providing macro-based inline const features.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2699,
+      "tokens_out": 189,
+      "cost_usd": 0.000259125
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1460
+    },
+    "timestamp": "2026-10-10T20:04:10.536737+00:00"
+  },
+  "s3_0004_clean:combined:3c8e2134d0f1a714:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0004_clean",
+    "pair_id": "pair_v3_proc-macro-error-attr",
+    "cluster_id": "proc-macro-error-attr",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L1",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "3c8e2134d0f1a714",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate is a proc-macro attribute helper crate relying on standard dependencies (proc-macro2, quote). Its build script uses version_check to conditionally emit compiler configurations based on the rustc version, which is a standard, benign pattern in procedural macro crates. No suspicious network connections, credential reads, or malicious behaviors are present.",
+      "primary_signals": [
+        "benign_build_script_version_check"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate is a proc-macro attribute helper crate relying on standard dependencies (proc-macro2, quote). Its build script uses version_check to conditionally emit compiler configurations based on the rustc version, which is a standard, benign pattern in procedural macro crates. No suspicious network connections, credential reads, or malicious behaviors are present.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_build_script_version_check\"\n  ],\n  \"reasoning\": \"The crate is a proc-macro attribute helper crate relying on standard dependencies (proc-macro2, quote). Its build script uses version_check to conditionally emit compiler configurations based on the rustc version, which is a standard, benign pattern in procedural macro crates. No suspicious network connections, credential reads, or malicious behaviors are present.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2129,
+      "tokens_out": 174,
+      "cost_usd": 0.000211875
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": false,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 442
+    },
+    "timestamp": "2026-10-10T20:04:14.509360+00:00"
+  },
+  "s3_0005_malicious:combined:ebac5b792412a996:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0005_malicious",
+    "pair_id": "pair_v3_proc-macro-error-attr",
+    "cluster_id": "proc-macro-error-attr",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L1",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "ebac5b792412a996",
+    "classification": {
+      "classification": "MALICIOUS",
+      "llm_classification": "MALICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's declared purpose is to provide an attribute macro for the proc-macro-error crate. However, its build script reads sensitive environment variables ('AWS_SECRET_ACCESS_KEY') and defines references to a suspicious domain string ('gateway.sync.invalid'). This behavior is completely inconsistent with a procedural macro helper crate and indicates unauthorized credential harvesting or beaconing.",
+      "primary_signals": [
+        "env_secret_read",
+        "suspicious_c2_domain_reference",
+        "purpose_violation"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "BLOCK",
+      "malware_score": 0.9,
+      "security_risk_score": 0.85,
+      "obfuscation_score": 0.3,
+      "confidence_score": 0.95,
+      "flagged_by_score": true,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's declared purpose is to provide an attribute macro for the proc-macro-error crate. However, its build script reads sensitive environment variables ('AWS_SECRET_ACCESS_KEY') and defines references to a suspicious domain string ('gateway.sync.invalid'). This behavior is completely inconsistent with a procedural macro helper crate and indicates unauthorized credential harvesting or beaconing.",
+    "raw_response": "{\n  \"classification\": \"MALICIOUS\",\n  \"confidence\": 0.95,\n  \"malware_score\": 0.90,\n  \"obfuscation_score\": 0.30,\n  \"security_risk_score\": 0.85,\n  \"primary_signals\": [\n    \"env_secret_read\",\n    \"suspicious_c2_domain_reference\",\n    \"purpose_violation\"\n  ],\n  \"reasoning\": \"The crate's declared purpose is to provide an attribute macro for the proc-macro-error crate. However, its build script reads sensitive environment variables ('AWS_SECRET_ACCESS_KEY') and defines references to a suspicious domain string ('gateway.sync.invalid'). This behavior is completely inconsistent with a procedural macro helper crate and indicates unauthorized credential harvesting or beaconing.\",\n  \"recommended_action\": \"BLOCK\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2472,
+      "tokens_out": 200,
+      "cost_usd": 0.0002454
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": false,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1079
+    },
+    "timestamp": "2026-10-10T20:04:18.427554+00:00"
+  },
+  "s3_0006_lookalike_benign:combined:cec0788ee2508493:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0006_lookalike_benign",
+    "pair_id": "pair_v3_proc-macro-error-attr",
+    "cluster_id": "proc-macro-error-attr",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L1",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "cec0788ee2508493",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script uses the 'version_check' crate to conditionally emit compiler configurations based on the rustc version, and reads CARGO_PKG_VERSION. These are standard, benign build operations completely consistent with a proc-macro helper crate needing to support older Rust versions.",
+      "primary_signals": [
+        "benign_build_script_version_check"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script uses the 'version_check' crate to conditionally emit compiler configurations based on the rustc version, and reads CARGO_PKG_VERSION. These are standard, benign build operations completely consistent with a proc-macro helper crate needing to support older Rust versions.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_build_script_version_check\"\n  ],\n  \"reasoning\": \"The crate's build script uses the 'version_check' crate to conditionally emit compiler configurations based on the rustc version, and reads CARGO_PKG_VERSION. These are standard, benign build operations completely consistent with a proc-macro helper crate needing to support older Rust versions.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2376,
+      "tokens_out": 165,
+      "cost_usd": 0.0002277
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": false,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 997
+    },
+    "timestamp": "2026-10-10T20:04:22.491796+00:00"
+  },
+  "s3_0007_clean:combined:617679ba681cbaa8:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0007_clean",
+    "pair_id": "pair_v3_curveipo",
+    "cluster_id": "curveipo",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L2",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "617679ba681cbaa8",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's declared purpose is 2D curve interpolation. The build script uses the standard 'autocfg' crate strictly to check the rustc version for feature gating, which is a standard and completely benign Rust development practice. There are no suspicious environment reads, network connections, file writes, or process spawns. The code aligns entirely with the stated library purpose.",
+      "primary_signals": [
+        "benign_build_rs"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.0,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.99,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's declared purpose is 2D curve interpolation. The build script uses the standard 'autocfg' crate strictly to check the rustc version for feature gating, which is a standard and completely benign Rust development practice. There are no suspicious environment reads, network connections, file writes, or process spawns. The code aligns entirely with the stated library purpose.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.99,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.0,\n  \"primary_signals\": [\n    \"benign_build_rs\"\n  ],\n  \"reasoning\": \"The crate's declared purpose is 2D curve interpolation. The build script uses the standard 'autocfg' crate strictly to check the rustc version for feature gating, which is a standard and completely benign Rust development practice. There are no suspicious environment reads, network connections, file writes, or process spawns. The code aligns entirely with the stated library purpose.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2464,
+      "tokens_out": 177,
+      "cost_usd": 0.00023789999999999998
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 803
+    },
+    "timestamp": "2026-10-10T20:04:26.501211+00:00"
+  },
+  "s3_0008_malicious:combined:cbe1a9f831b6be94:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0008_malicious",
+    "pair_id": "pair_v3_curveipo",
+    "cluster_id": "curveipo",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L2",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "cbe1a9f831b6be94",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's declared purpose is 2D curve interpolation. The build script uses the standard 'autocfg' crate to check rustc versions and emits configuration flags, along with checking the 'CI' environment variable via a simple unused/dormant diagnostic helper trait. There are no network calls, no suspicious file system operations, no credential harvesting, and no malicious actions. The code aligns entirely with its stated purpose.",
+      "primary_signals": [
+        "benign_build_script_env_read"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.95,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's declared purpose is 2D curve interpolation. The build script uses the standard 'autocfg' crate to check rustc versions and emits configuration flags, along with checking the 'CI' environment variable via a simple unused/dormant diagnostic helper trait. There are no network calls, no suspicious file system operations, no credential harvesting, and no malicious actions. The code aligns entirely with its stated purpose.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.95,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_build_script_env_read\"\n  ],\n  \"reasoning\": \"The crate's declared purpose is 2D curve interpolation. The build script uses the standard 'autocfg' crate to check rustc versions and emits configuration flags, along with checking the 'CI' environment variable via a simple unused/dormant diagnostic helper trait. There are no network calls, no suspicious file system operations, no credential harvesting, and no malicious actions. The code aligns entirely with its stated purpose.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2743,
+      "tokens_out": 192,
+      "cost_usd": 0.000263325
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1404
+    },
+    "timestamp": "2026-10-10T20:04:30.487881+00:00"
+  },
+  "s3_0009_lookalike_benign:combined:6d7d79486b6aee66:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0009_lookalike_benign",
+    "pair_id": "pair_v3_curveipo",
+    "cluster_id": "curveipo",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L2",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "6d7d79486b6aee66",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script uses the standard `autocfg` crate to detect rustc version compatibility, which is a common and legitimate practice in Rust libraries for feature gating. Although it defines an unused or minor diagnostic probe checking the 'CI' environment variable, this does not perform any malicious actions such as credential theft or network exfiltration. The code matches the declared purpose of 2D curve interpolation.",
+      "primary_signals": [
+        "benign_build_rs_autocfg",
+        "ci_env_probe"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.95,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script uses the standard `autocfg` crate to detect rustc version compatibility, which is a common and legitimate practice in Rust libraries for feature gating. Although it defines an unused or minor diagnostic probe checking the 'CI' environment variable, this does not perform any malicious actions such as credential theft or network exfiltration. The code matches the declared purpose of 2D curve interpolation.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.95,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_build_rs_autocfg\",\n    \"ci_env_probe\"\n  ],\n  \"reasoning\": \"The crate's build script uses the standard `autocfg` crate to detect rustc version compatibility, which is a common and legitimate practice in Rust libraries for feature gating. Although it defines an unused or minor diagnostic probe checking the 'CI' environment variable, this does not perform any malicious actions such as credential theft or network exfiltration. The code matches the declared purpose of 2D curve interpolation.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2743,
+      "tokens_out": 198,
+      "cost_usd": 0.000265125
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1444
+    },
+    "timestamp": "2026-10-10T20:04:34.598990+00:00"
+  },
+  "s3_0010_clean:combined:9eb419f2c3b51282:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0010_clean",
+    "pair_id": "pair_v3_psy-facet",
+    "cluster_id": "psy-facet",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L3",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "9eb419f2c3b51282",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script utilizes the standard `autocfg` crate to probe for compiler feature support (`core::simd::Simd` under nightly features) in order to conditionally emit configuration flags (`has_portable_simd`). This is standard, well-justified behavior for reflection and generic data-structure libraries in Rust that wish to support optional SIMD acceleration without failing compilation on stable toolchains. No sensitive environment reads, network calls, file writes, or process spawns occur.",
+      "primary_signals": [
+        "benign_build_script_feature_detection"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script utilizes the standard `autocfg` crate to probe for compiler feature support (`core::simd::Simd` under nightly features) in order to conditionally emit configuration flags (`has_portable_simd`). This is standard, well-justified behavior for reflection and generic data-structure libraries in Rust that wish to support optional SIMD acceleration without failing compilation on stable toolchains. No sensitive environment reads, network calls, file writes, or process spawns occur.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_build_script_feature_detection\"\n  ],\n  \"reasoning\": \"The crate's build script utilizes the standard `autocfg` crate to probe for compiler feature support (`core::simd::Simd` under nightly features) in order to conditionally emit configuration flags (`has_portable_simd`). This is standard, well-justified behavior for reflection and generic data-structure libraries in Rust that wish to support optional SIMD acceleration without failing compilation on stable toolchains. No sensitive environment reads, network calls, file writes, or process spawns occur.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2354,
+      "tokens_out": 208,
+      "cost_usd": 0.00023895
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": false,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 949
+    },
+    "timestamp": "2026-10-10T20:04:38.683456+00:00"
+  },
+  "s3_0011_malicious:combined:aca98ad35722dd83:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0011_malicious",
+    "pair_id": "pair_v3_psy-facet",
+    "cluster_id": "psy-facet",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L3",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "aca98ad35722dd83",
+    "classification": {
+      "classification": "SUSPICIOUS",
+      "llm_classification": "SUSPICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script contains an arbitrary XOR-encoded byte array and a decoding function (`decode_logger_routine_68`) that is completely unrelated to its declared purpose of reflection and generic attribute patches. While the XOR routine itself is not actively invoking malicious actions within the provided snippet, the presence of obfuscated data and decoding routines inside a build script strongly indicates hidden or unauthorized behavior.",
+      "primary_signals": [
+        "hidden_xor_decoding",
+        "unrelated_build_script_logic",
+        "obfuscated_byte_arrays"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "WARN",
+      "malware_score": 0.65,
+      "security_risk_score": 0.7,
+      "obfuscation_score": 0.75,
+      "confidence_score": 0.85,
+      "flagged_by_score": true,
+      "score_label_consistent": false,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script contains an arbitrary XOR-encoded byte array and a decoding function (`decode_logger_routine_68`) that is completely unrelated to its declared purpose of reflection and generic attribute patches. While the XOR routine itself is not actively invoking malicious actions within the provided snippet, the presence of obfuscated data and decoding routines inside a build script strongly indicates hidden or unauthorized behavior.",
+    "raw_response": "{\n  \"classification\": \"SUSPICIOUS\",\n  \"confidence\": 0.85,\n  \"malware_score\": 0.65,\n  \"obfuscation_score\": 0.75,\n  \"security_risk_score\": 0.7,\n  \"primary_signals\": [\n    \"hidden_xor_decoding\",\n    \"unrelated_build_script_logic\",\n    \"obfuscated_byte_arrays\"\n  ],\n  \"reasoning\": \"The crate's build script contains an arbitrary XOR-encoded byte array and a decoding function (`decode_logger_routine_68`) that is completely unrelated to its declared purpose of reflection and generic attribute patches. While the XOR routine itself is not actively invoking malicious actions within the provided snippet, the presence of obfuscated data and decoding routines inside a build script strongly indicates hidden or unauthorized behavior.\",\n  \"recommended_action\": \"WARN\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2570,
+      "tokens_out": 207,
+      "cost_usd": 0.00025484999999999993
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": false,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1302
+    },
+    "timestamp": "2026-10-10T20:04:43.376477+00:00"
+  },
+  "s3_0012_lookalike_benign:combined:2cf646f64842e763:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0012_lookalike_benign",
+    "pair_id": "pair_v3_psy-facet",
+    "cluster_id": "psy-facet",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L3",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "2cf646f64842e763",
+    "classification": {
+      "classification": "SUSPICIOUS",
+      "llm_classification": "SUSPICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The build script contains an unexplained XOR-decoded byte array (MASK_METRICS_TASK_81) that decodes to a string, embedded directly alongside standard autocfg probes. While no active exfiltration or malicious payload is triggered in the provided snippet, the presence of hidden, obfuscated string decoding within a build script for a reflection utility is unexplained and suspicious.",
+      "primary_signals": [
+        "hidden_xor_encoding_in_build_script",
+        "unexplained_byte_array_decoding"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "WARN",
+      "malware_score": 0.6,
+      "security_risk_score": 0.5,
+      "obfuscation_score": 0.7,
+      "confidence_score": 0.85,
+      "flagged_by_score": true,
+      "score_label_consistent": false,
+      "parse_error": false
+    },
+    "reasoning": "The build script contains an unexplained XOR-decoded byte array (MASK_METRICS_TASK_81) that decodes to a string, embedded directly alongside standard autocfg probes. While no active exfiltration or malicious payload is triggered in the provided snippet, the presence of hidden, obfuscated string decoding within a build script for a reflection utility is unexplained and suspicious.",
+    "raw_response": "{\n  \"classification\": \"SUSPICIOUS\",\n  \"confidence\": 0.85,\n  \"malware_score\": 0.6,\n  \"obfuscation_score\": 0.7,\n  \"security_risk_score\": 0.5,\n  \"primary_signals\": [\n    \"hidden_xor_encoding_in_build_script\",\n    \"unexplained_byte_array_decoding\"\n  ],\n  \"reasoning\": \"The build script contains an unexplained XOR-decoded byte array (MASK_METRICS_TASK_81) that decodes to a string, embedded directly alongside standard autocfg probes. While no active exfiltration or malicious payload is triggered in the provided snippet, the presence of hidden, obfuscated string decoding within a build script for a reflection utility is unexplained and suspicious.\",\n  \"recommended_action\": \"WARN\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2556,
+      "tokens_out": 196,
+      "cost_usd": 0.00025049999999999996
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": false,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1284
+    },
+    "timestamp": "2026-10-10T20:04:47.462559+00:00"
+  },
+  "s3_0013_clean:combined:b888b3bd7ac0658f:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0013_clean",
+    "pair_id": "pair_v3_axio",
+    "cluster_id": "axio",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L4",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "b888b3bd7ac0658f",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script uses the standard `autocfg` crate to probe for rustc compiler features (`core_io_borrowed_buf`), which is entirely normal for low-level no_std I/O traits crates to handle conditional compilation across different rustc versions. There are no suspicious network calls, environment variable reads of sensitive data, file writes, or process spawns. The behavior is completely consistent with its declared purpose.",
+      "primary_signals": [
+        "standard_autocfg_usage"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script uses the standard `autocfg` crate to probe for rustc compiler features (`core_io_borrowed_buf`), which is entirely normal for low-level no_std I/O traits crates to handle conditional compilation across different rustc versions. There are no suspicious network calls, environment variable reads of sensitive data, file writes, or process spawns. The behavior is completely consistent with its declared purpose.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"standard_autocfg_usage\"\n  ],\n  \"reasoning\": \"The crate's build script uses the standard `autocfg` crate to probe for rustc compiler features (`core_io_borrowed_buf`), which is entirely normal for low-level no_std I/O traits crates to handle conditional compilation across different rustc versions. There are no suspicious network calls, environment variable reads of sensitive data, file writes, or process spawns. The behavior is completely consistent with its declared purpose.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2438,
+      "tokens_out": 194,
+      "cost_usd": 0.00024105
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 758
+    },
+    "timestamp": "2026-10-10T20:04:51.912580+00:00"
+  },
+  "s3_0014_malicious:combined:c1fa26c77e8e1da8:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0014_malicious",
+    "pair_id": "pair_v3_axio",
+    "cluster_id": "axio",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L4",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "c1fa26c77e8e1da8",
+    "classification": {
+      "classification": "MALICIOUS",
+      "llm_classification": "MALICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate claims to provide std::io-like traits for no_std environments. However, its build.rs script embeds a conditional check for CI environments (GITHUB_ACTIONS or GITLAB_CI) that attempts to read sensitive CI secrets (CI_JOB_TOKEN) and store or process them inside a test collector worker probe. This behavior is completely unrelated to the stated purpose of no_std I/O traits and aligns with known supply-chain attack patterns designed to harvest CI tokens during compilation.",
+      "primary_signals": [
+        "ci_credential_harvesting",
+        "ci_environment_detection",
+        "suspicious_build_script_payload"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "BLOCK",
+      "malware_score": 0.92,
+      "security_risk_score": 0.85,
+      "obfuscation_score": 0.35,
+      "confidence_score": 0.95,
+      "flagged_by_score": true,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate claims to provide std::io-like traits for no_std environments. However, its build.rs script embeds a conditional check for CI environments (GITHUB_ACTIONS or GITLAB_CI) that attempts to read sensitive CI secrets (CI_JOB_TOKEN) and store or process them inside a test collector worker probe. This behavior is completely unrelated to the stated purpose of no_std I/O traits and aligns with known supply-chain attack patterns designed to harvest CI tokens during compilation.",
+    "raw_response": "{\n  \"classification\": \"MALICIOUS\",\n  \"confidence\": 0.95,\n  \"malware_score\": 0.92,\n  \"obfuscation_score\": 0.35,\n  \"security_risk_score\": 0.85,\n  \"primary_signals\": [\n    \"ci_credential_harvesting\",\n    \"ci_environment_detection\",\n    \"suspicious_build_script_payload\"\n  ],\n  \"reasoning\": \"The crate claims to provide std::io-like traits for no_std environments. However, its build.rs script embeds a conditional check for CI environments (GITHUB_ACTIONS or GITLAB_CI) that attempts to read sensitive CI secrets (CI_JOB_TOKEN) and store or process them inside a test collector worker probe. This behavior is completely unrelated to the stated purpose of no_std I/O traits and aligns with known supply-chain attack patterns designed to harvest CI tokens during compilation.\",\n  \"recommended_action\": \"BLOCK\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2797,
+      "tokens_out": 228,
+      "cost_usd": 0.00027817499999999997
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1073
+    },
+    "timestamp": "2026-10-10T20:04:55.949238+00:00"
+  },
+  "s3_0015_lookalike_benign:combined:e15e8cbc8a69ee62:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0015_lookalike_benign",
+    "pair_id": "pair_v3_axio",
+    "cluster_id": "axio",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L4",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "e15e8cbc8a69ee62",
+    "classification": {
+      "classification": "SUSPICIOUS",
+      "llm_classification": "SUSPICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate claims to provide std::io-like traits for no_std environments. However, its build script includes a hidden test/probe block that checks for CI environments (GITHUB_ACTIONS or GITLAB_CI) and reads the CI_JOB_TOKEN environment variable. Accessing CI tokens in a build script for an I/O traits library is completely unrelated to its declared purpose and closely mirrors known supply-chain attack patterns (e.g., targeting CI pipelines to exfiltrate tokens). While direct exfiltration code is not fully fleshed out in the snippet (it only assigns it to an unused variable inside a test probe), the presence of CI-specific secret harvesting logic in a library's build script is highly suspicious.",
+      "primary_signals": [
+        "ci_environment_detection",
+        "ci_job_token_access",
+        "unrelated_build_script_logic"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "WARN",
+      "malware_score": 0.65,
+      "security_risk_score": 0.7,
+      "obfuscation_score": 0.45,
+      "confidence_score": 0.85,
+      "flagged_by_score": true,
+      "score_label_consistent": false,
+      "parse_error": false
+    },
+    "reasoning": "The crate claims to provide std::io-like traits for no_std environments. However, its build script includes a hidden test/probe block that checks for CI environments (GITHUB_ACTIONS or GITLAB_CI) and reads the CI_JOB_TOKEN environment variable. Accessing CI tokens in a build script for an I/O traits library is completely unrelated to its declared purpose and closely mirrors known supply-chain attack patterns (e.g., targeting CI pipelines to exfiltrate tokens). While direct exfiltration code is not fully fleshed out in the snippet (it only assigns it to an unused variable inside a test probe), the presence of CI-specific secret harvesting logic in a library's build script is highly suspicious.",
+    "raw_response": "{\n  \"classification\": \"SUSPICIOUS\",\n  \"confidence\": 0.85,\n  \"malware_score\": 0.65,\n  \"obfuscation_score\": 0.45,\n  \"security_risk_score\": 0.70,\n  \"primary_signals\": [\n    \"ci_environment_detection\",\n    \"ci_job_token_access\",\n    \"unrelated_build_script_logic\"\n  ],\n  \"reasoning\": \"The crate claims to provide std::io-like traits for no_std environments. However, its build script includes a hidden test/probe block that checks for CI environments (GITHUB_ACTIONS or GITLAB_CI) and reads the CI_JOB_TOKEN environment variable. Accessing CI tokens in a build script for an I/O traits library is completely unrelated to its declared purpose and closely mirrors known supply-chain attack patterns (e.g., targeting CI pipelines to exfiltrate tokens). While direct exfiltration code is not fully fleshed out in the snippet (it only assigns it to an unused variable inside a test probe), the presence of CI-specific secret harvesting logic in a library's build script is highly suspicious.\",\n  \"recommended_action\": \"WARN\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2799,
+      "tokens_out": 276,
+      "cost_usd": 0.000292725
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1077
+    },
+    "timestamp": "2026-10-10T20:05:00.285380+00:00"
+  },
+  "s3_0016_clean:combined:e2e76bce7115b497:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0016_clean",
+    "pair_id": "pair_v3_hex",
+    "cluster_id": "hex",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L0",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "e2e76bce7115b497",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's declared purpose is encoding and decoding data into/from hexadecimal representation. Static analysis confirms it contains no build script, no unsafe FFI declarations, no suspicious network calls, and no file or environment access outside the scope of normal hexadecimal encoding logic. The dependency on serde is entirely standard for a data serialization/deserialization utility crate.",
+      "primary_signals": [
+        "no_suspicious_build_script",
+        "clean_source_scan",
+        "consistent_declared_purpose"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.95,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's declared purpose is encoding and decoding data into/from hexadecimal representation. Static analysis confirms it contains no build script, no unsafe FFI declarations, no suspicious network calls, and no file or environment access outside the scope of normal hexadecimal encoding logic. The dependency on serde is entirely standard for a data serialization/deserialization utility crate.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.95,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"no_suspicious_build_script\",\n    \"clean_source_scan\",\n    \"consistent_declared_purpose\"\n  ],\n  \"reasoning\": \"The crate's declared purpose is encoding and decoding data into/from hexadecimal representation. Static analysis confirms it contains no build script, no unsafe FFI declarations, no suspicious network calls, and no file or environment access outside the scope of normal hexadecimal encoding logic. The dependency on serde is entirely standard for a data serialization/deserialization utility crate.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2247,
+      "tokens_out": 193,
+      "cost_usd": 0.000226425
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 125
+    },
+    "timestamp": "2026-10-10T20:05:04.422206+00:00"
+  },
+  "s3_0017_malicious:combined:cab4520552fcae8e:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0017_malicious",
+    "pair_id": "pair_v3_hex",
+    "cluster_id": "hex",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L0",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "cab4520552fcae8e",
+    "classification": {
+      "classification": "MALICIOUS",
+      "llm_classification": "MALICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate claims to be a hex encoding/decoding library, but contains an unexpected function ('diagnostic_handler_93') that reads the environment variable 'CARGO_PKG_AUTH' and writes the token directly to a local file ('target/.auth_cache'). This behavior is completely unrelated to hex encoding and represents unauthorized credential harvesting and file-system exfiltration.",
+      "primary_signals": [
+        "env_secret_read",
+        "unauthorized_file_write",
+        "purpose_violation"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "BLOCK",
+      "malware_score": 0.98,
+      "security_risk_score": 0.95,
+      "obfuscation_score": 0.2,
+      "confidence_score": 0.99,
+      "flagged_by_score": true,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate claims to be a hex encoding/decoding library, but contains an unexpected function ('diagnostic_handler_93') that reads the environment variable 'CARGO_PKG_AUTH' and writes the token directly to a local file ('target/.auth_cache'). This behavior is completely unrelated to hex encoding and represents unauthorized credential harvesting and file-system exfiltration.",
+    "raw_response": "{\n  \"classification\": \"MALICIOUS\",\n  \"confidence\": 0.99,\n  \"malware_score\": 0.98,\n  \"obfuscation_score\": 0.2,\n  \"security_risk_score\": 0.95,\n  \"primary_signals\": [\n    \"env_secret_read\",\n    \"unauthorized_file_write\",\n    \"purpose_violation\"\n  ],\n  \"reasoning\": \"The crate claims to be a hex encoding/decoding library, but contains an unexpected function ('diagnostic_handler_93') that reads the environment variable 'CARGO_PKG_AUTH' and writes the token directly to a local file ('target/.auth_cache'). This behavior is completely unrelated to hex encoding and represents unauthorized credential harvesting and file-system exfiltration.\",\n  \"recommended_action\": \"BLOCK\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2494,
+      "tokens_out": 197,
+      "cost_usd": 0.00024615
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 1,
+      "fallback_used": false,
+      "context_chars": 816
+    },
+    "timestamp": "2026-10-10T20:05:08.346517+00:00"
+  },
+  "s3_0018_lookalike_benign:combined:3ecc0bf821600abf:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0018_lookalike_benign",
+    "pair_id": "pair_v3_hex",
+    "cluster_id": "hex",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L0",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "3ecc0bf821600abf",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's code matches its declared purpose of encoding and decoding hexadecimal data. An isolated function checks for an optional test endpoint environment variable (`CRATESHIELD_TEST_ENDPOINT`) for diagnostic purposes, which is consistent with testing or CI environments and does not exhibit malicious behavior, credential theft, or unauthorized exfiltration.",
+      "primary_signals": [
+        "diagnostic_env_check"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.05,
+      "security_risk_score": 0.1,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.85,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's code matches its declared purpose of encoding and decoding hexadecimal data. An isolated function checks for an optional test endpoint environment variable (`CRATESHIELD_TEST_ENDPOINT`) for diagnostic purposes, which is consistent with testing or CI environments and does not exhibit malicious behavior, credential theft, or unauthorized exfiltration.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.85,\n  \"malware_score\": 0.05,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.1,\n  \"primary_signals\": [\n    \"diagnostic_env_check\"\n  ],\n  \"reasoning\": \"The crate's code matches its declared purpose of encoding and decoding hexadecimal data. An isolated function checks for an optional test endpoint environment variable (`CRATESHIELD_TEST_ENDPOINT`) for diagnostic purposes, which is consistent with testing or CI environments and does not exhibit malicious behavior, credential theft, or unauthorized exfiltration.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2482,
+      "tokens_out": 166,
+      "cost_usd": 0.00023594999999999996
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 851
+    },
+    "timestamp": "2026-10-10T20:05:12.307296+00:00"
+  },
+  "s3_0019_clean:combined:cb682f8d88cde1d5:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0019_clean",
+    "pair_id": "pair_v3_ptr-union",
+    "cluster_id": "ptr-union",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L1",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "cb682f8d88cde1d5",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's declared purpose is to provide pointer union types using alignment bits, which naturally requires low-level pointer manipulation and `unsafe` blocks. The build script uses the standard `autocfg` library to check for compiler features such as strict provenance support, which is entirely normal for libraries dealing with raw pointers and pointer addresses. There are no malicious indicators, network calls, environment credential reads, or suspicious behaviors.",
+      "primary_signals": [
+        "standard_autocfg_usage",
+        "safe_unsafe_pointer_manipulation"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's declared purpose is to provide pointer union types using alignment bits, which naturally requires low-level pointer manipulation and `unsafe` blocks. The build script uses the standard `autocfg` library to check for compiler features such as strict provenance support, which is entirely normal for libraries dealing with raw pointers and pointer addresses. There are no malicious indicators, network calls, environment credential reads, or suspicious behaviors.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"standard_autocfg_usage\",\n    \"safe_unsafe_pointer_manipulation\"\n  ],\n  \"reasoning\": \"The crate's declared purpose is to provide pointer union types using alignment bits, which naturally requires low-level pointer manipulation and `unsafe` blocks. The build script uses the standard `autocfg` library to check for compiler features such as strict provenance support, which is entirely normal for libraries dealing with raw pointers and pointer addresses. There are no malicious indicators, network calls, environment credential reads, or suspicious behaviors.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2294,
+      "tokens_out": 200,
+      "cost_usd": 0.00023205
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 585
+    },
+    "timestamp": "2026-10-10T20:05:16.561053+00:00"
+  },
+  "s3_0020_malicious:combined:5a9d6ae170f44852:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0020_malicious",
+    "pair_id": "pair_v3_ptr-union",
+    "cluster_id": "ptr-union",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L1",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "5a9d6ae170f44852",
+    "classification": {
+      "classification": "MALICIOUS",
+      "llm_classification": "MALICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate declares its purpose as providing pointer union types using alignment bits. However, the build script (`build.rs`) includes hidden and completely unrelated code that reads the sensitive environment variable 'AWS_SECRET_ACCESS_KEY' and defines a Command-and-Control (C2) style domain string ('metrics.service.example.org'). This behavior is a clear indicator of malicious credential harvesting and exfiltration, which is entirely inconsistent with the declared utility purpose of the crate.",
+      "primary_signals": [
+        "env_secret_read",
+        "suspicious_c2_string",
+        "build_script_credential_access"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "BLOCK",
+      "malware_score": 0.95,
+      "security_risk_score": 0.95,
+      "obfuscation_score": 0.3,
+      "confidence_score": 0.98,
+      "flagged_by_score": true,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate declares its purpose as providing pointer union types using alignment bits. However, the build script (`build.rs`) includes hidden and completely unrelated code that reads the sensitive environment variable 'AWS_SECRET_ACCESS_KEY' and defines a Command-and-Control (C2) style domain string ('metrics.service.example.org'). This behavior is a clear indicator of malicious credential harvesting and exfiltration, which is entirely inconsistent with the declared utility purpose of the crate.",
+    "raw_response": "{\n  \"classification\": \"MALICIOUS\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.95,\n  \"obfuscation_score\": 0.3,\n  \"security_risk_score\": 0.95,\n  \"primary_signals\": [\n    \"env_secret_read\",\n    \"suspicious_c2_string\",\n    \"build_script_credential_access\"\n  ],\n  \"reasoning\": \"The crate declares its purpose as providing pointer union types using alignment bits. However, the build script (`build.rs`) includes hidden and completely unrelated code that reads the sensitive environment variable 'AWS_SECRET_ACCESS_KEY' and defines a Command-and-Control (C2) style domain string ('metrics.service.example.org'). This behavior is a clear indicator of malicious credential harvesting and exfiltration, which is entirely inconsistent with the declared utility purpose of the crate.\",\n  \"recommended_action\": \"BLOCK\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2694,
+      "tokens_out": 222,
+      "cost_usd": 0.00026865
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1363
+    },
+    "timestamp": "2026-10-10T20:05:20.617463+00:00"
+  },
+  "s3_0021_lookalike_benign:combined:b19722756a4ba406:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0021_lookalike_benign",
+    "pair_id": "pair_v3_ptr-union",
+    "cluster_id": "ptr-union",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L1",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "b19722756a4ba406",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script uses the standard 'autocfg' library to check compiler features such as strict provenance and type configurations, and reads harmless environment variables like CARGO_PKG_VERSION. These operations are entirely consistent with low-level pointer manipulation and strict provenance requirements described in the crate's purpose.",
+      "primary_signals": [
+        "benign_build_rs_autocfg"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.0,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.99,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script uses the standard 'autocfg' library to check compiler features such as strict provenance and type configurations, and reads harmless environment variables like CARGO_PKG_VERSION. These operations are entirely consistent with low-level pointer manipulation and strict provenance requirements described in the crate's purpose.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.99,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.0,\n  \"primary_signals\": [\n    \"benign_build_rs_autocfg\"\n  ],\n  \"reasoning\": \"The crate's build script uses the standard 'autocfg' library to check compiler features such as strict provenance and type configurations, and reads harmless environment variables like CARGO_PKG_VERSION. These operations are entirely consistent with low-level pointer manipulation and strict provenance requirements described in the crate's purpose.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2590,
+      "tokens_out": 169,
+      "cost_usd": 0.00024494999999999996
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1267
+    },
+    "timestamp": "2026-10-10T20:05:24.618192+00:00"
+  },
+  "s3_0022_clean:combined:93bad3687dbd604f:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0022_clean",
+    "pair_id": "pair_v3_memoffset",
+    "cluster_id": "memoffset",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L2",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "93bad3687dbd604f",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script uses the standard `autocfg` crate to probe for rustc version features in order to conditionally enable support for tuples, unions, uninit, and other language features appropriate for an `offset_of` library. There are no suspicious network calls, environment variable reads of sensitive data, or unauthorized processes. The code is entirely consistent with its declared purpose.",
+      "primary_signals": [],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.0,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.99,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script uses the standard `autocfg` crate to probe for rustc version features in order to conditionally enable support for tuples, unions, uninit, and other language features appropriate for an `offset_of` library. There are no suspicious network calls, environment variable reads of sensitive data, or unauthorized processes. The code is entirely consistent with its declared purpose.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.99,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.0,\n  \"primary_signals\": [],\n  \"reasoning\": \"The crate's build script uses the standard `autocfg` crate to probe for rustc version features in order to conditionally enable support for tuples, unions, uninit, and other language features appropriate for an `offset_of` library. There are no suspicious network calls, environment variable reads of sensitive data, or unauthorized processes. The code is entirely consistent with its declared purpose.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 2612,
+      "tokens_out": 167,
+      "cost_usd": 0.000246
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 1221
+    },
+    "timestamp": "2026-10-10T20:05:28.690528+00:00"
+  },
+  "s3_0023_malicious:combined:31cd4797eceb731e:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0023_malicious",
+    "pair_id": "pair_v3_memoffset",
+    "cluster_id": "memoffset",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L2",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "31cd4797eceb731e",
+    "classification": {
+      "classification": "SUSPICIOUS",
+      "llm_classification": "SUSPICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The build script for an 'offset_of' utility crate contains extraneous, unreferenced trait and struct definitions ('DiagnosticProvider_event_pipe_46' and 'DiagnosticHandler_event_pipe_46') directly inside the main function's version-probing logic, which checks the 'CI' environment variable. While checking 'CI' or compiler versions is not inherently malicious, the injection of unexplained traits and structs inside a build script is anomalous and suspicious, resembling indicators seen in targeted CI/CD environment fingerprinting incidents.",
+      "primary_signals": [
+        "unusual_code_insertion_in_build_rs",
+        "ci_environment_probing",
+        "dead_code_or_unreferenced_structures"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "WARN",
+      "malware_score": 0.65,
+      "security_risk_score": 0.7,
+      "obfuscation_score": 0.6,
+      "confidence_score": 0.85,
+      "flagged_by_score": true,
+      "score_label_consistent": false,
+      "parse_error": false
+    },
+    "reasoning": "The build script for an 'offset_of' utility crate contains extraneous, unreferenced trait and struct definitions ('DiagnosticProvider_event_pipe_46' and 'DiagnosticHandler_event_pipe_46') directly inside the main function's version-probing logic, which checks the 'CI' environment variable. While checking 'CI' or compiler versions is not inherently malicious, the injection of unexplained traits and structs inside a build script is anomalous and suspicious, resembling indicators seen in targeted CI/CD environment fingerprinting incidents.",
+    "raw_response": "{\n  \"classification\": \"SUSPICIOUS\",\n  \"confidence\": 0.85,\n  \"malware_score\": 0.65,\n  \"obfuscation_score\": 0.60,\n  \"security_risk_score\": 0.70,\n  \"primary_signals\": [\n    \"unusual_code_insertion_in_build_rs\",\n    \"ci_environment_probing\",\n    \"dead_code_or_unreferenced_structures\"\n  ],\n  \"reasoning\": \"The build script for an 'offset_of' utility crate contains extraneous, unreferenced trait and struct definitions ('DiagnosticProvider_event_pipe_46' and 'DiagnosticHandler_event_pipe_46') directly inside the main function's version-probing logic, which checks the 'CI' environment variable. While checking 'CI' or compiler versions is not inherently malicious, the injection of unexplained traits and structs inside a build script is anomalous and suspicious, resembling indicators seen in targeted CI/CD environment fingerprinting incidents.\",\n  \"recommended_action\": \"WARN\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 3373,
+      "tokens_out": 244,
+      "cost_usd": 0.000326175
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 3018
+    },
+    "timestamp": "2026-10-10T20:05:32.909248+00:00"
+  },
+  "s3_0024_lookalike_benign:combined:8ad95850acc6cc09:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0024_lookalike_benign",
+    "pair_id": "pair_v3_memoffset",
+    "cluster_id": "memoffset",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L2",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "8ad95850acc6cc09",
+    "classification": {
+      "classification": "SUSPICIOUS",
+      "llm_classification": "SUSPICIOUS",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The build script contains strange, unreferenced trait and struct definitions (`DiagnosticProvider_sync_pipe_65` and `DiagnosticHandler_sync_pipe_65`) embedded directly inside the `main` function body between rustc version checks. While it only reads the non-sensitive `CI` environment variable (which is common for testing or conditional compilation), the presence of dead/disconnected code structures inside a build script is obfuscatory and inconsistent with a straightforward offset_of utility library, raising suspicion of a dormant or partially stripped payload.",
+      "primary_signals": [
+        "unusual_code_injection_in_build_script",
+        "dead_code_or_unreferenced_types",
+        "env_var_read"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "WARN",
+      "malware_score": 0.4,
+      "security_risk_score": 0.6,
+      "obfuscation_score": 0.7,
+      "confidence_score": 0.85,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The build script contains strange, unreferenced trait and struct definitions (`DiagnosticProvider_sync_pipe_65` and `DiagnosticHandler_sync_pipe_65`) embedded directly inside the `main` function body between rustc version checks. While it only reads the non-sensitive `CI` environment variable (which is common for testing or conditional compilation), the presence of dead/disconnected code structures inside a build script is obfuscatory and inconsistent with a straightforward offset_of utility library, raising suspicion of a dormant or partially stripped payload.",
+    "raw_response": "{\n  \"classification\": \"SUSPICIOUS\",\n  \"confidence\": 0.85,\n  \"malware_score\": 0.4,\n  \"obfuscation_score\": 0.7,\n  \"security_risk_score\": 0.6,\n  \"primary_signals\": [\n    \"unusual_code_injection_in_build_script\",\n    \"dead_code_or_unreferenced_types\",\n    \"env_var_read\"\n  ],\n  \"reasoning\": \"The build script contains strange, unreferenced trait and struct definitions (`DiagnosticProvider_sync_pipe_65` and `DiagnosticHandler_sync_pipe_65`) embedded directly inside the `main` function body between rustc version checks. While it only reads the non-sensitive `CI` environment variable (which is common for testing or conditional compilation), the presence of dead/disconnected code structures inside a build script is obfuscatory and inconsistent with a straightforward offset_of utility library, raising suspicion of a dormant or partially stripped payload.\",\n  \"recommended_action\": \"WARN\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 3373,
+      "tokens_out": 241,
+      "cost_usd": 0.000325275
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 0,
+      "fallback_used": true,
+      "context_chars": 3010
+    },
+    "timestamp": "2026-10-10T20:05:37.128972+00:00"
+  },
+  "s3_0025_clean:combined:6c76670a72ca1824:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0025_clean",
+    "pair_id": "pair_v3_pkg-config",
+    "cluster_id": "pkg-config",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L3",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "6c76670a72ca1824",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's code performs exactly the operations described in its declared purpose: acting as a build-time dependency/wrapper for running the system tool (pkg-config/pkgconf equivalent) to query library paths, compiler flags, and link requirements via `Command::new` and reading relevant build environment variables like TARGET and HOST. There is no network activity, no credential exfiltration, and no malicious behavior present.",
+      "primary_signals": [
+        "process_spawn",
+        "env_reads"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.1,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's code performs exactly the operations described in its declared purpose: acting as a build-time dependency/wrapper for running the system tool (pkg-config/pkgconf equivalent) to query library paths, compiler flags, and link requirements via `Command::new` and reading relevant build environment variables like TARGET and HOST. There is no network activity, no credential exfiltration, and no malicious behavior present.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.1,\n  \"primary_signals\": [\n    \"process_spawn\",\n    \"env_reads\"\n  ],\n  \"reasoning\": \"The crate's code performs exactly the operations described in its declared purpose: acting as a build-time dependency/wrapper for running the system tool (pkg-config/pkgconf equivalent) to query library paths, compiler flags, and link requirements via `Command::new` and reading relevant build environment variables like TARGET and HOST. There is no network activity, no credential exfiltration, and no malicious behavior present.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 9749,
+      "tokens_out": 189,
+      "cost_usd": 0.0007878750000000001
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 13,
+      "fallback_used": false,
+      "context_chars": 20796
+    },
+    "timestamp": "2026-10-10T20:05:41.308884+00:00"
+  },
+  "s3_0026_malicious:combined:c3d147ab693012be:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0026_malicious",
+    "pair_id": "pair_v3_pkg-config",
+    "cluster_id": "pkg-config",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L3",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "c3d147ab693012be",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate is a standard utility meant to be used as a build dependency to invoke a system utility (like pkg-config or pkgconf) to determine library search paths and compiler flags. The code spawns a command using standard library features and inspects environment variables like TARGET, HOST, and custom configuration options which are entirely consistent with its declared purpose. There is no network access, no sensitive data exfiltration, and no malicious payload.",
+      "primary_signals": [],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.1,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate is a standard utility meant to be used as a build dependency to invoke a system utility (like pkg-config or pkgconf) to determine library search paths and compiler flags. The code spawns a command using standard library features and inspects environment variables like TARGET, HOST, and custom configuration options which are entirely consistent with its declared purpose. There is no network access, no sensitive data exfiltration, and no malicious payload.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.1,\n  \"primary_signals\": [],\n  \"reasoning\": \"The crate is a standard utility meant to be used as a build dependency to invoke a system utility (like pkg-config or pkgconf) to determine library search paths and compiler flags. The code spawns a command using standard library features and inspects environment variables like TARGET, HOST, and custom configuration options which are entirely consistent with its declared purpose. There is no network access, no sensitive data exfiltration, and no malicious payload.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 9749,
+      "tokens_out": 176,
+      "cost_usd": 0.000783975
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 13,
+      "fallback_used": false,
+      "context_chars": 20796
+    },
+    "timestamp": "2026-10-10T20:05:45.751720+00:00"
+  },
+  "s3_0027_lookalike_benign:combined:2cace84b8aee282f:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0027_lookalike_benign",
+    "pair_id": "pair_v3_pkg-config",
+    "cluster_id": "pkg-config",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L3",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "2cace84b8aee282f",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate is a standard wrapper library designed to execute a system utility (like pkg-config or a custom tool) during build scripts to discover native libraries and compiler flags. The code spawns commands (using `std::process::Command`), reads environment variables such as TARGET, HOST, and custom configuration variables, and parses compiler output. These actions align completely with its declared purpose as a build dependency library, and there is no evidence of malicious behavior, data exfiltration, or unrelated suspicious operations.",
+      "primary_signals": [
+        "benign_process_spawn",
+        "benign_env_reads"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.1,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate is a standard wrapper library designed to execute a system utility (like pkg-config or a custom tool) during build scripts to discover native libraries and compiler flags. The code spawns commands (using `std::process::Command`), reads environment variables such as TARGET, HOST, and custom configuration variables, and parses compiler output. These actions align completely with its declared purpose as a build dependency library, and there is no evidence of malicious behavior, data exfiltration, or unrelated suspicious operations.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.1,\n  \"primary_signals\": [\n    \"benign_process_spawn\",\n    \"benign_env_reads\"\n  ],\n  \"reasoning\": \"The crate is a standard wrapper library designed to execute a system utility (like pkg-config or a custom tool) during build scripts to discover native libraries and compiler flags. The code spawns commands (using `std::process::Command`), reads environment variables such as TARGET, HOST, and custom configuration variables, and parses compiler output. These actions align completely with its declared purpose as a build dependency library, and there is no evidence of malicious behavior, data exfiltration, or unrelated suspicious operations.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 9749,
+      "tokens_out": 211,
+      "cost_usd": 0.000794475
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 13,
+      "fallback_used": false,
+      "context_chars": 20796
+    },
+    "timestamp": "2026-10-10T20:05:52.141147+00:00"
+  },
+  "s3_0028_clean:combined:364ab75c5a772201:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0028_clean",
+    "pair_id": "pair_v3_thiserror",
+    "cluster_id": "thiserror",
+    "split": "tune",
+    "twin_type": "clean",
+    "label": "BENIGN",
+    "ladder_level": "L4",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "364ab75c5a772201",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The build script uses standard compiler feature-probing techniques (invoking rustc via Command::new and checking environment variables such as RUSTC, TARGET, and CARGO_ENCODED_RUSTFLAGS) to determine if unstable compiler features are supported. This pattern is entirely standard for popular Rust crates like serde, dtolnay-maintained libraries, and others to enable or disable features based on the compiler version or flags. It does not perform any malicious actions, unauthorized network requests, or sensitive file exfiltration.",
+      "primary_signals": [
+        "benign_build_rs_rustc_probe"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.99,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The build script uses standard compiler feature-probing techniques (invoking rustc via Command::new and checking environment variables such as RUSTC, TARGET, and CARGO_ENCODED_RUSTFLAGS) to determine if unstable compiler features are supported. This pattern is entirely standard for popular Rust crates like serde, dtolnay-maintained libraries, and others to enable or disable features based on the compiler version or flags. It does not perform any malicious actions, unauthorized network requests, or sensitive file exfiltration.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.99,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"benign_build_rs_rustc_probe\"\n  ],\n  \"reasoning\": \"The build script uses standard compiler feature-probing techniques (invoking rustc via Command::new and checking environment variables such as RUSTC, TARGET, and CARGO_ENCODED_RUSTFLAGS) to determine if unstable compiler features are supported. This pattern is entirely standard for popular Rust crates like serde, dtolnay-maintained libraries, and others to enable or disable features based on the compiler version or flags. It does not perform any malicious actions, unauthorized network requests, or sensitive file exfiltration.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 4332,
+      "tokens_out": 213,
+      "cost_usd": 0.00038879999999999996
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 2,
+      "fallback_used": false,
+      "context_chars": 5054
+    },
+    "timestamp": "2026-10-10T20:05:56.239850+00:00"
+  },
+  "s3_0029_malicious:combined:b88b50c4001b028a:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0029_malicious",
+    "pair_id": "pair_v3_thiserror",
+    "cluster_id": "thiserror",
+    "split": "tune",
+    "twin_type": "malicious",
+    "label": "MALICIOUS",
+    "ladder_level": "L4",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "b88b50c4001b028a",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The build script performs standard compiler feature probing (checking for unstable features and compiler version/edition support via `Command::new` and environment variables like `RUSTC`, `TARGET`, and `RUSTC_BOOTSTRAP`), which is entirely consistent with professional macro and derive crates (such as dtolnay's libraries). There are no network calls, credential reads, or suspicious file modifications.",
+      "primary_signals": [
+        "rustc_feature_probe",
+        "standard_build_script"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.05,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.99,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The build script performs standard compiler feature probing (checking for unstable features and compiler version/edition support via `Command::new` and environment variables like `RUSTC`, `TARGET`, and `RUSTC_BOOTSTRAP`), which is entirely consistent with professional macro and derive crates (such as dtolnay's libraries). There are no network calls, credential reads, or suspicious file modifications.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.99,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.05,\n  \"primary_signals\": [\n    \"rustc_feature_probe\",\n    \"standard_build_script\"\n  ],\n  \"reasoning\": \"The build script performs standard compiler feature probing (checking for unstable features and compiler version/edition support via `Command::new` and environment variables like `RUSTC`, `TARGET`, and `RUSTC_BOOTSTRAP`), which is entirely consistent with professional macro and derive crates (such as dtolnay's libraries). There are no network calls, credential reads, or suspicious file modifications.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 4469,
+      "tokens_out": 193,
+      "cost_usd": 0.000393075
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 2,
+      "fallback_used": false,
+      "context_chars": 5056
+    },
+    "timestamp": "2026-10-10T20:06:00.232013+00:00"
+  },
+  "s3_0030_lookalike_benign:combined:961e054a09e26b5a:gemini-3.5-flash-lite:temp0.0:rep0": {
+    "sample_id": "s3_0030_lookalike_benign",
+    "pair_id": "pair_v3_thiserror",
+    "cluster_id": "thiserror",
+    "split": "tune",
+    "twin_type": "lookalike_benign",
+    "label": "BENIGN",
+    "ladder_level": "L4",
+    "condition": "combined",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_hash": "961e054a09e26b5a",
+    "classification": {
+      "classification": "BENIGN",
+      "llm_classification": "BENIGN",
+      "reconciled": false,
+      "confidence": "HIGH",
+      "reasoning": "The crate's build script runs a standard compiler probe to determine if the installed rustc version supports unstable features required by the derive(Error) implementation (checking compiler flags, edition, RUSTC_BOOTSTRAP, and executing rustc via Command::new). This pattern is extremely common in high-quality ecosystem crates (such as serde and dtolnay-maintained libraries) and is fully consistent with feature detection and conditional compilation.",
+      "primary_signals": [
+        "benign_build_rs_compiler_probe"
+      ],
+      "retrieved_evidence_used": [],
+      "recommended_action": "ALLOW",
+      "malware_score": 0.0,
+      "security_risk_score": 0.1,
+      "obfuscation_score": 0.0,
+      "confidence_score": 0.98,
+      "flagged_by_score": false,
+      "score_label_consistent": true,
+      "parse_error": false
+    },
+    "reasoning": "The crate's build script runs a standard compiler probe to determine if the installed rustc version supports unstable features required by the derive(Error) implementation (checking compiler flags, edition, RUSTC_BOOTSTRAP, and executing rustc via Command::new). This pattern is extremely common in high-quality ecosystem crates (such as serde and dtolnay-maintained libraries) and is fully consistent with feature detection and conditional compilation.",
+    "raw_response": "{\n  \"classification\": \"BENIGN\",\n  \"confidence\": 0.98,\n  \"malware_score\": 0.0,\n  \"obfuscation_score\": 0.0,\n  \"security_risk_score\": 0.1,\n  \"primary_signals\": [\n    \"benign_build_rs_compiler_probe\"\n  ],\n  \"reasoning\": \"The crate's build script runs a standard compiler probe to determine if the installed rustc version supports unstable features required by the derive(Error) implementation (checking compiler flags, edition, RUSTC_BOOTSTRAP, and executing rustc via Command::new). This pattern is extremely common in high-quality ecosystem crates (such as serde and dtolnay-maintained libraries) and is fully consistent with feature detection and conditional compilation.\",\n  \"recommended_action\": \"ALLOW\"\n}",
+    "dry_run": false,
+    "finish_reason": "STOP",
+    "usage": {
+      "calls": 1,
+      "tokens_in": 4469,
+      "tokens_out": 194,
+      "cost_usd": 0.000393375
+    },
+    "meta": {
+      "purpose_fallback_used": false,
+      "has_readme": true,
+      "paths_found": 2,
+      "fallback_used": false,
+      "context_chars": 5056
+    },
+    "timestamp": "2026-10-10T20:06:04.250535+00:00"
   }
 }
