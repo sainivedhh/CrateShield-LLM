@@ -1,0 +1,332 @@
+{
+  "benchmark_version": "v3",
+  "total_eval_samples": 120,
+  "eval_clusters": 40,
+  "conditions": {
+    "size::baseline": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 0,
+      "avg_cost_usd": 0.0
+    },
+    "grep::baseline": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 0,
+      "avg_cost_usd": 0.0
+    },
+    "rule_only::baseline": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 0,
+      "avg_cost_usd": 0.0
+    },
+    "cargo_audit::baseline": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 0,
+      "avg_cost_usd": 0.0
+    },
+    "hybrid::gemini-3.5-flash-lite": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 3631,
+      "avg_cost_usd": 0.000332
+    },
+    "hybrid::qwen/qwen3.8-27b": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 3631,
+      "avg_cost_usd": 0.000766
+    },
+    "hybrid_fallback::gemini-3.5-flash-lite": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 5180,
+      "avg_cost_usd": 0.000449
+    },
+    "naive_full::gemini-3.5-flash-lite": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 85794,
+      "avg_cost_usd": 0.006495
+    },
+    "raw::gemini-3.5-flash-lite": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 15837,
+      "avg_cost_usd": 0.001248
+    },
+    "raw::qwen/qwen3.8-27b": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 15837,
+      "avg_cost_usd": 0.003207
+    },
+    "raw_full::gemini-3.5-flash-lite": {
+      "n_mal": 35,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.1
+      ],
+      "n_clean": 35,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.1
+      ],
+      "n_lookalike": 35,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.1
+      ],
+      "avg_tokens_in": 54487,
+      "avg_cost_usd": 0.004147
+    },
+    "structured::gemini-3.5-flash-lite": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 2951,
+      "avg_cost_usd": 0.000281
+    },
+    "structured::qwen/qwen3.8-27b": {
+      "n_mal": 40,
+      "tp": 0,
+      "recall": 0.0,
+      "recall_ci": [
+        0.0,
+        0.088
+      ],
+      "n_clean": 40,
+      "fp_clean": 0,
+      "fpr_clean": 0.0,
+      "fpr_clean_ci": [
+        0.0,
+        0.088
+      ],
+      "n_lookalike": 40,
+      "fp_lookalike": 0,
+      "fpr_lookalike": 0.0,
+      "fpr_lookalike_ci": [
+        0.0,
+        0.088
+      ],
+      "avg_tokens_in": 2951,
+      "avg_cost_usd": 0.00063
+    }
+  }
+}

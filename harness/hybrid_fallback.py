@@ -21,8 +21,22 @@ from crateshield.llm.prompt import (
 )
 from harness.hybrid import (
     BUILD_RS_SIZE_CAP_CHARS, HYBRID_TOTAL_CHAR_BUDGET, WINDOW_RADIUS,
-    extract_targeted_code_windows, _merge_intervals,
+    extract_targeted_code_windows,
 )
+
+
+def _merge_intervals(intervals: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    if not intervals:
+        return []
+    intervals = sorted(intervals, key=lambda x: x[0])
+    merged = [intervals[0]]
+    for cur in intervals[1:]:
+        last = merged[-1]
+        if cur[0] <= last[1] + 1:
+            merged[-1] = (last[0], max(last[1], cur[1]))
+        else:
+            merged.append(cur)
+    return merged
 
 RISK_PATTERNS = [
     (re.compile(r"\b(std::process|Command::new|spawn|exec)\b"), 4),

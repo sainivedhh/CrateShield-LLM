@@ -125,12 +125,18 @@ To verify all cryptographic hashes, validate benchmark manifest invariants, chec
 python scripts/verify_reproduction.py
 ```
 
-To fetch missing raw `.crate` archives:
+---
+
+## 5b. Benchmark v3 Reproduction (Hardened, Leak-Controlled, Multi-Model)
+
+Benchmark v3 is a leak-controlled, non-saturated synthetic evaluation benchmark comprising 150 samples across 50 clusters (10 tune clusters, 40 sealed eval clusters) across 8 threat families (5 SEEN, 3 HELD-OUT) with difficulty ladder levels L0–L4, independent firewall generation, hard-negative lookalike twins, and multi-model evaluation (`gemini-3.5-flash-lite` and Groq `qwen/qwen3.8-27b`).
+
+To verify Benchmark v3 reproduction completely offline in < 45 seconds:
 ```bash
-python scripts/fetch_data.py
+python scripts/v3/verify_reproduction_v3.py
 ```
 
-To run the unit and integration test suite:
+To run the offline test suite:
 ```bash
 pytest tests/
 ```

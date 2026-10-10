@@ -140,6 +140,7 @@ def generate_report_v3() -> dict[str, Any]:
     }
 
     # Dynamic conditions and models present in cache
+    headline_rows = []
     cond_order = []
     # baselines first
     for b in ("size", "grep", "rule_only", "cargo_audit"):
