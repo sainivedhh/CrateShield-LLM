@@ -11,6 +11,8 @@
 | **grep** | baseline | 13/40 | **32.5%** | 32.5% | 12.5% | 12.5% |
 | **hybrid** | gemini-3.5-flash-lite | 5/40 | **12.5%** | 15.0% | 0.0% | 2.5% |
 | **hybrid_fallback** | gemini-3.5-flash-lite | 8/40 | **20.0%** | 32.5% | 0.0% | 10.0% |
+| **hybrid_taint** | gemini-3.5-flash-lite | 6/40 | **15.0%** | 25.0% | 0.0% | 0.0% |
+| **hybrid_taint** | qwen/qwen3.8-27b | 0/13 (partial 40/120)* | **0.0%** | 46.2% | 0.0% | 0.0% |
 | **naive_full** | gemini-3.5-flash-lite | 15/40 | **37.5%** | 47.5% | 0.0% | 25.0% |
 | **raw** | gemini-3.5-flash-lite | 17/40 | **42.5%** | 50.0% | 0.0% | 10.0% |
 | **raw_full** | gemini-3.5-flash-lite | 13/40 | **32.5%** | 35.0% | 0.0% | 2.5% |
@@ -20,6 +22,7 @@
 | **raw_full_corrected** | gemini-3.5-flash-lite | 13/35 | **37.1%** | 37.1% | 0.0% | 2.5% |
 
 *Note: raw_full (testable N=35) excludes 5 crates that exceeded context limit (auto-labeled BENIGN). Overall uncorrected raw_full recall is 13/40 (32.5%).*
+*Note: qwen/qwen3.8-27b reflects partial evaluation (40/120 samples evaluated: 13 malicious, 27 benign) due to Groq free-tier rolling window token limits; remaining 80 samples pending.*
 
 ## 2. Evasion Ladder Breakdown ($L0$–$L4$ Strict Recall)
 
@@ -29,6 +32,8 @@
 | **grep** | baseline | 2/8 (25%) | 8/8 (100%) | 0/8 (0%) | 0/8 (0%) | 3/8 (38%) | **3/24 (12.5%)** |
 | **hybrid** | gemini-3.5-flash-lite | 4/8 (50%) | 0/8 (0%) | 0/8 (0%) | 1/8 (12%) | 0/8 (0%) | **1/24 (4.2%)** |
 | **hybrid_fallback** | gemini-3.5-flash-lite | 3/8 (38%) | 1/8 (12%) | 3/8 (38%) | 0/8 (0%) | 1/8 (12%) | **4/24 (16.7%)** |
+| **hybrid_taint** | gemini-3.5-flash-lite | 4/8 (50%) | 1/8 (12%) | 0/8 (0%) | 1/8 (12%) | 0/8 (0%) | **1/24 (4.2%)** |
+| **hybrid_taint** | qwen/qwen3.8-27b | 0/3 (0%) | 0/3 (0%) | 0/3 (0%) | 0/2 (0%) | 0/2 (0%) | **0/7 (0.0%)** |
 | **naive_full** | gemini-3.5-flash-lite | 4/8 (50%) | 5/8 (62%) | 1/8 (12%) | 4/8 (50%) | 1/8 (12%) | **6/24 (25.0%)** |
 | **raw** | gemini-3.5-flash-lite | 5/8 (62%) | 5/8 (62%) | 1/8 (12%) | 3/8 (38%) | 3/8 (38%) | **7/24 (29.2%)** |
 | **raw_full** | gemini-3.5-flash-lite | 4/8 (50%) | 5/8 (62%) | 0/8 (0%) | 2/8 (25%) | 2/8 (25%) | **4/24 (16.7%)** |
@@ -39,7 +44,12 @@
 
 ## 3. Paired Exact McNemar Tests (Holm-Bonferroni Corrected)
 
-*McNemar tests pending completed evaluation entries in cache.*
+| Comparison (Taint vs Target) | Target Model | Common $N$ | Taint Wins ($b$) | Target Wins ($c$) | Raw Exact $p$ | **Holm-Adjusted $p$** | Significance |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---|
+| **hybrid_taint** vs hybrid | gemini-3.5-flash-lite | 40 | 4 | 3 | 1.0000 | **1.0000** | Directionally favorable, not confirmed |
+| **hybrid_taint** vs hybrid_fallback | gemini-3.5-flash-lite | 40 | 4 | 6 | 0.7539 | **1.0000** | No difference / Lower |
+| **hybrid_taint** vs raw | gemini-3.5-flash-lite | 40 | 3 | 14 | 0.0127 | **0.0509** | No difference / Lower |
+| **hybrid_taint** vs raw_full (testable) | gemini-3.5-flash-lite | 35 | 3 | 11 | 0.0574 | **0.1721** | No difference / Lower |
 
 ## 4. Mechanistic Verification: Context Selection Quality
 
@@ -52,3 +62,6 @@
 - **Mean Character Budget:** 2355 chars (~589 tokens) vs Hybrid 2745 chars
 
 ## 5. Preregistration Hypotheses Verdict
+
+**Headline Finding:**
+hybrid_taint **does not close the gap to raw on L2-L4** (Holm-adjusted p=0.0509; Taint: 15.0%, Pooled L2-L4: 4.2%).

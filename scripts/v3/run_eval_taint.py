@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
-load_dotenv()
+load_dotenv(override=True)
 
 from crateshield.config import GEMINI_API_KEY
 from harness.gen_v3.config import PRICE_TABLE, TRACKER

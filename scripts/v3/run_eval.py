@@ -41,7 +41,7 @@ from crateshield.taintflow.extractor import extract_taint_context
 from harness.view import build_anonymized_view
 
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(override=True)
 
 import requests
 

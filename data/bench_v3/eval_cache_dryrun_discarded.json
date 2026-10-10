@@ -124875,7 +124875,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:25.767852+00:00"
+    "timestamp": "2026-10-10T18:56:59.912170+00:00"
   },
   "s3_0032_malicious::hybrid_taint::6787e0c915497182::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0032_malicious",
@@ -124917,7 +124917,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:25.949760+00:00"
+    "timestamp": "2026-10-10T18:57:00.234591+00:00"
   },
   "s3_0033_lookalike_benign::hybrid_taint::413c4e1f61ce3f49::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0033_lookalike_benign",
@@ -124959,7 +124959,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:26.137683+00:00"
+    "timestamp": "2026-10-10T18:57:00.497280+00:00"
   },
   "s3_0034_clean::hybrid_taint::ce5425acbf066f14::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0034_clean",
@@ -125001,7 +125001,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:26.421319+00:00"
+    "timestamp": "2026-10-10T18:57:00.997762+00:00"
   },
   "s3_0035_malicious::hybrid_taint::ca845018e0a1b4b1::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0035_malicious",
@@ -125043,7 +125043,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:26.673590+00:00"
+    "timestamp": "2026-10-10T18:57:01.347926+00:00"
   },
   "s3_0036_lookalike_benign::hybrid_taint::d1fa12a6b1012d3c::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0036_lookalike_benign",
@@ -125085,7 +125085,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:26.923093+00:00"
+    "timestamp": "2026-10-10T18:57:01.705477+00:00"
   },
   "s3_0037_clean::hybrid_taint::4217a5316a836022::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0037_clean",
@@ -125127,7 +125127,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:27.095144+00:00"
+    "timestamp": "2026-10-10T18:57:01.995282+00:00"
   },
   "s3_0038_malicious::hybrid_taint::ba90a78a0a0156f5::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0038_malicious",
@@ -125169,7 +125169,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:27.259967+00:00"
+    "timestamp": "2026-10-10T18:57:02.221670+00:00"
   },
   "s3_0039_lookalike_benign::hybrid_taint::bdf5cf431d8d64f1::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0039_lookalike_benign",
@@ -125211,7 +125211,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:27.420579+00:00"
+    "timestamp": "2026-10-10T18:57:02.481588+00:00"
   },
   "s3_0040_clean::hybrid_taint::8cb71f9fb0f0ab15::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0040_clean",
@@ -125253,7 +125253,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:27.612491+00:00"
+    "timestamp": "2026-10-10T18:57:02.787334+00:00"
   },
   "s3_0041_malicious::hybrid_taint::7da0783d75ad80db::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0041_malicious",
@@ -125295,7 +125295,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:27.807491+00:00"
+    "timestamp": "2026-10-10T18:57:03.037392+00:00"
   },
   "s3_0042_lookalike_benign::hybrid_taint::18196b9426a70e12::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0042_lookalike_benign",
@@ -125337,7 +125337,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:28.014559+00:00"
+    "timestamp": "2026-10-10T18:57:03.304160+00:00"
   },
   "s3_0043_clean::hybrid_taint::ff0c12f8d7f4c05f::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0043_clean",
@@ -125379,7 +125379,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:28.578782+00:00"
+    "timestamp": "2026-10-10T18:57:03.945273+00:00"
   },
   "s3_0044_malicious::hybrid_taint::2b2c9b4a3b01a9e9::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0044_malicious",
@@ -125421,7 +125421,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:28.888047+00:00"
+    "timestamp": "2026-10-10T18:57:04.310539+00:00"
   },
   "s3_0045_lookalike_benign::hybrid_taint::7807d548d7bf0c20::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0045_lookalike_benign",
@@ -125463,7 +125463,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:29.204279+00:00"
+    "timestamp": "2026-10-10T18:57:04.690609+00:00"
   },
   "s3_0046_clean::hybrid_taint::837e4f3bfb1c5a3f::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0046_clean",
@@ -125505,7 +125505,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:29.505975+00:00"
+    "timestamp": "2026-10-10T18:57:05.265655+00:00"
   },
   "s3_0047_malicious::hybrid_taint::af71222b75e25888::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0047_malicious",
@@ -125547,7 +125547,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:29.785403+00:00"
+    "timestamp": "2026-10-10T18:57:05.676861+00:00"
   },
   "s3_0048_lookalike_benign::hybrid_taint::8c7ff221f4a49ffd::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0048_lookalike_benign",
@@ -125589,7 +125589,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:30.094174+00:00"
+    "timestamp": "2026-10-10T18:57:06.067825+00:00"
   },
   "s3_0049_clean::hybrid_taint::e64ec9c273eee604::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0049_clean",
@@ -125631,7 +125631,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:30.337747+00:00"
+    "timestamp": "2026-10-10T18:57:06.418353+00:00"
   },
   "s3_0050_malicious::hybrid_taint::76ec9896f064216a::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0050_malicious",
@@ -125673,7 +125673,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:30.565116+00:00"
+    "timestamp": "2026-10-10T18:57:06.715299+00:00"
   },
   "s3_0051_lookalike_benign::hybrid_taint::7c79fbf62b18bbf2::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0051_lookalike_benign",
@@ -125715,7 +125715,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:30.742413+00:00"
+    "timestamp": "2026-10-10T18:57:07.047791+00:00"
   },
   "s3_0052_clean::hybrid_taint::33c55b41fda05e3e::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0052_clean",
@@ -125757,7 +125757,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:30.938265+00:00"
+    "timestamp": "2026-10-10T18:57:07.415254+00:00"
   },
   "s3_0053_malicious::hybrid_taint::90fae93cbbc6ff09::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0053_malicious",
@@ -125799,7 +125799,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:31.152980+00:00"
+    "timestamp": "2026-10-10T18:57:07.693056+00:00"
   },
   "s3_0054_lookalike_benign::hybrid_taint::3f9ee6745c35629a::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0054_lookalike_benign",
@@ -125841,7 +125841,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:31.371143+00:00"
+    "timestamp": "2026-10-10T18:57:07.988265+00:00"
   },
   "s3_0055_clean::hybrid_taint::52dadfd242f89586::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0055_clean",
@@ -125883,7 +125883,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:31.690532+00:00"
+    "timestamp": "2026-10-10T18:57:08.389837+00:00"
   },
   "s3_0056_malicious::hybrid_taint::3683645888e31a13::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0056_malicious",
@@ -125925,7 +125925,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:31.972403+00:00"
+    "timestamp": "2026-10-10T18:57:08.733965+00:00"
   },
   "s3_0057_lookalike_benign::hybrid_taint::9bf047558cfc806d::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0057_lookalike_benign",
@@ -125967,7 +125967,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:32.292200+00:00"
+    "timestamp": "2026-10-10T18:57:09.097903+00:00"
   },
   "s3_0058_clean::hybrid_taint::ad6aba411e7d00a9::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0058_clean",
@@ -126009,7 +126009,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:32.534877+00:00"
+    "timestamp": "2026-10-10T18:57:09.512022+00:00"
   },
   "s3_0059_malicious::hybrid_taint::bb5268ac8ff1ce75::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0059_malicious",
@@ -126051,7 +126051,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:32.735984+00:00"
+    "timestamp": "2026-10-10T18:57:09.783301+00:00"
   },
   "s3_0060_lookalike_benign::hybrid_taint::40eff032a7122eff::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0060_lookalike_benign",
@@ -126093,7 +126093,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:32.953807+00:00"
+    "timestamp": "2026-10-10T18:57:10.084115+00:00"
   },
   "s3_0061_clean::hybrid_taint::2be8bc7a00e47e68::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0061_clean",
@@ -126135,7 +126135,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:33.150512+00:00"
+    "timestamp": "2026-10-10T18:57:10.883651+00:00"
   },
   "s3_0062_malicious::hybrid_taint::ba9ba965da51d3ff::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0062_malicious",
@@ -126177,7 +126177,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:33.360864+00:00"
+    "timestamp": "2026-10-10T18:57:11.184437+00:00"
   },
   "s3_0063_lookalike_benign::hybrid_taint::a9d48668f39b63c6::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0063_lookalike_benign",
@@ -126219,7 +126219,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:33.551840+00:00"
+    "timestamp": "2026-10-10T18:57:11.511307+00:00"
   },
   "s3_0064_clean::hybrid_taint::7547b18f6134b9e5::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0064_clean",
@@ -126261,7 +126261,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:33.905958+00:00"
+    "timestamp": "2026-10-10T18:57:12.384229+00:00"
   },
   "s3_0065_malicious::hybrid_taint::6fcd8c331ea98310::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0065_malicious",
@@ -126303,7 +126303,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:34.278963+00:00"
+    "timestamp": "2026-10-10T18:57:12.882826+00:00"
   },
   "s3_0066_lookalike_benign::hybrid_taint::ff1869f9b12bb368::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0066_lookalike_benign",
@@ -126345,7 +126345,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:34.623193+00:00"
+    "timestamp": "2026-10-10T18:57:13.382504+00:00"
   },
   "s3_0067_clean::hybrid_taint::1cc4a97efb3358b5::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0067_clean",
@@ -126387,7 +126387,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:35.030431+00:00"
+    "timestamp": "2026-10-10T18:57:15.091465+00:00"
   },
   "s3_0068_malicious::hybrid_taint::b62711e70d46c07d::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0068_malicious",
@@ -126429,7 +126429,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:35.448069+00:00"
+    "timestamp": "2026-10-10T18:57:15.681309+00:00"
   },
   "s3_0069_lookalike_benign::hybrid_taint::bbd818821f9f06bc::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0069_lookalike_benign",
@@ -126471,7 +126471,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:35.862367+00:00"
+    "timestamp": "2026-10-10T18:57:16.280475+00:00"
   },
   "s3_0070_clean::hybrid_taint::d43ff1af17abf9bb::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0070_clean",
@@ -126513,7 +126513,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:36.224021+00:00"
+    "timestamp": "2026-10-10T18:57:16.794721+00:00"
   },
   "s3_0071_malicious::hybrid_taint::c8970c566af0f56a::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0071_malicious",
@@ -126555,7 +126555,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:36.589455+00:00"
+    "timestamp": "2026-10-10T18:57:17.277705+00:00"
   },
   "s3_0072_lookalike_benign::hybrid_taint::ba5bfdd59ca8c5f4::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0072_lookalike_benign",
@@ -126597,7 +126597,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:36.938180+00:00"
+    "timestamp": "2026-10-10T18:57:17.744829+00:00"
   },
   "s3_0073_clean::hybrid_taint::4c707ed881684f33::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0073_clean",
@@ -126639,7 +126639,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:37.285449+00:00"
+    "timestamp": "2026-10-10T18:57:18.352452+00:00"
   },
   "s3_0074_malicious::hybrid_taint::a59ca75c2901d7e5::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0074_malicious",
@@ -126681,7 +126681,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:37.908452+00:00"
+    "timestamp": "2026-10-10T18:57:18.945546+00:00"
   },
   "s3_0075_lookalike_benign::hybrid_taint::1418d76079281eee::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0075_lookalike_benign",
@@ -126723,7 +126723,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:38.260594+00:00"
+    "timestamp": "2026-10-10T18:57:19.471996+00:00"
   },
   "s3_0076_clean::hybrid_taint::9f45986e3fec671a::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0076_clean",
@@ -126765,7 +126765,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:38.612257+00:00"
+    "timestamp": "2026-10-10T18:57:20.067083+00:00"
   },
   "s3_0077_malicious::hybrid_taint::8aa44d4d37650e0e::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0077_malicious",
@@ -126807,7 +126807,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:38.969667+00:00"
+    "timestamp": "2026-10-10T18:57:20.534203+00:00"
   },
   "s3_0078_lookalike_benign::hybrid_taint::9c1e815a4ede02d1::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0078_lookalike_benign",
@@ -126849,7 +126849,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:39.278067+00:00"
+    "timestamp": "2026-10-10T18:57:20.986632+00:00"
   },
   "s3_0079_clean::hybrid_taint::186d0c95aa633b79::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0079_clean",
@@ -126891,7 +126891,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:39.786231+00:00"
+    "timestamp": "2026-10-10T18:57:21.722944+00:00"
   },
   "s3_0080_malicious::hybrid_taint::fca2d1ba730e3360::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0080_malicious",
@@ -126933,7 +126933,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:40.276555+00:00"
+    "timestamp": "2026-10-10T18:57:22.317187+00:00"
   },
   "s3_0081_lookalike_benign::hybrid_taint::f89c54a8f26944e3::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0081_lookalike_benign",
@@ -126975,7 +126975,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:40.744841+00:00"
+    "timestamp": "2026-10-10T18:57:22.924073+00:00"
   },
   "s3_0082_clean::hybrid_taint::b50ad4a3a2d525b8::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0082_clean",
@@ -127017,7 +127017,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:41.256915+00:00"
+    "timestamp": "2026-10-10T18:57:23.800367+00:00"
   },
   "s3_0083_malicious::hybrid_taint::aa43623f0aa1742b::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0083_malicious",
@@ -127059,7 +127059,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:41.760282+00:00"
+    "timestamp": "2026-10-10T18:57:24.446127+00:00"
   },
   "s3_0084_lookalike_benign::hybrid_taint::0cde11a124162a0c::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0084_lookalike_benign",
@@ -127101,7 +127101,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:42.264841+00:00"
+    "timestamp": "2026-10-10T18:57:25.095116+00:00"
   },
   "s3_0085_clean::hybrid_taint::3ad24c88dfb70e1b::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0085_clean",
@@ -127143,7 +127143,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:42.759826+00:00"
+    "timestamp": "2026-10-10T18:57:25.887904+00:00"
   },
   "s3_0086_malicious::hybrid_taint::debc38900b91f70e::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0086_malicious",
@@ -127185,7 +127185,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:43.225805+00:00"
+    "timestamp": "2026-10-10T18:57:26.525896+00:00"
   },
   "s3_0087_lookalike_benign::hybrid_taint::ce566fb4e2b26bd0::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0087_lookalike_benign",
@@ -127227,7 +127227,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:43.680913+00:00"
+    "timestamp": "2026-10-10T18:57:27.216787+00:00"
   },
   "s3_0088_clean::hybrid_taint::d268011b9e226312::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0088_clean",
@@ -127269,7 +127269,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:44.245750+00:00"
+    "timestamp": "2026-10-10T18:57:28.144818+00:00"
   },
   "s3_0089_malicious::hybrid_taint::7b944e85dec6f7c0::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0089_malicious",
@@ -127311,7 +127311,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:44.804424+00:00"
+    "timestamp": "2026-10-10T18:57:28.959005+00:00"
   },
   "s3_0090_lookalike_benign::hybrid_taint::db46317eeaf9badc::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0090_lookalike_benign",
@@ -127353,7 +127353,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:45.347093+00:00"
+    "timestamp": "2026-10-10T18:57:29.762296+00:00"
   },
   "s3_0091_clean::hybrid_taint::51dc7ccefce6ee75::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0091_clean",
@@ -127395,7 +127395,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:46.057324+00:00"
+    "timestamp": "2026-10-10T18:57:30.662843+00:00"
   },
   "s3_0092_malicious::hybrid_taint::cc418f6b5f6f6729::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0092_malicious",
@@ -127437,7 +127437,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:46.529888+00:00"
+    "timestamp": "2026-10-10T18:57:31.272491+00:00"
   },
   "s3_0093_lookalike_benign::hybrid_taint::396bfd2cea9adec9::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0093_lookalike_benign",
@@ -127479,7 +127479,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:47.006898+00:00"
+    "timestamp": "2026-10-10T18:57:31.881773+00:00"
   },
   "s3_0094_clean::hybrid_taint::513e6acd730185bb::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0094_clean",
@@ -127521,7 +127521,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:47.469772+00:00"
+    "timestamp": "2026-10-10T18:57:32.670617+00:00"
   },
   "s3_0095_malicious::hybrid_taint::a80e6fe48b701e21::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0095_malicious",
@@ -127563,7 +127563,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:47.921164+00:00"
+    "timestamp": "2026-10-10T18:57:33.263316+00:00"
   },
   "s3_0096_lookalike_benign::hybrid_taint::636483a6f32f99c7::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0096_lookalike_benign",
@@ -127605,7 +127605,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:48.397171+00:00"
+    "timestamp": "2026-10-10T18:57:33.858143+00:00"
   },
   "s3_0097_clean::hybrid_taint::7a4ce64b5e2dd771::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0097_clean",
@@ -127647,7 +127647,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:48.591263+00:00"
+    "timestamp": "2026-10-10T18:57:34.115346+00:00"
   },
   "s3_0098_malicious::hybrid_taint::e52ae8bd74bb6b16::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0098_malicious",
@@ -127689,7 +127689,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:48.764727+00:00"
+    "timestamp": "2026-10-10T18:57:34.370359+00:00"
   },
   "s3_0099_lookalike_benign::hybrid_taint::36b287b00324ad39::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0099_lookalike_benign",
@@ -127731,7 +127731,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:48.948239+00:00"
+    "timestamp": "2026-10-10T18:57:34.598553+00:00"
   },
   "s3_0100_clean::hybrid_taint::73ae64440cfe1a46::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0100_clean",
@@ -127773,7 +127773,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:49.582203+00:00"
+    "timestamp": "2026-10-10T18:57:35.752075+00:00"
   },
   "s3_0101_malicious::hybrid_taint::ef08af14db4d02e6::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0101_malicious",
@@ -127815,7 +127815,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:50.209786+00:00"
+    "timestamp": "2026-10-10T18:57:36.667292+00:00"
   },
   "s3_0102_lookalike_benign::hybrid_taint::50c6a7ed0d9935ca::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0102_lookalike_benign",
@@ -127857,7 +127857,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:50.861408+00:00"
+    "timestamp": "2026-10-10T18:57:37.615063+00:00"
   },
   "s3_0103_clean::hybrid_taint::49b1b821742aae0d::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0103_clean",
@@ -127899,7 +127899,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:51.838603+00:00"
+    "timestamp": "2026-10-10T18:57:38.940757+00:00"
   },
   "s3_0104_malicious::hybrid_taint::80b8f6244182189c::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0104_malicious",
@@ -127941,7 +127941,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:52.535997+00:00"
+    "timestamp": "2026-10-10T18:57:39.796947+00:00"
   },
   "s3_0105_lookalike_benign::hybrid_taint::1494e9499c1bfb73::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0105_lookalike_benign",
@@ -127983,7 +127983,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:53.253734+00:00"
+    "timestamp": "2026-10-10T18:57:40.650615+00:00"
   },
   "s3_0106_clean::hybrid_taint::99bd4a5573246e59::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0106_clean",
@@ -128025,7 +128025,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:53.959516+00:00"
+    "timestamp": "2026-10-10T18:57:41.697550+00:00"
   },
   "s3_0107_malicious::hybrid_taint::422b2098661e8c36::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0107_malicious",
@@ -128067,7 +128067,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:54.914054+00:00"
+    "timestamp": "2026-10-10T18:57:42.809128+00:00"
   },
   "s3_0108_lookalike_benign::hybrid_taint::6f0c43f872bac65a::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0108_lookalike_benign",
@@ -128109,7 +128109,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:55.653500+00:00"
+    "timestamp": "2026-10-10T18:57:43.674349+00:00"
   },
   "s3_0109_clean::hybrid_taint::267808c9376a0825::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0109_clean",
@@ -128151,7 +128151,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:56.272481+00:00"
+    "timestamp": "2026-10-10T18:57:44.733833+00:00"
   },
   "s3_0110_malicious::hybrid_taint::36d2fb89e46a7763::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0110_malicious",
@@ -128193,7 +128193,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:56.889037+00:00"
+    "timestamp": "2026-10-10T18:57:45.637745+00:00"
   },
   "s3_0111_lookalike_benign::hybrid_taint::08f611ecbbd5a5e9::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0111_lookalike_benign",
@@ -128235,7 +128235,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:57.521680+00:00"
+    "timestamp": "2026-10-10T18:57:46.542628+00:00"
   },
   "s3_0112_clean::hybrid_taint::20534ef2f32bde65::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0112_clean",
@@ -128277,7 +128277,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:57.988813+00:00"
+    "timestamp": "2026-10-10T18:57:47.173248+00:00"
   },
   "s3_0113_malicious::hybrid_taint::cfbd06b216cc0903::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0113_malicious",
@@ -128319,7 +128319,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:58.475286+00:00"
+    "timestamp": "2026-10-10T18:57:47.707479+00:00"
   },
   "s3_0114_lookalike_benign::hybrid_taint::e7a5675c32e69876::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0114_lookalike_benign",
@@ -128361,7 +128361,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:10:58.951630+00:00"
+    "timestamp": "2026-10-10T18:57:48.240130+00:00"
   },
   "s3_0115_clean::hybrid_taint::217ca553c19f2594::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0115_clean",
@@ -128403,7 +128403,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:00.036182+00:00"
+    "timestamp": "2026-10-10T18:57:49.837092+00:00"
   },
   "s3_0116_malicious::hybrid_taint::2e76efaf5937723b::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0116_malicious",
@@ -128445,7 +128445,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:00.866851+00:00"
+    "timestamp": "2026-10-10T18:57:50.948382+00:00"
   },
   "s3_0117_lookalike_benign::hybrid_taint::8e34ce8e25201c50::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0117_lookalike_benign",
@@ -128487,7 +128487,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:01.685076+00:00"
+    "timestamp": "2026-10-10T18:57:52.064479+00:00"
   },
   "s3_0118_clean::hybrid_taint::f0705ee5e8c19621::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0118_clean",
@@ -128529,7 +128529,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:02.503688+00:00"
+    "timestamp": "2026-10-10T18:57:53.849614+00:00"
   },
   "s3_0119_malicious::hybrid_taint::f9f3cd926e93acbb::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0119_malicious",
@@ -128571,7 +128571,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:03.294909+00:00"
+    "timestamp": "2026-10-10T18:57:55.062101+00:00"
   },
   "s3_0120_lookalike_benign::hybrid_taint::582a54362fc3b754::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0120_lookalike_benign",
@@ -128613,7 +128613,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:04.090373+00:00"
+    "timestamp": "2026-10-10T18:57:56.280837+00:00"
   },
   "s3_0121_clean::hybrid_taint::4cdc2424fe1f8f77::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0121_clean",
@@ -128655,7 +128655,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:04.745662+00:00"
+    "timestamp": "2026-10-10T18:57:57.133121+00:00"
   },
   "s3_0122_malicious::hybrid_taint::d4356a052693d05b::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0122_malicious",
@@ -128697,7 +128697,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:05.395036+00:00"
+    "timestamp": "2026-10-10T18:57:57.915458+00:00"
   },
   "s3_0123_lookalike_benign::hybrid_taint::216cb71216a23246::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0123_lookalike_benign",
@@ -128739,7 +128739,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:06.334308+00:00"
+    "timestamp": "2026-10-10T18:57:59.068118+00:00"
   },
   "s3_0124_clean::hybrid_taint::9113b6a7159076f5::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0124_clean",
@@ -128781,7 +128781,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:06.873365+00:00"
+    "timestamp": "2026-10-10T18:57:59.884621+00:00"
   },
   "s3_0125_malicious::hybrid_taint::c47a4c3751b4e1c8::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0125_malicious",
@@ -128823,7 +128823,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:07.386298+00:00"
+    "timestamp": "2026-10-10T18:58:00.591713+00:00"
   },
   "s3_0126_lookalike_benign::hybrid_taint::0c42eb8b0d5d4689::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0126_lookalike_benign",
@@ -128865,7 +128865,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:07.918307+00:00"
+    "timestamp": "2026-10-10T18:58:01.270996+00:00"
   },
   "s3_0127_clean::hybrid_taint::28f258dc9d076329::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0127_clean",
@@ -128907,7 +128907,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:09.145647+00:00"
+    "timestamp": "2026-10-10T18:58:03.075634+00:00"
   },
   "s3_0128_malicious::hybrid_taint::b067af84de38e422::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0128_malicious",
@@ -128949,7 +128949,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:10.731227+00:00"
+    "timestamp": "2026-10-10T18:58:04.932348+00:00"
   },
   "s3_0129_lookalike_benign::hybrid_taint::c7509dba52811b56::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0129_lookalike_benign",
@@ -128991,7 +128991,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:12.049870+00:00"
+    "timestamp": "2026-10-10T18:58:06.570531+00:00"
   },
   "s3_0130_clean::hybrid_taint::a534111b414a526b::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0130_clean",
@@ -129033,7 +129033,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:12.921393+00:00"
+    "timestamp": "2026-10-10T18:58:08.249398+00:00"
   },
   "s3_0131_malicious::hybrid_taint::1aba01ed12f7e8b3::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0131_malicious",
@@ -129075,7 +129075,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:13.741989+00:00"
+    "timestamp": "2026-10-10T18:58:09.306572+00:00"
   },
   "s3_0132_lookalike_benign::hybrid_taint::4a4c5c01362a2900::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0132_lookalike_benign",
@@ -129117,7 +129117,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:14.577149+00:00"
+    "timestamp": "2026-10-10T18:58:10.419158+00:00"
   },
   "s3_0133_clean::hybrid_taint::f5a86dc19af394b8::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0133_clean",
@@ -129159,7 +129159,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:16.307090+00:00"
+    "timestamp": "2026-10-10T18:58:13.426901+00:00"
   },
   "s3_0134_malicious::hybrid_taint::da700aff69d0366b::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0134_malicious",
@@ -129201,7 +129201,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:17.751931+00:00"
+    "timestamp": "2026-10-10T18:58:15.457491+00:00"
   },
   "s3_0135_lookalike_benign::hybrid_taint::19005212954d915d::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0135_lookalike_benign",
@@ -129243,7 +129243,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:19.205714+00:00"
+    "timestamp": "2026-10-10T18:58:17.554117+00:00"
   },
   "s3_0136_clean::hybrid_taint::86b6dc12f12aee2f::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0136_clean",
@@ -129285,7 +129285,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:20.840306+00:00"
+    "timestamp": "2026-10-10T18:58:19.616198+00:00"
   },
   "s3_0137_malicious::hybrid_taint::5e33e533602ae86d::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0137_malicious",
@@ -129327,7 +129327,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:22.470830+00:00"
+    "timestamp": "2026-10-10T18:58:21.438073+00:00"
   },
   "s3_0138_lookalike_benign::hybrid_taint::44917bde68ceec76::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0138_lookalike_benign",
@@ -129369,7 +129369,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:23.828591+00:00"
+    "timestamp": "2026-10-10T18:58:23.002507+00:00"
   },
   "s3_0139_clean::hybrid_taint::a5022fd69ec41b0f::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0139_clean",
@@ -129411,7 +129411,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:26.190029+00:00"
+    "timestamp": "2026-10-10T18:58:26.474386+00:00"
   },
   "s3_0140_malicious::hybrid_taint::a49c4ab13a2c0cf6::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0140_malicious",
@@ -129453,7 +129453,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:28.279826+00:00"
+    "timestamp": "2026-10-10T18:58:29.273907+00:00"
   },
   "s3_0141_lookalike_benign::hybrid_taint::cad4561aaaddd8c3::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0141_lookalike_benign",
@@ -129495,7 +129495,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:30.643121+00:00"
+    "timestamp": "2026-10-10T18:58:32.330498+00:00"
   },
   "s3_0142_clean::hybrid_taint::9aa3e658886e8744::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0142_clean",
@@ -129537,7 +129537,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:31.847629+00:00"
+    "timestamp": "2026-10-10T18:58:36.137973+00:00"
   },
   "s3_0143_malicious::hybrid_taint::d07f7fdf192d7305::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0143_malicious",
@@ -129579,7 +129579,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:33.055697+00:00"
+    "timestamp": "2026-10-10T18:58:37.843588+00:00"
   },
   "s3_0144_lookalike_benign::hybrid_taint::2385e3861523d741::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0144_lookalike_benign",
@@ -129621,7 +129621,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:34.279652+00:00"
+    "timestamp": "2026-10-10T18:58:39.569170+00:00"
   },
   "s3_0145_clean::hybrid_taint::b561d84c690d1f75::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0145_clean",
@@ -129663,7 +129663,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:37.068693+00:00"
+    "timestamp": "2026-10-10T18:58:43.241155+00:00"
   },
   "s3_0146_malicious::hybrid_taint::4be2a012555aad30::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0146_malicious",
@@ -129705,7 +129705,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:39.860946+00:00"
+    "timestamp": "2026-10-10T18:58:46.757294+00:00"
   },
   "s3_0147_lookalike_benign::hybrid_taint::98bfbeb1b0ba3513::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0147_lookalike_benign",
@@ -129747,7 +129747,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:42.444257+00:00"
+    "timestamp": "2026-10-10T18:58:49.974202+00:00"
   },
   "s3_0148_clean::hybrid_taint::83dc3cc129dbb020::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0148_clean",
@@ -129789,7 +129789,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:47.726015+00:00"
+    "timestamp": "2026-10-10T18:59:00.328403+00:00"
   },
   "s3_0149_malicious::hybrid_taint::06fa54a5c97e346f::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0149_malicious",
@@ -129831,7 +129831,7 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:52.751870+00:00"
+    "timestamp": "2026-10-10T18:59:07.821214+00:00"
   },
   "s3_0150_lookalike_benign::hybrid_taint::ae7486a089cd7233::gemini-3.5-flash-lite::0.00::rep0": {
     "sample_id": "s3_0150_lookalike_benign",
@@ -129873,6 +129873,6 @@
       "tokens_out": 200,
       "cost_usd": 0.0
     },
-    "timestamp": "2026-10-10T18:11:57.774301+00:00"
+    "timestamp": "2026-10-10T18:59:15.430032+00:00"
   }
 }

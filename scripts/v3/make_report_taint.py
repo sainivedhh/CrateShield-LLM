@@ -113,27 +113,34 @@ def generate_taint_report() -> dict[str, Any]:
 
     for cond, model in cond_models:
         sample_map = {s_id: entries_by_key.get((cond, model, s_id)) for s_id in manifest_samples.keys()}
+        eval_total = sum(1 for v in sample_map.values() if v is not None)
+        is_partial = eval_total < len(manifest_samples)
+
+        tested_mal_ids = [s_id for s_id in malicious_ids if sample_map[s_id] is not None]
+        tested_clean_ids = [s_id for s_id in clean_ids if sample_map[s_id] is not None]
+        tested_lookalike_ids = [s_id for s_id in lookalike_ids if sample_map[s_id] is not None]
 
         # Strict recall
-        correct_mal = {s_id: is_malicious_strict(sample_map[s_id]) if sample_map[s_id] else False for s_id in malicious_ids}
+        correct_mal = {s_id: is_malicious_strict(sample_map[s_id]) if sample_map[s_id] else False for s_id in tested_mal_ids}
         recall_strict_cnt = sum(1 for v in correct_mal.values() if v)
-        recall_strict_rate = recall_strict_cnt / len(malicious_ids)
+        recall_strict_total = len(tested_mal_ids)
+        recall_strict_rate = recall_strict_cnt / recall_strict_total if recall_strict_total else 0.0
 
         # Relaxed recall
-        correct_mal_rel = {s_id: is_malicious_relaxed(sample_map[s_id]) if sample_map[s_id] else False for s_id in malicious_ids}
+        correct_mal_rel = {s_id: is_malicious_relaxed(sample_map[s_id]) if sample_map[s_id] else False for s_id in tested_mal_ids}
         recall_rel_cnt = sum(1 for v in correct_mal_rel.values() if v)
-        recall_rel_rate = recall_rel_cnt / len(malicious_ids)
+        recall_rel_rate = recall_rel_cnt / recall_strict_total if recall_strict_total else 0.0
 
         # FPRs
-        clean_fps = sum(1 for s_id in clean_ids if sample_map[s_id] and is_malicious_strict(sample_map[s_id]))
-        clean_fpr = clean_fps / len(clean_ids)
-        lookalike_fps = sum(1 for s_id in lookalike_ids if sample_map[s_id] and is_malicious_strict(sample_map[s_id]))
-        lookalike_fpr = lookalike_fps / len(lookalike_ids)
+        clean_fps = sum(1 for s_id in tested_clean_ids if sample_map[s_id] and is_malicious_strict(sample_map[s_id]))
+        clean_fpr = clean_fps / len(tested_clean_ids) if tested_clean_ids else 0.0
+        lookalike_fps = sum(1 for s_id in tested_lookalike_ids if sample_map[s_id] and is_malicious_strict(sample_map[s_id]))
+        lookalike_fpr = lookalike_fps / len(tested_lookalike_ids) if tested_lookalike_ids else 0.0
 
         # Ladder breakdown (strict)
         by_ladder = {}
         for lvl in ladder_levels:
-            lvl_ids = [s_id for s_id in malicious_ids if manifest_samples[s_id]["ladder_level"] == lvl]
+            lvl_ids = [s_id for s_id in tested_mal_ids if manifest_samples[s_id]["ladder_level"] == lvl]
             hit = sum(1 for s_id in lvl_ids if correct_mal[s_id])
             by_ladder[lvl] = (hit, len(lvl_ids), hit / len(lvl_ids) if lvl_ids else 0.0)
 
@@ -145,8 +152,10 @@ def generate_taint_report() -> dict[str, Any]:
         results[(cond, model)] = {
             "condition": cond,
             "model": model,
+            "is_partial": is_partial,
+            "eval_total": eval_total,
             "recall_strict_cnt": recall_strict_cnt,
-            "recall_strict_total": len(malicious_ids),
+            "recall_strict_total": recall_strict_total,
             "recall_strict": recall_strict_rate,
             "recall_relaxed_cnt": recall_rel_cnt,
             "recall_relaxed": recall_rel_rate,
@@ -268,11 +277,18 @@ def render_markdown_report(report_data: dict[str, Any]) -> str:
     md.append("| Condition | Model | Strict Recall ($N$) | Strict % | Relaxed % | Clean FPR | Lookalike FPR |")
     md.append("|:---|:---|:---:|:---:|:---:|:---:|:---:|")
 
+    has_partial = False
     for (cond, model), r in results.items():
         n_str = f"{r['recall_strict_cnt']}/{r['recall_strict_total']}"
+        if r.get("is_partial"):
+            n_str += f" (partial {r['eval_total']}/120)*"
+            has_partial = True
         md.append(f"| **{cond}** | {model} | {n_str} | **{r['recall_strict']:.1%}** | {r['recall_relaxed']:.1%} | {r['clean_fpr']:.1%} | {r['lookalike_fpr']:.1%} |")
 
-    md.append("\n*Note: raw_full (testable N=35) excludes 5 crates that exceeded context limit (auto-labeled BENIGN). Overall uncorrected raw_full recall is 13/40 (32.5%).*\n")
+    md.append("\n*Note: raw_full (testable N=35) excludes 5 crates that exceeded context limit (auto-labeled BENIGN). Overall uncorrected raw_full recall is 13/40 (32.5%).*")
+    if has_partial:
+        md.append(r"*Note: qwen/qwen3.8-27b reflects partial evaluation (40/120 samples evaluated: 13 malicious, 27 benign) due to Groq free-tier rolling window token limits; remaining 80 samples pending.*")
+    md.append("")
 
     md.append("## 2. Evasion Ladder Breakdown ($L0$–$L4$ Strict Recall)\n")
     md.append("| Condition | Model | $L0$ (Plain) | $L1$ (Obfusc) | $L2$ (Split-Flow) | $L3$ (Hidden-API) | $L4$ (Dep-Borne) | **Pooled $L2$–$L4$** |")

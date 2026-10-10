@@ -5,22 +5,23 @@
 
 ---
 
-## 1. Provider API Quota Exhaustion for Gemini
+## 1. Provider API Key Refresh for Gemini Confirmatory Run
 
-- **Observation:** Attempts to invoke `gemini-3.5-flash-lite` with the provided API key returned HTTP 429 (`RESOURCE_EXHAUSTED: Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 500, model: gemini-3.5-flash-lite, retryDelay: 21535s (~5.5 hours)`).
-- **Cause:** The earlier full confirmatory runs on Benchmark v3 executed 1,905 calls, consuming the 500 requests/day free-tier allotment on Google AI Studio.
+- **Observation:** Initial attempts to invoke `gemini-3.5-flash-lite` with earlier keys returned HTTP 429 (`RESOURCE_EXHAUSTED: Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 500, model: gemini-3.5-flash-lite`) due to project-level daily quota exhaustion.
 - **Protocol Action:**
-  - In accordance with the prompt guidance (*"Then run on qwen/qwen3.8-27b with ITPM pacing — don't let it go pending-forever like last run; if it will take hours, say so upfront and run it to completion in the background rather than skipping it"*), the live evaluation is executed on `qwen/qwen3.8-27b` via Groq.
-  - The dry-run estimate for `gemini-3.5-flash-lite` is recorded (120 calls, 431,415 input tokens, 24,000 output tokens, $0.0396 USD estimated cost).
+  - The user provided a fresh Gemini API key created under a new project (`AQ.Ab8RN6KWYk7rb3...`).
+  - `load_dotenv(override=True)` was explicitly set in `run_eval.py`, `run_eval_taint.py`, and `src/crateshield/config.py` to ensure process environment precedence over stale OS variables.
+  - The full 120-call confirmatory evaluation for `hybrid_taint` on `gemini-3.5-flash-lite` was successfully executed to 100% completion (120 calls, 508,372 tokens in, 33,851 tokens out, $0.048284 USD spend).
 
 ---
 
-## 2. Dynamic Pacing for Groq Rate Limits
+## 2. Dynamic Pacing and Free-Tier Token Window for Groq (`qwen/qwen3.8-27b`)
 
-- **Observation:** Groq enforces strict free-tier rate limits: 8,000 input tokens/minute (ITPM) and 30 requests/minute (RPM). Last run, rows 11–13 stalled due to unpaced burst submissions.
+- **Observation:** Groq enforces strict free-tier rate limits: 8,000 input tokens/minute (ITPM) and a rolling window daily token cap. After 40 samples, Groq returns 429 backoff headers requiring 300s–1,400s pauses for bucket refill.
 - **Protocol Action:**
   - Implemented dynamic token bucket tracking via `x-ratelimit-remaining-tokens` and `Retry-After` headers in `run_eval.py`.
-  - When remaining tokens in the Groq bucket fall below 3,500, the runner pauses for token replenishment (130 tokens/second), preventing HTTP 429 errors and ensuring 100% completion without stalls.
+  - The cross-model Groq evaluation completed 40/120 samples (13 malicious, 27 benign) with 0.0% strict / 46.2% relaxed recall on tested malicious samples and 0.0% FPR.
+  - The remaining 80 samples are queued for paced background completion.
 
 ---
 
