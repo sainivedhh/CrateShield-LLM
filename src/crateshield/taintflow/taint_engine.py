@@ -36,8 +36,8 @@ class TaintEngine:
         found_paths: list[TaintPath] = []
         seen_path_keys: set[tuple[str, ...]] = set()
 
-        source_nodes = callgraph.get_source_nodes()
-        sink_nodes = callgraph.get_sink_nodes()
+        source_nodes = sorted(callgraph.get_source_nodes(), key=lambda n: n.id)
+        sink_nodes = sorted(callgraph.get_sink_nodes(), key=lambda n: n.id)
         sink_ids = {s.id for s in sink_nodes}
 
         # 1. Intra-procedural paths (single function containing both source and sink)
@@ -69,7 +69,7 @@ class TaintEngine:
                 if len(path_nodes) > self.max_depth:
                     continue
 
-                for callee_id in callgraph.forward_edges.get(curr_id, set()):
+                for callee_id in sorted(callgraph.forward_edges.get(curr_id, set())):
                     if callee_id in visited:
                         continue
                     callee_fn = callgraph.nodes.get(callee_id)
@@ -95,10 +95,10 @@ class TaintEngine:
 
         # 3. Coordinator / Common-Caller paths (Source <- Coordinator -> Sink)
         # Find functions that call a source and also call a sink (or chain to sink)
-        for coord_id, coord_fn in callgraph.nodes.items():
+        for coord_id, coord_fn in sorted(callgraph.nodes.items()):
             callees = callgraph.forward_edges.get(coord_id, set())
-            called_sources = [cid for cid in callees if cid in [s.id for s in source_nodes]]
-            called_sinks = [cid for cid in callees if cid in sink_ids]
+            called_sources = sorted([cid for cid in callees if cid in [s.id for s in source_nodes]])
+            called_sinks = sorted([cid for cid in callees if cid in sink_ids])
 
             for s_id in called_sources:
                 s_fn = callgraph.nodes[s_id]
@@ -115,6 +115,6 @@ class TaintEngine:
                             seen_path_keys.add(tp.node_ids)
                             found_paths.append(tp)
 
-        # Sort paths by length (shortest first)
-        found_paths.sort(key=lambda p: (p.length, len(p.source_desc)))
+        # Sort paths deterministically by length, source desc, sink desc, and node ids
+        found_paths.sort(key=lambda p: (p.length, p.source_desc, p.sink_desc, [n.id for n in p.nodes]))
         return found_paths

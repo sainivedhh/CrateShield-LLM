@@ -115,3 +115,59 @@ def test_prompt_construction():
     assert "<untrusted_crate_data>" in user_msg
     assert "</untrusted_crate_data>" in user_msg
     assert "=== Taint Flow Path 1 ===" in user_msg
+
+
+def test_hybrid_taint_dry_run_cache_bypass(monkeypatch):
+    """Verify that a stale dry_run=True cache entry for hybrid_taint is bypassed on a live call."""
+    import json
+    from scripts.v3.run_eval import evaluate_sample_v3
+
+    cache = {}
+    sample_meta = {
+        "sample_id": "s3_0035_malicious",
+        "pair_id": "pair_01",
+        "cluster_id": "sha2",
+        "split": "eval",
+        "twin_type": "malicious",
+        "label": "MALICIOUS",
+        "family": "F1",
+        "seen_or_heldout": "SEEN",
+        "ladder_level": "L1",
+    }
+
+    # 1. Execute dry run for hybrid_taint
+    dry_res = evaluate_sample_v3(sample_meta, "hybrid_taint", "gemini-3.5-flash-lite", cache, repeat=0, dry_run=True)
+    assert dry_res["dry_run"] is True
+    assert dry_res["finish_reason"] == "dry_run"
+
+    # Ensure dry_run entry exists in cache
+    assert len(cache) == 1
+    cache_key = next(iter(cache.keys()))
+    assert cache[cache_key]["dry_run"] is True
+
+    # 2. Mock call_model_api to track live invocation
+    call_count = 0
+    def mock_call_model_api(*args, **kwargs):
+        nonlocal call_count
+        call_count += 1
+        return json.dumps({
+            "classification": "MALICIOUS",
+            "confidence": "HIGH",
+            "malware_score": 0.95,
+            "reasoning": "verified live call"
+        }), 100, 50, 0.001, "STOP"
+
+    monkeypatch.setattr("scripts.v3.run_eval.call_model_api", mock_call_model_api)
+
+    # 3. Execute live run (dry_run=False) with the dry-run polluted cache
+    live_res = evaluate_sample_v3(sample_meta, "hybrid_taint", "gemini-3.5-flash-lite", cache, repeat=0, dry_run=False)
+    assert call_count == 1, "Live call must NOT treat stale dry_run entry as a cache hit!"
+    assert live_res["dry_run"] is False
+    assert live_res["classification"]["classification"] == "MALICIOUS"
+    assert live_res["finish_reason"] == "STOP"
+
+    # 4. Execute second live run: must hit the live cache entry without another API call
+    second_live_res = evaluate_sample_v3(sample_meta, "hybrid_taint", "gemini-3.5-flash-lite", cache, repeat=0, dry_run=False)
+    assert call_count == 1, "Second live call must hit live cache!"
+    assert second_live_res["classification"]["classification"] == "MALICIOUS"
+

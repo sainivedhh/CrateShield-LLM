@@ -36,7 +36,12 @@ from harness.baselines import run_grep_baseline, run_rule_only_baseline, run_siz
 from harness.gen_v3.config import PRICE_TABLE, TRACKER
 from harness.hybrid import build_hybrid_prompt, extract_targeted_code_windows
 from harness.hybrid_fallback import build_hybrid_fallback_prompt, extract_fallback_code_windows
+from harness.hybrid_taint import build_hybrid_taint_prompt
+from crateshield.taintflow.extractor import extract_taint_context
 from harness.view import build_anonymized_view
+
+from dotenv import load_dotenv
+load_dotenv()
 
 import requests
 
@@ -131,37 +136,54 @@ def call_model_api(
             "max_tokens": 1024,
         }
         resp = None
-        for attempt in range(6):
+        for attempt in range(10):
             try:
-                resp = requests.post(url, headers=headers, json=payload, timeout=30)
+                resp = requests.post(url, headers=headers, json=payload, timeout=45)
                 if resp.status_code in (429, 503):
-                    delay = 4 * (attempt + 1)
+                    delay = 5 * (attempt + 1)
                     retry_after = resp.headers.get("Retry-After")
                     if retry_after:
                         try:
-                            delay = max(delay, float(retry_after))
+                            delay = max(delay, float(retry_after) + 1.0)
                         except ValueError:
                             pass
-                    logger.warning("Groq rate limit (%d), waiting %.1fs (attempt %d/6)...", resp.status_code, delay, attempt + 1)
+                    logger.warning("Groq rate limit (%d), waiting %.1fs (attempt %d/10)...", resp.status_code, delay, attempt + 1)
                     time.sleep(delay)
                     continue
                 break
-            except requests.RequestException:
-                time.sleep(3 * (attempt + 1))
+            except requests.RequestException as e:
+                logger.warning("Groq request exception: %s (attempt %d/10)", e, attempt + 1)
+                time.sleep(4 * (attempt + 1))
         if resp is None or resp.status_code != 200:
             err_msg = resp.text[:300] if resp is not None else "No response"
-            logger.warning("Groq call failed: %s; falling back to gemini-3.5-flash-lite", err_msg)
-            return call_model_api("gemini-3.5-flash-lite", messages, temperature, dry_run)
+            raise RuntimeError(f"Groq API call failed after retries: {err_msg}")
         data = resp.json()
         choices = data.get("choices", [])
         if not choices:
-            raise RuntimeError("Groq returned no choices")
+            raise RuntimeError(f"Groq returned no choices: {data}")
         text = choices[0].get("message", {}).get("content", "")
         usage = data.get("usage", {})
         tokens_in = usage.get("prompt_tokens", est_in)
         tokens_out = usage.get("completion_tokens", est_out)
         cost = TRACKER.record_usage(model, tokens_in, tokens_out)
-        time.sleep(1.0)
+
+        # Dynamic token bucket pacing for Groq (8,000 ITPM limit)
+        rem_tokens_str = resp.headers.get("x-ratelimit-remaining-tokens")
+        if rem_tokens_str:
+            try:
+                rem_tokens = int(rem_tokens_str)
+                if rem_tokens < 3500:
+                    needed_refill = 3500 - rem_tokens
+                    sleep_needed = (needed_refill / 130.0) + 1.0
+                    logger.info("Groq token buffer low (%d remaining); pacing sleep for %.1fs...", rem_tokens, sleep_needed)
+                    time.sleep(sleep_needed)
+                else:
+                    time.sleep(1.0)
+            except ValueError:
+                time.sleep(2.0)
+        else:
+            time.sleep(2.0)
+
         return text, tokens_in, tokens_out, cost, "STOP"
 
     if not GEMINI_API_KEY:
@@ -350,6 +372,13 @@ def evaluate_sample_v3(
         code_windows = extract_fallback_code_windows(view)
         retrieved = retrieve_context(signals, top_k=3, exclude_crates={sample_meta["cluster_id"]})
         messages = build_hybrid_fallback_prompt(signals, code_windows, retrieved_context=retrieved)
+
+    elif condition == "hybrid_taint":
+        signals = extract_all_signals(view)
+        signals.pop("analysis_timestamp", None)
+        taint_context = extract_taint_context(view, manifest_sample=sample_meta)
+        retrieved = retrieve_context(signals, top_k=3, exclude_crates={sample_meta["cluster_id"]})
+        messages = build_hybrid_taint_prompt(signals, taint_context, retrieved_context=retrieved)
 
     else:
         raise ValueError(f"Unknown condition: {condition}")
