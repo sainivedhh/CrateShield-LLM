@@ -310,7 +310,8 @@ def evaluate_sample_v3(
     exceeds_context = False
 
     if condition == "raw":
-        packed = pack_source(view, budget_chars=60000)
+        raw_budget = 20000 if ("qwen" in model.lower() or "groq" in model.lower()) else 60000
+        packed = pack_source(view, budget_chars=raw_budget)
         messages = build_raw_prompt(view["name"], view["version"], packed["text"], packed.get("truncation_note"))
 
     elif condition == "raw_full":
@@ -432,7 +433,7 @@ def evaluate_sample_v3(
     return res
 
 
-def run_evaluation_suite(dry_run: bool = False, seed: int = 42) -> dict[str, Any]:
+def run_evaluation_suite(dry_run: bool = False, seed: int = 42, secondary_only: bool = False) -> dict[str, Any]:
     with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
         manifest = json.load(f)
 
@@ -451,38 +452,39 @@ def run_evaluation_suite(dry_run: bool = False, seed: int = 42) -> dict[str, Any
     primary_model = "gemini-3.5-flash-lite"
     secondary_model = "qwen/qwen3.8-27b"
 
-    print(f"Starting evaluation suite across {len(eval_samples)} eval samples (Dry Run: {dry_run})")
+    print(f"Starting evaluation suite across {len(eval_samples)} eval samples (Dry Run: {dry_run}, Secondary Only: {secondary_only})")
     print(f"Repeat subset: {len(repeat_subset)} samples for 3 repeats")
 
-    # 1. Run Baselines
-    for b in baselines:
-        print(f"Evaluating Baseline: {b}...")
-        for s in eval_samples:
-            evaluate_sample_v3(s, b, "baseline", cache, repeat=0, dry_run=dry_run)
-        save_eval_cache(cache, dry_run=dry_run)
+    if not secondary_only:
+        # 1. Run Baselines
+        for b in baselines:
+            print(f"Evaluating Baseline: {b}...")
+            for s in eval_samples:
+                evaluate_sample_v3(s, b, "baseline", cache, repeat=0, dry_run=dry_run)
+            save_eval_cache(cache, dry_run=dry_run)
 
-    # 2. Run Primary Model (gemini-3.5-flash-lite) across all 6 conditions
-    for cond in primary_conditions:
-        print(f"Evaluating Primary Model ({primary_model}) on condition: {cond}...")
-        for i, s in enumerate(eval_samples, 1):
-            evaluate_sample_v3(s, cond, primary_model, cache, repeat=0, temperature=0.0, dry_run=dry_run)
-            if i % 10 == 0:
+        # 2. Run Primary Model (gemini-3.5-flash-lite) across all 6 conditions
+        for cond in primary_conditions:
+            print(f"Evaluating Primary Model ({primary_model}) on condition: {cond}...")
+            for i, s in enumerate(eval_samples, 1):
+                evaluate_sample_v3(s, cond, primary_model, cache, repeat=0, temperature=0.0, dry_run=dry_run)
+                if i % 10 == 0:
+                    save_eval_cache(cache, dry_run=dry_run)
+            save_eval_cache(cache, dry_run=dry_run)
+
+            # 3 repeats on 20% subset at T=0.0 (H7 determinism)
+            print(f"  Running 3 repeats (T=0.0) for {cond} x {primary_model} on 20% subset...")
+            for rep in (1, 2, 3):
+                for s in repeat_subset:
+                    evaluate_sample_v3(s, cond, primary_model, cache, repeat=rep, temperature=0.0, dry_run=dry_run)
                 save_eval_cache(cache, dry_run=dry_run)
-        save_eval_cache(cache, dry_run=dry_run)
 
-        # 3 repeats on 20% subset at T=0.0 (H7 determinism)
-        print(f"  Running 3 repeats (T=0.0) for {cond} x {primary_model} on 20% subset...")
-        for rep in (1, 2, 3):
-            for s in repeat_subset:
-                evaluate_sample_v3(s, cond, primary_model, cache, repeat=rep, temperature=0.0, dry_run=dry_run)
-            save_eval_cache(cache, dry_run=dry_run)
-
-        # 3 repeats on 20% subset at T=0.7 (H8 sampling variance)
-        print(f"  Running 3 repeats (T=0.7) for {cond} x {primary_model} on 20% subset...")
-        for rep in (1, 2, 3):
-            for s in repeat_subset:
-                evaluate_sample_v3(s, cond, primary_model, cache, repeat=rep, temperature=0.7, dry_run=dry_run)
-            save_eval_cache(cache, dry_run=dry_run)
+            # 3 repeats on 20% subset at T=0.7 (H8 sampling variance)
+            print(f"  Running 3 repeats (T=0.7) for {cond} x {primary_model} on 20% subset...")
+            for rep in (1, 2, 3):
+                for s in repeat_subset:
+                    evaluate_sample_v3(s, cond, primary_model, cache, repeat=rep, temperature=0.7, dry_run=dry_run)
+                save_eval_cache(cache, dry_run=dry_run)
 
     # 3. Run Secondary Model (qwen/qwen3.8-27b on Groq) on raw, structured, hybrid (H6 model transfer)
     for cond in secondary_conditions:
@@ -503,5 +505,6 @@ def run_evaluation_suite(dry_run: bool = False, seed: int = 42) -> dict[str, Any
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Benchmark v3 evaluation")
     parser.add_argument("--dry-run", action="store_true", help="Perform dry run with planned calls & cost")
+    parser.add_argument("--secondary-only", action="store_true", help="Run only secondary model conditions on Groq")
     args = parser.parse_args()
-    run_evaluation_suite(dry_run=args.dry_run)
+    run_evaluation_suite(dry_run=args.dry_run, secondary_only=args.secondary_only)

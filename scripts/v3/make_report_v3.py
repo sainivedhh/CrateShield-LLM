@@ -135,12 +135,17 @@ def generate_report_v3() -> dict[str, Any]:
     eval_samples = [s for s in samples if s["split"] == "eval"]
     assert len(eval_samples) == 120, f"Expected 120 eval samples, got {len(eval_samples)}"
 
-    # Group cache entries by condition and model (repeat 0)
-    entries_by_cond_model = collections.defaultdict(list)
+    # Group cache entries by condition and model (repeat 0, temperature 0.0), taking latest timestamp per sample
+    latest_by_key = {}
     for entry in cache.values():
-        if entry.get("split") == "eval" and entry.get("repeat", 0) == 0:
-            key = (entry["condition"], entry["model"])
-            entries_by_cond_model[key].append(entry)
+        if entry.get("split") == "eval" and entry.get("repeat", 0) == 0 and entry.get("temperature", 0.0) == 0.0:
+            k = (entry["condition"], entry["model"], entry["sample_id"])
+            if k not in latest_by_key or entry.get("timestamp", "") > latest_by_key[k].get("timestamp", ""):
+                latest_by_key[k] = entry
+
+    entries_by_cond_model = collections.defaultdict(list)
+    for (cond, model, _), entry in latest_by_key.items():
+        entries_by_cond_model[(cond, model)].append(entry)
 
     summary: dict[str, Any] = {
         "benchmark_version": "v3",

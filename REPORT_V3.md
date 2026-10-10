@@ -2,9 +2,9 @@
 
 ## Executive Headline
 
-- **Benchmark Status**: **CONFIRMED (NON-SATURATED)** (Raw-Full strict recall on L2-L4 is **0.0%** <= 85%).
-- **Primary Hypothesis H3**: **EQUIVALENCE CONFIRMED (|delta| < 0.10)** (Hybrid-Fallback vs Raw-Full differ by +0.000 with margin +/-0.10).
-- **Generalisation (H5)**: **GENERALISATION SUPPORTED (|delta| <= 0.10)** (Seen recall: 0.0%, Held-Out recall: 0.0%).
+- **Benchmark Status**: **CONFIRMED (NON-SATURATED)** (Raw-Full strict recall on L2-L4 is **16.7%** <= 85%).
+- **Primary Hypothesis H3**: **NOT EQUIVALENT** (Hybrid-Fallback vs Raw-Full differ by -0.125 with margin +/-0.10).
+- **Generalisation (H5)**: **GENERALISATION SUPPORTED (|delta| <= 0.10)** (Seen recall: 32.0%, Held-Out recall: 33.3%).
 - **Behavioural Discrimination (H6)**: Lookalike-benign FPR measured separately from clean twins (identifies semantic vs syntactic false positives).
 
 ## Headline Metric Table (Confirmatory Eval Split, N=120 samples across 40 clusters)
@@ -15,31 +15,35 @@
 | `grep` | `baseline` | **32.5%** [0.19, 0.49] | 12.5% | 12.5% | 0 | $0.00000 |
 | `rule_only` | `baseline` | **5.0%** [0.01, 0.17] | 5.0% | 5.0% | 0 | $0.00000 |
 | `cargo_audit` | `baseline` | **0.0%** [0.00, 0.09] | 0.0% | 0.0% | 0 | $0.00000 |
-| `hybrid` | `gemini-3.5-flash-lite` | **20.0%** [0.06, 0.44] | 0.0% | 5.0% | 3729 | $0.00036 |
+| `hybrid` | `gemini-3.5-flash-lite` | **12.5%** [0.04, 0.27] | 0.0% | 2.5% | 4391 | $0.00041 |
+| `hybrid_fallback` | `gemini-3.5-flash-lite` | **20.0%** [0.09, 0.36] | 0.0% | 10.0% | 7759 | $0.00067 |
+| `naive_full` | `gemini-3.5-flash-lite` | **37.5%** [0.23, 0.54] | 0.0% | 25.0% | 108221 | $0.00816 |
+| `raw` | `gemini-3.5-flash-lite` | **42.5%** [0.27, 0.59] | 0.0% | 10.0% | 19960 | $0.00155 |
+| `raw_full` | `gemini-3.5-flash-lite` | **32.5%** [0.19, 0.49] | 0.0% | 2.5% | 62066 | $0.00470 |
 | `structured` | `gemini-3.5-flash-lite` | **0.0%** [0.00, 0.09] | 0.0% | 0.0% | 3362 | $0.00034 |
 
 ## Preregistered Hypothesis Verdicts (H1 - H8)
 
 | Hypothesis | Preregistered Decision Rule | Observed Metric | Verdict |
 |---|---|---|---|
-| **H1: Non-Saturation** | raw_full strict recall on L2-L4 <= 0.85 | 0.0% | **CONFIRMED (NON-SATURATED)** |
-| **H2: Monotonicity** | grep & raw_full recall decrease from L0 to L4 | L0=0.00 -> L4=0.00 | **PARTIALLY SUPPORTED / NON-MONOTONIC** |
-| **H3: Equivalence** | hybrid_fallback vs raw_full delta within +/-0.10 | delta=+0.000, p_TOST=0.0000 | **EQUIVALENCE CONFIRMED (|delta| < 0.10)** |
-| **H4: Prompt Effect** | raw_full vs naive_full equivalent within +/-0.10 | delta=+0.000, p_TOST=0.0000 | **EQUIVALENT (|delta| < 0.10)** |
-| **H5: Generalisation** | Held-out vs seen families recall within 0.10 | gap=+0.000 (Seen=0.0%, Held=0.0%) | **GENERALISATION SUPPORTED (|delta| <= 0.10)** |
+| **H1: Non-Saturation** | raw_full strict recall on L2-L4 <= 0.85 | 16.7% | **CONFIRMED (NON-SATURATED)** |
+| **H2: Monotonicity** | grep & raw_full recall decrease from L0 to L4 | L0=0.50 -> L4=0.25 | **PARTIALLY SUPPORTED / NON-MONOTONIC** |
+| **H3: Equivalence** | hybrid_fallback vs raw_full delta within +/-0.10 | delta=-0.125, p_TOST=0.6119 | **NOT EQUIVALENT** |
+| **H4: Prompt Effect** | raw_full vs naive_full equivalent within +/-0.10 | delta=-0.050, p_TOST=0.2384 | **DIFFERENCE DETECTED (delta = -0.050)** |
+| **H5: Generalisation** | Held-out vs seen families recall within 0.10 | gap=+0.013 (Seen=32.0%, Held=33.3%) | **GENERALISATION SUPPORTED (|delta| <= 0.10)** |
 | **H6: Behavioural Discrimination** | Clopper-Pearson intervals on lookalike-benign | Lookalike FPRs characterised across conditions | **CHARACTERISED (See Table: lookalike FPRs range from 0.0 to 0.35)** |
 | **H7: Circularity** | Extractor-independent subset evaluated | Subset recall robust | **CIRCULARITY ROBUST: Evaluated on extractor-independent subset** |
-| **H8: Model & Repeat Agreement** | Cohen's kappa across 3 repeats on 20% subset | kappa={} | **HIGH REPEAT AGREEMENT (Cohen's kappa: {})** |
+| **H8: Model & Repeat Agreement** | Cohen's kappa across 3 repeats on 20% subset | kappa={'gemini-3.5-flash-lite': 1.0} | **HIGH REPEAT AGREEMENT (Cohen's kappa: {'gemini-3.5-flash-lite': 1.0})** |
 
 ## Difficulty Ladder Decomposition (L0 - L4 Strict Recall)
 
 | Ladder Level | Description | Grep Baseline | Raw Full (Gemini 3.5 Lite) |
 |---|---|---|---|
-| **L0** | Plaintext standalone block | 25.0% | 0.0% |
-| **L1** | Minimal-diff (1-3 lines modified) | 100.0% | 0.0% |
+| **L0** | Plaintext standalone block | 25.0% | 50.0% |
+| **L1** | Minimal-diff (1-3 lines modified) | 100.0% | 62.5% |
 | **L2** | Split-flow across multi-file boundaries | 0.0% | 0.0% |
-| **L3** | Hidden API names (byte arrays / OUT_DIR) | 0.0% | 0.0% |
-| **L4** | Dependency-borne & conditional CI/date triggers | 37.5% | 0.0% |
+| **L3** | Hidden API names (byte arrays / OUT_DIR) | 0.0% | 25.0% |
+| **L4** | Dependency-borne & conditional CI/date triggers | 37.5% | 25.0% |
 
 ## Threat Family Decomposition (Seen vs Held-Out)
 
@@ -65,7 +69,11 @@
 | `grep` (baseline) | 32.5% | 12.5% | 2.6% | 0.26% | 0.026% |
 | `rule_only` (baseline) | 5.0% | 5.0% | 1.0% | 0.10% | 0.010% |
 | `cargo_audit` (baseline) | 0.0% | 0.0% | 0.0% | 0.00% | 0.000% |
-| `hybrid` (gemini-3.5-flash-lite) | 20.0% | 0.0% | 66.9% | 16.68% | 1.961% |
+| `hybrid` (gemini-3.5-flash-lite) | 12.5% | 0.0% | 55.8% | 11.12% | 1.235% |
+| `hybrid_fallback` (gemini-3.5-flash-lite) | 20.0% | 0.0% | 66.9% | 16.68% | 1.961% |
+| `naive_full` (gemini-3.5-flash-lite) | 37.5% | 0.0% | 79.1% | 27.29% | 3.615% |
+| `raw` (gemini-3.5-flash-lite) | 42.5% | 0.0% | 81.1% | 29.85% | 4.077% |
+| `raw_full` (gemini-3.5-flash-lite) | 32.5% | 0.0% | 76.7% | 24.55% | 3.148% |
 | `structured` (gemini-3.5-flash-lite) | 0.0% | 0.0% | 0.0% | 0.00% | 0.000% |
 
 ## Realism Review Status
