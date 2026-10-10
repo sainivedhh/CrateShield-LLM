@@ -1,0 +1,402 @@
+[
+  {
+    "name": "inline-const",
+    "version": "0.1.0",
+    "root": "data\\bench_v1\\base_candidates\\inline-const-0.1.0",
+    "build_class": "env_probing",
+    "size_bytes": 5003,
+    "rs_count": 2
+  },
+  {
+    "name": "proc-macro-error-attr",
+    "version": "1.0.4",
+    "root": "data\\bench_v1\\base_candidates\\proc-macro-error-attr-1.0.4",
+    "build_class": "env_probing",
+    "size_bytes": 8430,
+    "rs_count": 4
+  },
+  {
+    "name": "curveipo",
+    "version": "1.1.0",
+    "root": "data\\bench_v1\\base_candidates\\curveipo-1.1.0",
+    "build_class": "env_probing",
+    "size_bytes": 14946,
+    "rs_count": 2
+  },
+  {
+    "name": "psy-facet",
+    "version": "0.1.1",
+    "root": "data\\bench_v1\\base_candidates\\psy-facet-0.1.1",
+    "build_class": "env_probing",
+    "size_bytes": 20774,
+    "rs_count": 2
+  },
+  {
+    "name": "axio",
+    "version": "0.2.1",
+    "root": "data\\bench_v1\\base_candidates\\axio-0.2.1",
+    "build_class": "env_probing",
+    "size_bytes": 21439,
+    "rs_count": 7
+  },
+  {
+    "name": "hex",
+    "version": "0.4.3",
+    "root": "data\\bench_v3\\base_candidates\\hex-0.4.3",
+    "build_class": "none",
+    "size_bytes": 22803,
+    "rs_count": 6
+  },
+  {
+    "name": "ptr-union",
+    "version": "2.3.0",
+    "root": "data\\bench_v1\\base_candidates\\ptr-union-2.3.0",
+    "build_class": "env_probing",
+    "size_bytes": 29051,
+    "rs_count": 4
+  },
+  {
+    "name": "memoffset",
+    "version": "0.9.1",
+    "root": "data\\bench_v1\\base_candidates\\memoffset-0.9.1",
+    "build_class": "env_probing",
+    "size_bytes": 32124,
+    "rs_count": 5
+  },
+  {
+    "name": "pkg-config",
+    "version": "0.3.30",
+    "root": "data\\bench_v3\\base_candidates\\pkg-config-0.3.30",
+    "build_class": "none",
+    "size_bytes": 51757,
+    "rs_count": 2
+  },
+  {
+    "name": "thiserror",
+    "version": "1.0.64",
+    "root": "data\\bench_v3\\base_candidates\\thiserror-1.0.64",
+    "build_class": "env_probing",
+    "size_bytes": 52460,
+    "rs_count": 49
+  },
+  {
+    "name": "wmemchr",
+    "version": "0.1.0",
+    "root": "data\\bench_v1\\base_candidates\\wmemchr-0.1.0",
+    "build_class": "env_probing",
+    "size_bytes": 65645,
+    "rs_count": 19
+  },
+  {
+    "name": "sha2",
+    "version": "0.10.8",
+    "root": "data\\bench_v3\\base_candidates\\sha2-0.10.8",
+    "build_class": "none",
+    "size_bytes": 82421,
+    "rs_count": 15
+  },
+  {
+    "name": "error-chain",
+    "version": "0.12.4",
+    "root": "data\\bench_v1\\base_candidates\\error-chain-0.12.4",
+    "build_class": "env_probing",
+    "size_bytes": 89329,
+    "rs_count": 15
+  },
+  {
+    "name": "quote",
+    "version": "1.0.37",
+    "root": "data\\bench_v3\\base_candidates\\quote-1.0.37",
+    "build_class": "none",
+    "size_bytes": 97855,
+    "rs_count": 16
+  },
+  {
+    "name": "walkdir",
+    "version": "2.5.0",
+    "root": "data\\bench_v3\\base_candidates\\walkdir-2.5.0",
+    "build_class": "none",
+    "size_bytes": 100537,
+    "rs_count": 7
+  },
+  {
+    "name": "semver",
+    "version": "1.0.23",
+    "root": "data\\extracted\\semver-1.0.23",
+    "build_class": "env_probing",
+    "size_bytes": 103743,
+    "rs_count": 17
+  },
+  {
+    "name": "libloading",
+    "version": "0.8.5",
+    "root": "data\\bench_v3\\base_candidates\\libloading-0.8.5",
+    "build_class": "none",
+    "size_bytes": 104451,
+    "rs_count": 15
+  },
+  {
+    "name": "once_cell",
+    "version": "1.19.0",
+    "root": "data\\bench_v3\\base_candidates\\once_cell-1.19.0",
+    "build_class": "none",
+    "size_bytes": 112416,
+    "rs_count": 18
+  },
+  {
+    "name": "smallvec",
+    "version": "1.13.2",
+    "root": "data\\bench_v3\\base_candidates\\smallvec-1.13.2",
+    "build_class": "none",
+    "size_bytes": 118228,
+    "rs_count": 7
+  },
+  {
+    "name": "tempfile",
+    "version": "3.12.0",
+    "root": "data\\bench_v3\\base_candidates\\tempfile-3.12.0",
+    "build_class": "none",
+    "size_bytes": 120621,
+    "rs_count": 19
+  },
+  {
+    "name": "clap",
+    "version": "4.5.18",
+    "root": "data\\bench_v3\\base_candidates\\clap-4.5.18",
+    "build_class": "none",
+    "size_bytes": 132468,
+    "rs_count": 89
+  },
+  {
+    "name": "bitflags",
+    "version": "2.6.0",
+    "root": "data\\bench_v3\\base_candidates\\bitflags-2.6.0",
+    "build_class": "none",
+    "size_bytes": 144330,
+    "rs_count": 42
+  },
+  {
+    "name": "polyhal",
+    "version": "0.4.0",
+    "root": "data\\bench_v1\\base_candidates\\polyhal-0.4.0",
+    "build_class": "env_probing",
+    "size_bytes": 144578,
+    "rs_count": 80
+  },
+  {
+    "name": "log",
+    "version": "0.4.22",
+    "root": "data\\bench_v3\\base_candidates\\log-0.4.22",
+    "build_class": "none",
+    "size_bytes": 154626,
+    "rs_count": 10
+  },
+  {
+    "name": "crossbeam-epoch",
+    "version": "0.9.18",
+    "root": "data\\bench_v3\\base_candidates\\crossbeam-epoch-0.9.18",
+    "build_class": "none",
+    "size_bytes": 168061,
+    "rs_count": 17
+  },
+  {
+    "name": "async-io",
+    "version": "2.6.0",
+    "root": "data\\bench_v1\\base_candidates\\async-io-2.6.0",
+    "build_class": "env_probing",
+    "size_bytes": 173287,
+    "rs_count": 23
+  },
+  {
+    "name": "indexmap-amortized",
+    "version": "1.6.1",
+    "root": "data\\bench_v1\\base_candidates\\indexmap-amortized-1.6.1",
+    "build_class": "env_probing",
+    "size_bytes": 218712,
+    "rs_count": 21
+  },
+  {
+    "name": "uuid",
+    "version": "1.10.0",
+    "root": "data\\bench_v3\\base_candidates\\uuid-1.10.0",
+    "build_class": "none",
+    "size_bytes": 232623,
+    "rs_count": 22
+  },
+  {
+    "name": "num-traits",
+    "version": "0.2.19",
+    "root": "data\\bench_v1\\base_candidates\\num-traits-0.2.19",
+    "build_class": "env_probing",
+    "size_bytes": 245272,
+    "rs_count": 21
+  },
+  {
+    "name": "base64",
+    "version": "0.22.1",
+    "root": "data\\bench_v3\\base_candidates\\base64-0.22.1",
+    "build_class": "none",
+    "size_bytes": 260439,
+    "rs_count": 25
+  },
+  {
+    "name": "url",
+    "version": "2.5.2",
+    "root": "data\\bench_v3\\base_candidates\\url-2.5.2",
+    "build_class": "none",
+    "size_bytes": 268468,
+    "rs_count": 9
+  },
+  {
+    "name": "bytes",
+    "version": "1.7.1",
+    "root": "data\\bench_v3\\base_candidates\\bytes-1.7.1",
+    "build_class": "none",
+    "size_bytes": 293474,
+    "rs_count": 33
+  },
+  {
+    "name": "futures",
+    "version": "0.3.30",
+    "root": "data\\bench_v3\\base_candidates\\futures-0.3.30",
+    "build_class": "none",
+    "size_bytes": 296643,
+    "rs_count": 60
+  },
+  {
+    "name": "rand",
+    "version": "0.8.5",
+    "root": "data\\bench_v3\\base_candidates\\rand-0.8.5",
+    "build_class": "none",
+    "size_bytes": 298099,
+    "rs_count": 26
+  },
+  {
+    "name": "cc",
+    "version": "1.1.21",
+    "root": "data\\bench_v3\\base_candidates\\cc-1.1.21",
+    "build_class": "none",
+    "size_bytes": 306286,
+    "rs_count": 20
+  },
+  {
+    "name": "hashbrown_tstd",
+    "version": "0.7.1",
+    "root": "data\\bench_v1\\base_candidates\\hashbrown_tstd-0.7.1",
+    "build_class": "env_probing",
+    "size_bytes": 337576,
+    "rs_count": 23
+  },
+  {
+    "name": "corosensei",
+    "version": "0.3.4",
+    "root": "data\\bench_v1\\base_candidates\\corosensei-0.3.4",
+    "build_class": "env_probing",
+    "size_bytes": 357224,
+    "rs_count": 29
+  },
+  {
+    "name": "tracing",
+    "version": "0.1.40",
+    "root": "data\\bench_v3\\base_candidates\\tracing-0.1.40",
+    "build_class": "none",
+    "size_bytes": 387434,
+    "rs_count": 37
+  },
+  {
+    "name": "indexmap",
+    "version": "2.5.0",
+    "root": "data\\bench_v3\\base_candidates\\indexmap-2.5.0",
+    "build_class": "none",
+    "size_bytes": 403340,
+    "rs_count": 31
+  },
+  {
+    "name": "mio",
+    "version": "1.0.2",
+    "root": "data\\bench_v3\\base_candidates\\mio-1.0.2",
+    "build_class": "none",
+    "size_bytes": 414978,
+    "rs_count": 61
+  },
+  {
+    "name": "regex",
+    "version": "1.10.6",
+    "root": "data\\bench_v3\\base_candidates\\regex-1.10.6",
+    "build_class": "none",
+    "size_bytes": 454419,
+    "rs_count": 23
+  },
+  {
+    "name": "crossbeam-channel",
+    "version": "0.5.13",
+    "root": "data\\bench_v3\\base_candidates\\crossbeam-channel-0.5.13",
+    "build_class": "none",
+    "size_bytes": 536142,
+    "rs_count": 34
+  },
+  {
+    "name": "rust_decimal",
+    "version": "1.36.0",
+    "root": "data\\extracted\\rust_decimal-1.36.0",
+    "build_class": "env_probing",
+    "size_bytes": 550415,
+    "rs_count": 33
+  },
+  {
+    "name": "itertools",
+    "version": "0.13.0",
+    "root": "data\\bench_v3\\base_candidates\\itertools-0.13.0",
+    "build_class": "none",
+    "size_bytes": 629866,
+    "rs_count": 71
+  },
+  {
+    "name": "hyper",
+    "version": "1.4.1",
+    "root": "data\\bench_v3\\base_candidates\\hyper-1.4.1",
+    "build_class": "none",
+    "size_bytes": 675483,
+    "rs_count": 59
+  },
+  {
+    "name": "hashbrown",
+    "version": "0.14.5",
+    "root": "data\\bench_v3\\base_candidates\\hashbrown-0.14.5",
+    "build_class": "none",
+    "size_bytes": 790377,
+    "rs_count": 32
+  },
+  {
+    "name": "bindgen",
+    "version": "0.69.4",
+    "root": "data\\extracted\\bindgen-0.69.4",
+    "build_class": "env_probing",
+    "size_bytes": 1018707,
+    "rs_count": 55
+  },
+  {
+    "name": "fastnum2",
+    "version": "0.3.6",
+    "root": "data\\bench_v1\\base_candidates\\fastnum2-0.3.6",
+    "build_class": "env_probing",
+    "size_bytes": 1036452,
+    "rs_count": 278
+  },
+  {
+    "name": "chrono",
+    "version": "0.4.38",
+    "root": "data\\bench_v3\\base_candidates\\chrono-0.4.38",
+    "build_class": "none",
+    "size_bytes": 1245452,
+    "rs_count": 42
+  },
+  {
+    "name": "tokio_wasi",
+    "version": "1.25.2",
+    "root": "data\\bench_v1\\base_candidates\\tokio_wasi-1.25.2",
+    "build_class": "env_probing",
+    "size_bytes": 3077487,
+    "rs_count": 420
+  }
+]

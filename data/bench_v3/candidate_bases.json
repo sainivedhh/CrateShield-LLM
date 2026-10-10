@@ -1,0 +1,138 @@
+[
+  {
+    "name": "async-io",
+    "version": "2.6.0",
+    "root": "data\\bench_v1\\base_candidates\\async-io-2.6.0",
+    "build_class": "env_probing",
+    "size_bytes": 173287,
+    "rs_count": 23
+  },
+  {
+    "name": "axio",
+    "version": "0.2.1",
+    "root": "data\\bench_v1\\base_candidates\\axio-0.2.1",
+    "build_class": "env_probing",
+    "size_bytes": 21439,
+    "rs_count": 7
+  },
+  {
+    "name": "corosensei",
+    "version": "0.3.4",
+    "root": "data\\bench_v1\\base_candidates\\corosensei-0.3.4",
+    "build_class": "env_probing",
+    "size_bytes": 357224,
+    "rs_count": 29
+  },
+  {
+    "name": "curveipo",
+    "version": "1.1.0",
+    "root": "data\\bench_v1\\base_candidates\\curveipo-1.1.0",
+    "build_class": "env_probing",
+    "size_bytes": 14946,
+    "rs_count": 2
+  },
+  {
+    "name": "error-chain",
+    "version": "0.12.4",
+    "root": "data\\bench_v1\\base_candidates\\error-chain-0.12.4",
+    "build_class": "env_probing",
+    "size_bytes": 89329,
+    "rs_count": 15
+  },
+  {
+    "name": "fastnum2",
+    "version": "0.3.6",
+    "root": "data\\bench_v1\\base_candidates\\fastnum2-0.3.6",
+    "build_class": "env_probing",
+    "size_bytes": 1036452,
+    "rs_count": 278
+  },
+  {
+    "name": "hashbrown_tstd",
+    "version": "0.7.1",
+    "root": "data\\bench_v1\\base_candidates\\hashbrown_tstd-0.7.1",
+    "build_class": "env_probing",
+    "size_bytes": 337576,
+    "rs_count": 23
+  },
+  {
+    "name": "indexmap-amortized",
+    "version": "1.6.1",
+    "root": "data\\bench_v1\\base_candidates\\indexmap-amortized-1.6.1",
+    "build_class": "env_probing",
+    "size_bytes": 218712,
+    "rs_count": 21
+  },
+  {
+    "name": "inline-const",
+    "version": "0.1.0",
+    "root": "data\\bench_v1\\base_candidates\\inline-const-0.1.0",
+    "build_class": "env_probing",
+    "size_bytes": 5003,
+    "rs_count": 2
+  },
+  {
+    "name": "memoffset",
+    "version": "0.9.1",
+    "root": "data\\bench_v1\\base_candidates\\memoffset-0.9.1",
+    "build_class": "env_probing",
+    "size_bytes": 32124,
+    "rs_count": 5
+  },
+  {
+    "name": "num-traits",
+    "version": "0.2.19",
+    "root": "data\\bench_v1\\base_candidates\\num-traits-0.2.19",
+    "build_class": "env_probing",
+    "size_bytes": 245272,
+    "rs_count": 21
+  },
+  {
+    "name": "polyhal",
+    "version": "0.4.0",
+    "root": "data\\bench_v1\\base_candidates\\polyhal-0.4.0",
+    "build_class": "env_probing",
+    "size_bytes": 144578,
+    "rs_count": 80
+  },
+  {
+    "name": "proc-macro-error-attr",
+    "version": "1.0.4",
+    "root": "data\\bench_v1\\base_candidates\\proc-macro-error-attr-1.0.4",
+    "build_class": "env_probing",
+    "size_bytes": 8430,
+    "rs_count": 4
+  },
+  {
+    "name": "psy-facet",
+    "version": "0.1.1",
+    "root": "data\\bench_v1\\base_candidates\\psy-facet-0.1.1",
+    "build_class": "env_probing",
+    "size_bytes": 20774,
+    "rs_count": 2
+  },
+  {
+    "name": "ptr-union",
+    "version": "2.3.0",
+    "root": "data\\bench_v1\\base_candidates\\ptr-union-2.3.0",
+    "build_class": "env_probing",
+    "size_bytes": 29051,
+    "rs_count": 4
+  },
+  {
+    "name": "tokio_wasi",
+    "version": "1.25.2",
+    "root": "data\\bench_v1\\base_candidates\\tokio_wasi-1.25.2",
+    "build_class": "env_probing",
+    "size_bytes": 3077487,
+    "rs_count": 420
+  },
+  {
+    "name": "wmemchr",
+    "version": "0.1.0",
+    "root": "data\\bench_v1\\base_candidates\\wmemchr-0.1.0",
+    "build_class": "env_probing",
+    "size_bytes": 65645,
+    "rs_count": 19
+  }
+]

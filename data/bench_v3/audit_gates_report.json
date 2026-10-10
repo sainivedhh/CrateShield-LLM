@@ -1,0 +1,174 @@
+{
+  "all_gates_passed": false,
+  "tell_audit": {
+    "passed": false,
+    "violating_tells": [
+      {
+        "token": "CARGO_PKG_AUTH",
+        "mal_freq": 0.2,
+        "ben_count": 0
+      },
+      {
+        "token": "target_host",
+        "mal_freq": 0.2,
+        "ben_count": 0
+      },
+      {
+        "token": "auth_cache",
+        "mal_freq": 0.2,
+        "ben_count": 0
+      },
+      {
+        "token": "AWS_SECRET_ACCESS_KEY",
+        "mal_freq": 0.2,
+        "ben_count": 0
+      }
+    ],
+    "max_tell_frequency": 0.2,
+    "threshold": 0.2
+  },
+  "line_endings": {
+    "passed": false,
+    "mismatches_count": 94,
+    "mismatch_samples": [
+      "s3_0002_malicious",
+      "s3_0003_lookalike_benign",
+      "s3_0005_malicious",
+      "s3_0006_lookalike_benign",
+      "s3_0008_malicious",
+      "s3_0009_lookalike_benign",
+      "s3_0011_malicious",
+      "s3_0012_lookalike_benign",
+      "s3_0014_malicious",
+      "s3_0015_lookalike_benign",
+      "s3_0017_malicious",
+      "s3_0018_lookalike_benign",
+      "s3_0020_malicious",
+      "s3_0021_lookalike_benign",
+      "s3_0023_malicious",
+      "s3_0024_lookalike_benign",
+      "s3_0026_malicious",
+      "s3_0027_lookalike_benign",
+      "s3_0029_malicious",
+      "s3_0030_lookalike_benign",
+      "s3_0032_malicious",
+      "s3_0033_lookalike_benign",
+      "s3_0035_malicious",
+      "s3_0036_lookalike_benign",
+      "s3_0038_malicious",
+      "s3_0039_lookalike_benign",
+      "s3_0041_malicious",
+      "s3_0042_lookalike_benign",
+      "s3_0044_malicious",
+      "s3_0045_lookalike_benign",
+      "s3_0050_malicious",
+      "s3_0051_lookalike_benign",
+      "s3_0053_malicious",
+      "s3_0054_lookalike_benign",
+      "s3_0056_malicious",
+      "s3_0057_lookalike_benign",
+      "s3_0059_malicious",
+      "s3_0060_lookalike_benign",
+      "s3_0062_malicious",
+      "s3_0063_lookalike_benign",
+      "s3_0065_malicious",
+      "s3_0066_lookalike_benign",
+      "s3_0068_malicious",
+      "s3_0069_lookalike_benign",
+      "s3_0071_malicious",
+      "s3_0072_lookalike_benign",
+      "s3_0074_malicious",
+      "s3_0075_lookalike_benign",
+      "s3_0077_malicious",
+      "s3_0078_lookalike_benign",
+      "s3_0080_malicious",
+      "s3_0081_lookalike_benign",
+      "s3_0083_malicious",
+      "s3_0084_lookalike_benign",
+      "s3_0086_malicious",
+      "s3_0087_lookalike_benign",
+      "s3_0089_malicious",
+      "s3_0090_lookalike_benign",
+      "s3_0092_malicious",
+      "s3_0093_lookalike_benign",
+      "s3_0095_malicious",
+      "s3_0096_lookalike_benign",
+      "s3_0098_malicious",
+      "s3_0099_lookalike_benign",
+      "s3_0101_malicious",
+      "s3_0102_lookalike_benign",
+      "s3_0104_malicious",
+      "s3_0105_lookalike_benign",
+      "s3_0107_malicious",
+      "s3_0108_lookalike_benign",
+      "s3_0110_malicious",
+      "s3_0111_lookalike_benign",
+      "s3_0113_malicious",
+      "s3_0114_lookalike_benign",
+      "s3_0116_malicious",
+      "s3_0117_lookalike_benign",
+      "s3_0119_malicious",
+      "s3_0120_lookalike_benign",
+      "s3_0122_malicious",
+      "s3_0123_lookalike_benign",
+      "s3_0125_malicious",
+      "s3_0126_lookalike_benign",
+      "s3_0131_malicious",
+      "s3_0132_lookalike_benign",
+      "s3_0134_malicious",
+      "s3_0135_lookalike_benign",
+      "s3_0137_malicious",
+      "s3_0138_lookalike_benign",
+      "s3_0143_malicious",
+      "s3_0144_lookalike_benign",
+      "s3_0146_malicious",
+      "s3_0147_lookalike_benign",
+      "s3_0149_malicious",
+      "s3_0150_lookalike_benign"
+    ]
+  },
+  "discriminators": {
+    "passed": false,
+    "bag_of_tokens_accuracy": 0.87,
+    "char_ngram_accuracy": 0.869,
+    "malicious_vs_lookalike_accuracy": 0.662,
+    "threshold": 0.6
+  },
+  "syntax_trees": {
+    "passed": false,
+    "syntax_error_count": 6,
+    "error_files": [
+      "s3_0044_malicious/lib.rs",
+      "s3_0045_lookalike_benign/lib.rs",
+      "s3_0071_malicious/lib.rs",
+      "s3_0072_lookalike_benign/lib.rs",
+      "s3_0080_malicious/build.rs"
+    ]
+  },
+  "inertness": {
+    "passed": false,
+    "violations_count": 122,
+    "violations": [
+      {
+        "sample_id": "s3_0026_malicious",
+        "disallowed_host": "libfoo.so"
+      },
+      {
+        "sample_id": "s3_0026_malicious",
+        "disallowed_host": "libfoo.so"
+      },
+      {
+        "sample_id": "s3_0026_malicious",
+        "disallowed_host": "libfoo.dylib"
+      },
+      {
+        "sample_id": "s3_0026_malicious",
+        "disallowed_host": "foo.lib"
+      },
+      {
+        "sample_id": "s3_0026_malicious",
+        "disallowed_host": "foo.lib"
+      }
+    ]
+  }
+}

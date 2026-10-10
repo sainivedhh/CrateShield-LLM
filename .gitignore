@@ -31,3 +31,4 @@ data/prod_v1/cache/
 # Scratch & temporary logs
 scratch/
 *.log
+*.tar.gz
