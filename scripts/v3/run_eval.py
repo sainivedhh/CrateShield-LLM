@@ -38,6 +38,9 @@ from harness.hybrid import build_hybrid_prompt, extract_targeted_code_windows
 from harness.hybrid_fallback import build_hybrid_fallback_prompt, extract_fallback_code_windows
 from harness.hybrid_taint import build_hybrid_taint_prompt
 from crateshield.taintflow.extractor import extract_taint_context
+from crateshield.taintflow.contextual_extractor import extract_taint_contextual
+from harness.pilot_v33.candidate_b import extract_crate_declared_purpose
+from harness.pilot_v33.combined import build_combined_prompt
 from harness.view import build_anonymized_view
 
 from dotenv import load_dotenv
@@ -379,6 +382,14 @@ def evaluate_sample_v3(
         taint_context = extract_taint_context(view, manifest_sample=sample_meta)
         retrieved = retrieve_context(signals, top_k=3, exclude_crates={sample_meta["cluster_id"]})
         messages = build_hybrid_taint_prompt(signals, taint_context, retrieved_context=retrieved)
+
+    elif condition in ("combined", "contextual_purpose_consistency"):
+        signals = extract_all_signals(view)
+        signals.pop("analysis_timestamp", None)
+        purpose_info = extract_crate_declared_purpose(sample_dir, view, sample_meta)
+        taint_context = extract_taint_contextual(view, manifest_sample=sample_meta, omit_absence_notes=True)
+        retrieved = retrieve_context(signals, top_k=3, exclude_crates={sample_meta["cluster_id"]})
+        messages = build_combined_prompt(signals, taint_context, purpose_info, retrieved_context=retrieved)
 
     else:
         raise ValueError(f"Unknown condition: {condition}")
