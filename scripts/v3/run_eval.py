@@ -157,6 +157,20 @@ def call_model_api(
             except requests.RequestException as e:
                 logger.warning("Groq request exception: %s (attempt %d/10)", e, attempt + 1)
                 time.sleep(4 * (attempt + 1))
+        if resp is not None and (resp.status_code == 413 or "Request too large" in resp.text):
+            logger.warning("Groq request exceeded model context limit (413): %s", resp.text[:200])
+            raw_text = json.dumps({
+                "verdict": "BENIGN",
+                "confidence": 0.0,
+                "malware_score": 0.0,
+                "obfuscation_score": 0.0,
+                "security_risk_score": 0.0,
+                "primary_signals": ["exceeds_context"],
+                "reasoning": "Prompt exceeded model context limit on Groq (ITPM > 7000); counted as failure of condition.",
+                "recommended_action": "ALLOW",
+            })
+            return raw_text, est_in, 0, 0.0, "exceeds_context"
+
         if resp is None or resp.status_code != 200:
             err_msg = resp.text[:300] if resp is not None else "No response"
             raise RuntimeError(f"Groq API call failed after retries: {err_msg}")
@@ -218,25 +232,25 @@ def call_model_api(
     headers = {"Content-Type": "application/json"}
 
     resp = None
-    for attempt in range(6):
+    for attempt in range(10):
         try:
             resp = requests.post(url, headers=headers, json=body, timeout=45)
             if resp.status_code in (429, 503):
-                delay = 4 * (attempt + 1)
+                delay = max(10.0, 5.0 * (attempt + 1))
                 retry_after = resp.headers.get("Retry-After")
                 if retry_after:
                     try:
                         delay = max(delay, float(retry_after))
                     except ValueError:
                         pass
-                logger.warning("Gemini rate limit (%d), waiting %.1fs (attempt %d/6)...", resp.status_code, delay, attempt + 1)
+                logger.warning("Gemini rate limit (%d), waiting %.1fs (attempt %d/10)...", resp.status_code, delay, attempt + 1)
                 time.sleep(delay)
                 continue
             break
         except requests.RequestException:
-            if attempt == 5:
+            if attempt == 9:
                 raise
-            time.sleep(3 * (attempt + 1))
+            time.sleep(5.0 * (attempt + 1))
 
     if resp is None or resp.status_code != 200:
         err_msg = resp.text[:300] if resp is not None else "No response"
@@ -353,11 +367,17 @@ def evaluate_sample_v3(
 
     elif condition == "naive_full":
         all_sources = view.get("source_files") or {}
-        packed_full = "\n\n".join(f"// File: {p}\n{c}" for p, c in all_sources.items())
-        messages = [
-            {"role": "system", "content": "You are a code security auditor. Inspect this Rust crate source code and classify it as BENIGN, SUSPICIOUS, or MALICIOUS. Return JSON."},
-            {"role": "user", "content": f"Source code:\n{packed_full}\nReturn verdict, confidence, malware_score, reasoning."},
-        ]
+        b_rs = view.get("build_rs") or ""
+        c_toml = view.get("cargo_toml") or ""
+        total_chars = len(c_toml) + len(b_rs) + sum(len(c) for c in all_sources.values())
+        if total_chars > 600000:
+            exceeds_context = True
+        else:
+            packed_full = "\n\n".join(f"// File: {p}\n{c}" for p, c in all_sources.items())
+            messages = [
+                {"role": "system", "content": "You are a code security auditor. Inspect this Rust crate source code and classify it as BENIGN, SUSPICIOUS, or MALICIOUS. Return JSON."},
+                {"role": "user", "content": f"Source code:\n{packed_full}\nReturn verdict, confidence, malware_score, reasoning."},
+            ]
 
     elif condition == "structured":
         signals = extract_all_signals(view)

@@ -4,10 +4,16 @@
 3. Oversized crate exceeds_context cache write
 """
 import json
+import sys
 import pytest
 from pathlib import Path
 from crateshield.llm.parser import PARSER_CLASSIFICATION_KEY, parse_llm_response
 from scripts.v3.make_report_v3 import REPORT_CLASSIFICATION_KEY, is_malicious
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "fixtures"))
+from fixtures.v3_samples import create_minimal_sample
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_report_key_matches_parser_key():
@@ -34,9 +40,23 @@ def test_report_key_matches_parser_key():
     assert is_malicious({"classification": parsed_verdict}) is True
 
 
+def _setup_v3_corpus(tmp_path: Path, corpus_name: str = "corpus") -> Path:
+    """Creates a temporary benchmark-v3 corpus containing the two samples the
+    tests exercise, then shadows the CORPUS_DIR used by scripts.v3.run_eval so
+    no private corpus is required."""
+    corpus_dir = tmp_path / corpus_name
+    create_minimal_sample(corpus_dir, "s3_0035_malicious", "sha2")
+    create_minimal_sample(corpus_dir, "s3_0149_malicious", "tokio_wasi")
+    from scripts.v3 import run_eval
+    run_eval.CORPUS_DIR = corpus_dir
+    return corpus_dir
+
+
 def test_dry_run_cache_isolation(tmp_path, monkeypatch):
     """Test that dry-run pass sets dry_run=True and live run refuses to hit dry-run cache."""
     from scripts.v3.run_eval import evaluate_sample_v3, make_cache_key
+
+    _setup_v3_corpus(tmp_path)
 
     cache = {}
     sample_meta = {
@@ -91,6 +111,10 @@ def test_dry_run_cache_isolation(tmp_path, monkeypatch):
 def test_exceeds_context_writes_cache(tmp_path, monkeypatch):
     """Test that exceeds_context branch (~332-363) writes to cache before returning."""
     from scripts.v3.run_eval import evaluate_sample_v3
+
+    corpus_dir = _setup_v3_corpus(tmp_path)
+    # Make the tokio_wasi sample exceed the 600k char raw_full budget.
+    create_minimal_sample(corpus_dir, "s3_0149_malicious", "tokio_wasi", source_chars=700_000)
 
     cache = {}
     sample_meta = {
