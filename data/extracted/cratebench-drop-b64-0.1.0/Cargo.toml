@@ -1,0 +1,4 @@
+[package]
+name = "cratebench-drop-b64"
+version = "0.1.0"
+edition = "2021"

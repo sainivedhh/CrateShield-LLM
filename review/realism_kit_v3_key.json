@@ -1,0 +1,542 @@
+[
+  {
+    "hunk_id": "HUNK_001",
+    "sample_id": "s3_0065_malicious",
+    "twin_type": "malicious",
+    "family": "F5",
+    "ladder_level": "L1",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_002",
+    "sample_id": "s3_0063_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F7",
+    "ladder_level": "L0",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_003",
+    "sample_id": "s3_0138_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F3",
+    "ladder_level": "L0",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_004",
+    "sample_id": "s3_0015_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F7",
+    "ladder_level": "L4",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_005",
+    "sample_id": "s3_0099_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F8",
+    "ladder_level": "L2",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_006",
+    "sample_id": "s3_0077_malicious",
+    "twin_type": "malicious",
+    "family": "F6",
+    "ladder_level": "L0",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_007",
+    "sample_id": "s3_0003_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F1",
+    "ladder_level": "L0",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_008",
+    "sample_id": "s3_0107_malicious",
+    "twin_type": "malicious",
+    "family": "F4",
+    "ladder_level": "L0",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_009",
+    "sample_id": "s3_0024_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F3",
+    "ladder_level": "L2",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_010",
+    "sample_id": "s3_0119_malicious",
+    "twin_type": "malicious",
+    "family": "F1",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_011",
+    "sample_id": "s3_0111_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F8",
+    "ladder_level": "L1",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_012",
+    "sample_id": "s3_0017_malicious",
+    "twin_type": "malicious",
+    "family": "F1",
+    "ladder_level": "L0",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_013",
+    "sample_id": "s3_0084_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F5",
+    "ladder_level": "L2",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_014",
+    "sample_id": "s3_0086_malicious",
+    "twin_type": "malicious",
+    "family": "F3",
+    "ladder_level": "L3",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_015",
+    "sample_id": "s3_0110_malicious",
+    "twin_type": "malicious",
+    "family": "F8",
+    "ladder_level": "L1",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_016",
+    "sample_id": "s3_0069_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F7",
+    "ladder_level": "L2",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_017",
+    "sample_id": "s3_0074_malicious",
+    "twin_type": "malicious",
+    "family": "F3",
+    "ladder_level": "L4",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_018",
+    "sample_id": "s3_0140_malicious",
+    "twin_type": "malicious",
+    "family": "F4",
+    "ladder_level": "L1",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_019",
+    "sample_id": "s3_0116_malicious",
+    "twin_type": "malicious",
+    "family": "F1",
+    "ladder_level": "L3",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_020",
+    "sample_id": "s3_0057_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F1",
+    "ladder_level": "L3",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_021",
+    "sample_id": "s3_0047_malicious",
+    "twin_type": "malicious",
+    "family": "F7",
+    "ladder_level": "L0",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_022",
+    "sample_id": "s3_0033_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F2",
+    "ladder_level": "L0",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_023",
+    "sample_id": "s3_0050_malicious",
+    "twin_type": "malicious",
+    "family": "F6",
+    "ladder_level": "L1",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_024",
+    "sample_id": "s3_0146_malicious",
+    "twin_type": "malicious",
+    "family": "F1",
+    "ladder_level": "L3",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_025",
+    "sample_id": "s3_0122_malicious",
+    "twin_type": "malicious",
+    "family": "F8",
+    "ladder_level": "L0",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_026",
+    "sample_id": "s3_0075_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F3",
+    "ladder_level": "L4",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_027",
+    "sample_id": "s3_0126_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F5",
+    "ladder_level": "L1",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_028",
+    "sample_id": "s3_0041_malicious",
+    "twin_type": "malicious",
+    "family": "F8",
+    "ladder_level": "L3",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_029",
+    "sample_id": "s3_0132_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F2",
+    "ladder_level": "L3",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_030",
+    "sample_id": "s3_0051_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F6",
+    "ladder_level": "L1",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_031",
+    "sample_id": "s3_0014_malicious",
+    "twin_type": "malicious",
+    "family": "F7",
+    "ladder_level": "L4",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_032",
+    "sample_id": "s3_0072_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F4",
+    "ladder_level": "L3",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_033",
+    "sample_id": "s3_0090_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F7",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_034",
+    "sample_id": "s3_0096_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F6",
+    "ladder_level": "L1",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_035",
+    "sample_id": "s3_0113_malicious",
+    "twin_type": "malicious",
+    "family": "F6",
+    "ladder_level": "L2",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_036",
+    "sample_id": "s3_0068_malicious",
+    "twin_type": "malicious",
+    "family": "F7",
+    "ladder_level": "L2",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_037",
+    "sample_id": "s3_0149_malicious",
+    "twin_type": "malicious",
+    "family": "F2",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_038",
+    "sample_id": "s3_0080_malicious",
+    "twin_type": "malicious",
+    "family": "F8",
+    "ladder_level": "L1",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_039",
+    "sample_id": "s3_0129_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F2",
+    "ladder_level": "L2",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_040",
+    "sample_id": "s3_0020_malicious",
+    "twin_type": "malicious",
+    "family": "F2",
+    "ladder_level": "L1",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_041",
+    "sample_id": "s3_0056_malicious",
+    "twin_type": "malicious",
+    "family": "F1",
+    "ladder_level": "L3",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_042",
+    "sample_id": "s3_0036_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F1",
+    "ladder_level": "L1",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_043",
+    "sample_id": "s3_0060_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F6",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_044",
+    "sample_id": "s3_0062_malicious",
+    "twin_type": "malicious",
+    "family": "F7",
+    "ladder_level": "L0",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_045",
+    "sample_id": "s3_0029_malicious",
+    "twin_type": "malicious",
+    "family": "F7",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_046",
+    "sample_id": "s3_0101_malicious",
+    "twin_type": "malicious",
+    "family": "F5",
+    "ladder_level": "L3",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_047",
+    "sample_id": "s3_0093_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F7",
+    "ladder_level": "L0",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_048",
+    "sample_id": "s3_0092_malicious",
+    "twin_type": "malicious",
+    "family": "F7",
+    "ladder_level": "L0",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "example-subdomain"
+  },
+  {
+    "hunk_id": "HUNK_049",
+    "sample_id": "s3_0012_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F4",
+    "ladder_level": "L3",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_050",
+    "sample_id": "s3_0053_malicious",
+    "twin_type": "malicious",
+    "family": "F3",
+    "ladder_level": "L2",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_051",
+    "sample_id": "s3_0150_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F2",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_052",
+    "sample_id": "s3_0071_malicious",
+    "twin_type": "malicious",
+    "family": "F4",
+    "ladder_level": "L3",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_053",
+    "sample_id": "s3_0005_malicious",
+    "twin_type": "malicious",
+    "family": "F2",
+    "ladder_level": "L1",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_054",
+    "sample_id": "s3_0078_lookalike_benign",
+    "twin_type": "lookalike_benign",
+    "family": "F6",
+    "ladder_level": "L0",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_055",
+    "sample_id": "s3_0026_malicious",
+    "twin_type": "malicious",
+    "family": "F4",
+    "ladder_level": "L3",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_056",
+    "sample_id": "s3_0059_malicious",
+    "twin_type": "malicious",
+    "family": "F6",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_057",
+    "sample_id": "s3_0089_malicious",
+    "twin_type": "malicious",
+    "family": "F7",
+    "ladder_level": "L4",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_058",
+    "sample_id": "s3_0104_malicious",
+    "twin_type": "malicious",
+    "family": "F4",
+    "ladder_level": "L4",
+    "generator": "gemini-3.5-flash-lite",
+    "host_style": "none"
+  },
+  {
+    "hunk_id": "HUNK_059",
+    "sample_id": "s3_0035_malicious",
+    "twin_type": "malicious",
+    "family": "F1",
+    "ladder_level": "L1",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  },
+  {
+    "hunk_id": "HUNK_060",
+    "sample_id": "s3_0095_malicious",
+    "twin_type": "malicious",
+    "family": "F6",
+    "ladder_level": "L1",
+    "generator": "groq-qwen-3.8-27b",
+    "host_style": "reserved-invalid-or-test"
+  }
+]

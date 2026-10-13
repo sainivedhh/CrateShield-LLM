@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrateShield — crate inspection</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="wordmark">
+      <span class="wordmark-crate">crate</span><span class="wordmark-shield">shield</span>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-view="inspect">Inspect</button>
+      <button class="tab" data-view="dataset">Dataset</button>
+      <button class="tab" data-view="ablation">Ablation</button>
+    </nav>
+    <div class="llm-status" id="llmStatus">checking backend…</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- INSPECT VIEW -->
+  <section id="view-inspect" class="view active">
+    <div class="scan-panel">
+      <p class="scan-eyebrow">manifest inspection · structured signals + LLM reasoning</p>
+      <form id="scanForm" class="scan-form">
+        <input id="crateName" type="text" placeholder="crate name, e.g. faster_log" autocomplete="off" required>
+        <input id="crateVersion" type="text" placeholder="version, e.g. 0.1.2" autocomplete="off" required>
+        <select id="condition">
+          <option value="structured">signals + RAG + LLM (primary)</option>
+          <option value="structured_norag">signals + LLM, no RAG</option>
+          <option value="hybrid">hybrid (signals + windows + LLM)</option>
+          <option value="hybrid_norag">hybrid (no RAG)</option>
+          <option value="raw">raw source + domain prompt</option>
+          <option value="naive">naive prompt (baseline)</option>
+          <option value="socketai">per-file workflow (SocketAI-style, many LLM calls)</option>
+        </select>
+        <label class="prescreen-toggle" title="Skip the LLM when no cheap static signal fires (signals conditions only)">
+          <input type="checkbox" id="prescreen"> pre-screen
+        </label>
+        <button type="submit" id="scanButton">Inspect</button>
+      </form>
+      <p class="scan-hint">Downloads the crate tarball from crates.io, extracts signals statically
+        (build.rs is never executed), and sends structured JSON to the LLM for a reasoned verdict.</p>
+    </div>
+
+    <div id="scanResult" class="scan-result hidden"></div>
+  </section>
+
+  <!-- DATASET VIEW -->
+  <section id="view-dataset" class="view">
+    <div class="section-head">
+      <h2>Labeled dataset</h2>
+      <p id="datasetSummary" class="muted">loading…</p>
+    </div>
+    <table class="ledger" id="datasetTable">
+      <thead>
+        <tr><th>crate</th><th>version</th><th>label</th><th>source</th><th>attack category</th><th>analyzable</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- ABLATION VIEW -->
+  <section id="view-ablation" class="view">
+    <div class="section-head">
+      <h2>Ablation</h2>
+      <p class="muted">signals + RAG &nbsp;·&nbsp; signals, no RAG &nbsp;·&nbsp; raw source &nbsp;·&nbsp; naive prompt &nbsp;·&nbsp; per-file workflow &nbsp;·&nbsp; cargo-audit</p>
+      <button id="runAblation" class="run-btn">Run ablation over dataset</button>
+    </div>
+    <div id="ablationOutput"></div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

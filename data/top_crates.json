@@ -1,0 +1,22 @@
+[
+  {"name": "serde", "rank": 1},
+  {"name": "serde_json", "rank": 2},
+  {"name": "tokio", "rank": 3},
+  {"name": "rand", "rank": 4},
+  {"name": "clap", "rank": 5},
+  {"name": "reqwest", "rand": 6, "rank": 6},
+  {"name": "log", "rank": 7},
+  {"name": "regex", "rank": 8},
+  {"name": "anyhow", "rank": 9},
+  {"name": "thiserror", "rank": 10},
+  {"name": "rust_decimal", "rank": 42},
+  {"name": "fast_log", "rank": 847},
+  {"name": "finch", "rank": 1200},
+  {"name": "libc", "rank": 11},
+  {"name": "bytes", "rank": 12},
+  {"name": "futures", "rank": 13},
+  {"name": "async-trait", "rank": 14},
+  {"name": "once_cell", "rank": 15},
+  {"name": "chrono", "rank": 16},
+  {"name": "uuid", "rank": 17}
+]

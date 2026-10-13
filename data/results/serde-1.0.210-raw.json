@@ -1,0 +1,65 @@
+{
+  "crate": "serde",
+  "version": "1.0.210",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is 'serde', the standard and widely used serialization/deserialization framework in the Rust ecosystem. Reviewing the provided files (Cargo.toml, build.rs, library source files like lib.rs, format.rs, std_error.rs, macros.rs, seed.rs, size_hint.rs, private/mod.rs, ser/fmt.rs, private/doc.rs, ser/impossible.rs, de/ignored_any.rs, ser/impls.rs), all code is standard library code for Serde. The build.rs script only probes the rustc minor version to set conditional compilation cfgs (`rustc-check-cfg` and `rustc-cfg`) and performs no network requests, file reading outside expected build parameters, or command execution harmful to the host. There are no obfuscated strings, malicious payloads, or unauthorized dependencies.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/integer128.rs",
+      "src/format.rs",
+      "src/std_error.rs",
+      "src/macros.rs",
+      "src/de/seed.rs",
+      "src/de/size_hint.rs",
+      "src/private/mod.rs",
+      "src/ser/fmt.rs",
+      "src/private/doc.rs",
+      "src/ser/impossible.rs",
+      "src/de/ignored_any.rs",
+      "src/ser/impls.rs"
+    ],
+    "partial": [
+      "src/ser/impls.rs (4766/30970 chars)"
+    ],
+    "omitted": [
+      "src/private/ser.rs",
+      "src/de/value.rs",
+      "src/ser/mod.rs",
+      "src/de/mod.rs",
+      "src/private/de.rs",
+      "src/de/impls.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 6 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 21
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63932,
+    "chars_out": 942
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

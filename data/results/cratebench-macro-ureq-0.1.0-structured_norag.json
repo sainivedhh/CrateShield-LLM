@@ -1,0 +1,124 @@
+{
+  "crate": "cratebench-macro-ureq",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-macro-ureq",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:30:39.970932+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": true,
+      "proc_macro_suspicious_imports": [
+        "ureq"
+      ]
+    },
+    "typosquatting": {
+      "score": 0.238,
+      "target": "async-trait",
+      "edit_distance": 16,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {
+        "network": 1,
+        "ip_literal_url": 1
+      },
+      "categories": [
+        "network",
+        "ip_literal_url"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/lib.rs",
+            "line": 4,
+            "snippet": "let _ = ureq::get(\"http://127.0.0.1:7003\").call();"
+          }
+        ],
+        "ip_literal_url": [
+          {
+            "file": "src/lib.rs",
+            "line": 4,
+            "snippet": "let _ = ureq::get(\"http://127.0.0.1:7003\").call();"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 4,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 95
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: A proc-macro crate (`is_proc_macro: true`) with only 4 lines of meaningful code, designed to perform an HTTP request during compilation. Sources: None explicitly reading environment variables or files in this snippet. Sinks: Makes a network call via `ureq` to an IP literal `http://127.0.0.1:7003` (`src/lib.rs:4`). Flow: Proc-macros execute inside the Rust compiler during the build process; performing network requests and connecting to local/external endpoints inside a proc-macro is a severe supply-chain risk pattern, as code execution occurs implicitly upon compilation without runtime context. Anomalies: Proc-macro executing network calls (`ureq::get`) containing an IP-literal URL. Conclusion: Although pointing to localhost (`127.0.0.1`), a proc-macro executing network requests during compilation is highly anomalous and characteristic of malicious exfiltration or build-time code execution payloads.",
+    "primary_signals": [
+      "proc_macro.is_proc_macro",
+      "proc_macro.proc_macro_suspicious_imports",
+      "source_scan.network",
+      "source_scan.ip_literal_url"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.65,
+    "security_risk_score": 0.7,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.9,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9774,
+    "chars_out": 1343
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

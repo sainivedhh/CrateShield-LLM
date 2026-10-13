@@ -1,0 +1,130 @@
+{
+  "crate": "clap",
+  "version": "4.5.18",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "clap",
+    "version": {
+      "version": "4.5.18",
+      "major": 4,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:21:55.182457+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "log",
+      "edit_distance": 3,
+      "target_rank": 7,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "clap_builder",
+        "clap_derive"
+      ],
+      "dev_dependency_count": 8,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {
+        "process_spawn": 2
+      },
+      "categories": [
+        "process_spawn"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "process_spawn": [
+          {
+            "file": "src/bin/stdio-fixture.rs",
+            "line": 3,
+            "snippet": "let mut cmd = clap::Command::new(\"stdio-fixture\")"
+          },
+          {
+            "file": "src/bin/stdio-fixture.rs",
+            "line": 7,
+            "snippet": ".subcommand(clap::Command::new(\"more\"))"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 33,
+      "has_build_script": false,
+      "meaningful_lines": 249,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 65663
+    },
+    "metadata": {
+      "publish_date": "2015-03-01T01:17:24.903018Z",
+      "age_days": 4238,
+      "description": "A simple to use, efficient, and full-featured Command Line Argument Parser",
+      "keywords": [
+        "parser",
+        "argument",
+        "cli",
+        "parse",
+        "arg"
+      ],
+      "downloads": 1201917210,
+      "num_versions": 462,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `clap` is the well-known, highly popular command-line argument parser crate on crates.io (proven by massive download count exceeding 1.2 billion and long age of over 4,000 days). Sources: no sensitive sources or environment variable reading. Sinks: the flagged 'process_spawn' snippets in `src/bin/stdio-fixture.rs` are actually instantiating `clap::Command`, which is a core part of its CLI parsing functionality rather than spawning external OS processes. Flow: no malicious data flow. Anomalies: none; typosquatting flag is false, build script is absent, dependencies are clean internal sub-crates (`clap_builder`, `clap_derive`). Conclusion: completely legitimate, highly trusted library.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10084,
+    "chars_out": 975
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

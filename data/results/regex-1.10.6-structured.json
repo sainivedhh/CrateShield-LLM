@@ -1,0 +1,137 @@
+{
+  "crate": "regex",
+  "version": "1.10.6",
+  "condition": "structured",
+  "signals": {
+    "crate": "regex",
+    "version": {
+      "version": "1.10.6",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:12:40.645478+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.429,
+      "target": "reqwest",
+      "edit_distance": 4,
+      "target_rank": 6,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 4,
+      "names": [
+        "aho-corasick",
+        "memchr",
+        "regex-automata",
+        "regex-syntax"
+      ],
+      "dev_dependency_count": 6,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 12,
+      "has_build_script": false,
+      "meaningful_lines": 3362,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 418600
+    },
+    "metadata": {
+      "publish_date": "2014-12-13T22:10:11.303311Z",
+      "age_days": 4315,
+      "description": "An implementation of regular expressions for Rust. This implementation uses\nfinite automata and guarantees linear time matching on all inputs.\n",
+      "keywords": [],
+      "downloads": 1229533573,
+      "num_versions": 169,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: the crate is `regex`, the well-known, highly trusted regular expressions library for Rust with over 1.2 billion downloads and a multi-year history (age_days: 4315). Sources: none. Sinks: none. Flows: none. Anomalies: none; no build script, no unsafe blocks, standard dependencies (aho-corasick, memchr, etc.), no suspicious flags. The typosquatting score against `reqwest` is a false positive due to minor name overlap, but `edit_distance` is 4 and `flagged` is false. Conclusion: completely benign legitimate crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.10334052486230869
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.09374011280030546
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.09001297837061277
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11387,
+    "chars_out": 799
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

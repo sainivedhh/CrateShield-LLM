@@ -1,0 +1,143 @@
+{
+  "crate": "bitflags",
+  "version": "2.6.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "bitflags",
+    "version": {
+      "version": "2.6.0",
+      "major": 2,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:13:39.039481+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.375,
+      "target": "bytes",
+      "edit_distance": 5,
+      "target_rank": 12,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 5,
+      "names": [
+        "arbitrary",
+        "bytemuck",
+        "compiler_builtins",
+        "rustc-std-workspace-core",
+        "serde"
+      ],
+      "dev_dependency_count": 8,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 36,
+      "has_build_script": false,
+      "meaningful_lines": 3921,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 135695
+    },
+    "metadata": {
+      "publish_date": "2015-01-15T08:35:24.901276Z",
+      "age_days": 4283,
+      "description": "A macro to generate structures which behave like bitflags.\n",
+      "keywords": [
+        "bit",
+        "bitmask",
+        "bitflags",
+        "flags"
+      ],
+      "downloads": 1972635909,
+      "num_versions": 64,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `bitflags` is an extremely well-known, foundational crate for generating bitflags structures with over 1.9 billion downloads and a history spanning over 4,000 days. Sources: none; no build script, no environment variable reads. Sinks: none; zero unsafe blocks, zero FFI declarations, zero network/process calls. Flow: none. Anomalies: none; the typosquatting flag is a false positive due to edit distance scoring against unrelated short names ('bytes'), but the crate name is the actual legitimate crate itself. Conclusion: completely benign and standard library code.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.10334052486230869
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.09374011280030546
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.09001297837061277
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11398,
+    "chars_out": 851
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

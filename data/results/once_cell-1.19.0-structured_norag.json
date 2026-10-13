@@ -1,0 +1,115 @@
+{
+  "crate": "once_cell",
+  "version": "1.19.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "once_cell",
+    "version": {
+      "version": "1.19.0",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:23:20.975500+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 31,
+      "unsafe_per_kloc": 12.39,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "rust_decimal",
+      "edit_distance": 9,
+      "target_rank": 42,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 3,
+      "names": [
+        "critical-section",
+        "parking_lot_core",
+        "portable-atomic"
+      ],
+      "dev_dependency_count": 2,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 5,
+      "has_build_script": false,
+      "meaningful_lines": 1090,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 81259
+    },
+    "metadata": {
+      "publish_date": "2018-08-02T00:12:48.969947Z",
+      "age_days": 2988,
+      "description": "Single assignment cells and lazy values.",
+      "keywords": [
+        "lazy",
+        "static"
+      ],
+      "downloads": 1336650906,
+      "num_versions": 67,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: once_cell is a widely known, highly trusted, and extremely popular crate providing single-assignment cells and lazy values (downloads exceed 1.3 billion). Sources: none; no environment reads or network calls. Sinks: none; no malicious payloads, no file writes, no process spawns. Flow: purely safe/unsafe abstractions for concurrent cell initialization. Anomalies: none; build.rs is absent, dependencies are standard synchronization primitives (critical-section, parking_lot_core, portable-atomic), and the crate has a long history (published in 2018, age ~2988 days). Unsafe usage is strictly confined to synchronization primitives and performance, typical for core utility crates.",
+    "primary_signals": [
+      "high download count and age",
+      "absence of build script",
+      "clean source scan with no exfiltration or network capability"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9474,
+    "chars_out": 1101
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

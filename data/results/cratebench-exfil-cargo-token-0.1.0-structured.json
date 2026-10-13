@@ -1,0 +1,130 @@
+{
+  "crate": "cratebench-exfil-cargo-token",
+  "version": "0.1.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "cratebench-exfil-cargo-token",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:17:14.004604+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:9005\");"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:9005\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.214,
+      "target": "async-trait",
+      "edit_distance": 22,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 7,
+      "total_bytes": 195
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "MEDIUM",
+    "reasoning": "Purpose: A benchmarking/test crate (`cratebench-exfil-cargo-token`). Sources: The build script has no env reads or file access in the provided data. Sinks: The build script executes a network call via `TcpStream::connect(\"127.0.0.1:9005\")`. Flow: Makes a TCP connection to localhost during `cargo build`. Anomalies: Connecting to a socket during build time without a clear benign justification (such as local testing or codegen) warrants review, although it connects to localhost (`127.0.0.1`) rather than an external exfiltration endpoint. Because the crate name itself references 'exfil-cargo-token' and performs an unexplained build-time network connection, it is classified as SUSPICIOUS.",
+    "primary_signals": [
+      "build_rs.network_call"
+    ],
+    "retrieved_evidence_used": [
+      "pattern-build-rs-exfiltration"
+    ],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.4,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.75,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.1906139113814883
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.12449209324944302
+    },
+    {
+      "id": "pattern-build-rs-exfiltration",
+      "type": "pattern",
+      "title": "General pattern: build.rs data exfiltration",
+      "text": "The most common Rust-specific attack pattern. build.rs executes arbitrary code at `cargo build` time, before any runtime security control applies, with full access to the developer's filesystem, network, and environment variables. Typical sequence: (1) read a sensitive target -- SSH keys, cloud credentials (AWS_SECRET_ACCESS_KEY, GITHUB_TOKEN), cryptocurrency wallet files, or general environment variables; (2) establish an outbound network connection, often to a raw IP or a low-reputation domain rather than a well-known API endpoint; (3) transmit the harvested data. Legitimate build.rs scripts do sometimes make network calls (fetching a codegen schema) or read env vars (checking a target triple), so presence of a single signal alone is a weak indicator -- the co-occurrence of file/env access AND outbound network calls, especially to non-standard destinations, is the stronger signal.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.11774725929804516
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11772,
+    "chars_out": 1055
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

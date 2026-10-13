@@ -1,0 +1,163 @@
+{
+  "crate": "anyhow",
+  "version": "1.0.89",
+  "condition": "structured",
+  "signals": {
+    "crate": "anyhow",
+    "version": {
+      "version": "1.0.89",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:12:46.881444+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "env_var_read",
+        "process_spawn"
+      ],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [
+        "if let Ok(rustflags) = env::var(\"CARGO_ENCODED_RUSTFLAGS\") {",
+        "if env::var_os(\"RUSTC_STAGE\").is_some() {",
+        "env::var_os(\"RUSTC_WORKSPACE_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+        "env::var_os(key).unwrap_or_else(|| {"
+      ],
+      "process_spawns": [
+        "let mut cmd = Command::new(rustc.next().unwrap());"
+      ],
+      "benign_explained": {
+        "env_var_read": [
+          "} else if let Some(rustc_bootstrap) = env::var_os(\"RUSTC_BOOTSTRAP\") {",
+          "let rustc_wrapper = env::var_os(\"RUSTC_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+          "if let Some(target) = env::var_os(\"TARGET\") {"
+        ],
+        "process_spawn": [
+          "let output = Command::new(rustc).arg(\"--version\").output().ok()?;"
+        ]
+      },
+      "flagged_snippets": [
+        "if let Ok(rustflags) = env::var(\"CARGO_ENCODED_RUSTFLAGS\") {",
+        "if env::var_os(\"RUSTC_STAGE\").is_some() {",
+        "env::var_os(\"RUSTC_WORKSPACE_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+        "let mut cmd = Command::new(rustc.next().unwrap());"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 72,
+      "unsafe_per_kloc": 17.01,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "fast_log",
+      "edit_distance": 6,
+      "target_rank": 847,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "backtrace"
+      ],
+      "dev_dependency_count": 5,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 12,
+      "has_build_script": true,
+      "meaningful_lines": 2766,
+      "meaningful_lines_build_script": 134,
+      "total_bytes": 156526
+    },
+    "metadata": {
+      "publish_date": "2019-10-05T19:52:26.646502Z",
+      "age_days": 2558,
+      "description": "Flexible concrete Error type built on std::error::Error",
+      "keywords": [
+        "error",
+        "error-handling"
+      ],
+      "downloads": 1023397623,
+      "num_versions": 106,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `anyhow` is the foundational, widely adopted error-handling crate in the Rust ecosystem (over 1 billion downloads, maintained for years). Sources: `build.rs` reads standard compiler and cargo environment variables (such as `CARGO_ENCODED_RUSTFLAGS`, `RUSTC_STAGE`, `RUSTC_WORKSPACE_WRAPPER`, and `TARGET`) and invokes `rustc --version` via `Command::new` to probe compiler features and rustflags, matching documented benign build script patterns (pattern-benign-false-positive-build-rs). Sinks: None; no network calls, no file writes, no exfiltration. Flow: The build script only configures compilation parameters based on the host rustc environment. Anomalies: None. Typosquatting checks flag no meaningful similarity to popular crates. Conclusion: This is the legitimate, highly trusted `anyhow` crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [
+      "pattern-benign-false-positive-build-rs"
+    ],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.183031485150556
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.15697912275067677
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.12750994028185256
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 12800,
+    "chars_out": 1135
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

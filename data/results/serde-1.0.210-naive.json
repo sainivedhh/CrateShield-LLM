@@ -1,0 +1,65 @@
+{
+  "crate": "serde",
+  "version": "1.0.210",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is 'serde' version 1.0.210, which is the official, widely used serialization/deserialization framework for Rust created by David Tolnay and Erick Tryzelaar. Inspection of the provided source files (Cargo.toml, build.rs, lib.rs, macros.rs, and core traits/modules) reveals standard, robust Rust code adhering to the expected implementation of Serde, with no indicators of malicious behavior, obfuscation, or unauthorized network/system access.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/integer128.rs",
+      "src/format.rs",
+      "src/std_error.rs",
+      "src/macros.rs",
+      "src/de/seed.rs",
+      "src/de/size_hint.rs",
+      "src/private/mod.rs",
+      "src/ser/fmt.rs",
+      "src/private/doc.rs",
+      "src/ser/impossible.rs",
+      "src/de/ignored_any.rs",
+      "src/ser/impls.rs"
+    ],
+    "partial": [
+      "src/ser/impls.rs (4766/30970 chars)"
+    ],
+    "omitted": [
+      "src/private/ser.rs",
+      "src/de/value.rs",
+      "src/ser/mod.rs",
+      "src/de/mod.rs",
+      "src/private/de.rs",
+      "src/de/impls.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 6 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 21
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60362,
+    "chars_out": 536
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

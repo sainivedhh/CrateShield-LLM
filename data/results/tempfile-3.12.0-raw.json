@@ -1,0 +1,59 @@
+{
+  "crate": "tempfile",
+  "version": "3.12.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is 'tempfile', a well-known, legitimate, and standard Rust crate for managing temporary files and directories. The code implements standard filesystem operations, path handling, and file creation wrappers using standard libraries and safe abstractions. There are no malicious indicators, network operations, credential harvesting, obfuscation, or anomalous build scripts.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/error.rs",
+      "src/util.rs",
+      "src/env.rs",
+      "src/spooled.rs",
+      "src/dir/mod.rs",
+      "src/file/mod.rs"
+    ],
+    "partial": [
+      "src/file/mod.rs (11210/32414 chars)"
+    ],
+    "omitted": [
+      "src/dir/imp/mod.rs",
+      "src/file/imp/mod.rs",
+      "src/dir/imp/any.rs",
+      "src/dir/imp/unix.rs",
+      "src/file/imp/other.rs",
+      "src/file/imp/windows.rs",
+      "src/file/imp/unix.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 7 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 15
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63934,
+    "chars_out": 606
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

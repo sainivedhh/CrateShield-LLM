@@ -1,0 +1,138 @@
+{
+  "crate": "url",
+  "version": "2.5.2",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "url",
+    "version": {
+      "version": "2.5.2",
+      "major": 2,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:24:36.107135+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.286,
+      "target": "futures",
+      "edit_distance": 5,
+      "target_rank": 13,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 4,
+      "names": [
+        "form_urlencoded",
+        "idna",
+        "percent-encoding",
+        "serde"
+      ],
+      "dev_dependency_count": 4,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 3
+      },
+      "categories": [
+        "network"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/host.rs",
+            "line": 11,
+            "snippet": "use std::net::{Ipv4Addr, Ipv6Addr};"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 160,
+            "snippet": "use std::net::IpAddr;"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 162,
+            "snippet": "use std::net::{SocketAddr, ToSocketAddrs};"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 7,
+      "has_build_script": false,
+      "meaningful_lines": 3818,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 211071
+    },
+    "metadata": {
+      "publish_date": "2014-11-14T18:37:08.658193Z",
+      "age_days": 4344,
+      "description": "URL library for Rust, based on the WHATWG URL Standard",
+      "keywords": [
+        "parser",
+        "url"
+      ],
+      "downloads": 931056810,
+      "num_versions": 89,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is the highly popular, established `url` library for Rust based on the WHATWG standard, with massive download counts (over 930 million downloads) and a long history (over 4,300 days old). Sources: No suspicious environment reads, no build script (`has_build_script\": false`), no prompt injection, and no typosquatting flags. Sinks: The static source scan flagged network-related items, but inspection of these snippets (`use std::net::{Ipv4Addr, Ipv6Addr};`, `use std::net::IpAddr;`, `use std::net::{SocketAddr, ToSocketAddrs};`) reveals they are standard library imports for handling IP addresses and socket types, which is entirely normal and expected for a URL parsing library. Flows: No data exfiltration or credential gathering flows exist. Anomalies: None. Conclusion: This is a legitimate, foundational library.",
+    "primary_signals": [
+      "established metadata (millions of downloads, long age)",
+      "absence of build script",
+      "standard library IP/network type imports correctly categorized as benign functionality"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10122,
+    "chars_out": 1301
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

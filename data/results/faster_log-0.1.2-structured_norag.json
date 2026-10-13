@@ -1,0 +1,110 @@
+{
+  "crate": "faster_log",
+  "version": "0.1.2",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "faster_log",
+    "version": {
+      "version": "0.1.2",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:28:28.507215+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call",
+        "env_var_read"
+      ],
+      "network_calls": [
+        "if let Ok(mut stream) = TcpStream::connect(\"127.0.0.1:8080\") {"
+      ],
+      "file_writes": [],
+      "env_reads": [
+        "let home = env::var(\"HOME\").unwrap_or_default();"
+      ],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "if let Ok(mut stream) = TcpStream::connect(\"127.0.0.1:8080\") {",
+        "let home = env::var(\"HOME\").unwrap_or_default();"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.8,
+      "target": "fast_log",
+      "edit_distance": 2,
+      "target_rank": 847,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 14,
+      "meaningful_lines_build_script": 11,
+      "total_bytes": 442
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: A minimal crate named `faster_log` (resembling the popular legitimate crate `fast_log`, edit distance 2) containing virtually no actual library functionality (only 14 meaningful lines of code total). Sources: The build script reads the `HOME` environment variable (`env::var(\"HOME\")`). Sinks: The build script attempts to make a TCP network connection to `127.0.0.1:8080` via `TcpStream::connect`. Flow: The build script runs automatically at `cargo build` time, reads sensitive local environment/path data (`HOME`), and attempts to establish a network connection. Anomalies: Legitimate logging libraries do not read `HOME` and initiate TCP connections inside a build script (`build.rs`). This pattern is a classic supply-chain attack vector designed to execute arbitrary code and exfiltrate host data during compilation.",
+    "primary_signals": [
+      "build_rs.network_call",
+      "build_rs.env_reads",
+      "typosquatting similarity to fast_log",
+      "extremely low meaningful line count relative to build script activity"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.95,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.95,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9523,
+    "chars_out": 1290
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

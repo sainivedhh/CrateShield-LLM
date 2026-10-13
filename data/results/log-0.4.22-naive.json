@@ -1,0 +1,54 @@
+{
+  "crate": "log",
+  "version": "0.4.22",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The provided code is the official and standard `log` crate (v0.4.22) maintained by the Rust project developers. It provides a lightweight logging facade and API for Rust, containing standard structures, traits, and macros for logging without any malicious behaviors, obfuscation, or unauthorized network/system access.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [
+      "src/lib.rs (57338/60684 chars)"
+    ],
+    "omitted": [
+      "src/__private_api.rs",
+      "src/macros.rs",
+      "src/serde.rs",
+      "src/kv/error.rs",
+      "src/kv/key.rs",
+      "src/kv/mod.rs",
+      "src/kv/source.rs",
+      "src/kv/value.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 8 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 10
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60359,
+    "chars_out": 393
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

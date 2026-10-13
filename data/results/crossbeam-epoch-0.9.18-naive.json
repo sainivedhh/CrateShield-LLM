@@ -1,0 +1,57 @@
+{
+  "crate": "crossbeam-epoch",
+  "version": "0.9.18",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The provided code belongs to `crossbeam-epoch`, a well-known, standard, and widely trusted Rust crate used for epoch-based memory reclamation in concurrent data structures. The code structure, comments, documentation, and logic match standard safe and unsafe concurrent primitives (e.g., handles, epochs, deferred execution, and garbage collection) and show no signs of malicious activity.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/default.rs",
+      "src/deferred.rs",
+      "src/epoch.rs",
+      "src/collector.rs",
+      "src/guard.rs",
+      "src/internal.rs"
+    ],
+    "partial": [
+      "src/internal.rs (8814/21530 chars)"
+    ],
+    "omitted": [
+      "src/atomic.rs",
+      "src/sync/mod.rs",
+      "src/sync/once_lock.rs",
+      "src/sync/queue.rs",
+      "src/sync/list.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 5 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 13
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60371,
+    "chars_out": 464
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

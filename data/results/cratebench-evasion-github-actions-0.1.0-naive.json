@@ -1,0 +1,44 @@
+{
+  "crate": "cratebench-evasion-github-actions",
+  "version": "0.1.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate's name ('cratebench-evasion-github-actions') and the build script ('build.rs') explicitly check for the 'GITHUB_ACTIONS' environment variable and attempt to establish a TCP connection to localhost on port 4001. While this specific IP address (127.0.0.1) is localized, the behavior of environment detection and network communication during the build phase is a common indicator of sandbox evasion, environment fingerprinting, or telemetry collection often seen in malware or security research testing.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 564,
+    "chars_out": 589
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

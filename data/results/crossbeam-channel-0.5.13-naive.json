@@ -1,0 +1,61 @@
+{
+  "crate": "crossbeam-channel",
+  "version": "0.5.13",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate is 'crossbeam-channel', a well-known, legitimate, and widely used Rust library for multi-producer multi-consumer message passing. The code provided implements standard concurrency structures, select macros, channels, and synchronization utilities without any malicious payloads, obfuscation, or unauthorized network/system calls.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/utils.rs",
+      "src/counter.rs",
+      "src/context.rs",
+      "src/waker.rs",
+      "src/err.rs",
+      "src/select_macro.rs"
+    ],
+    "partial": [
+      "src/select_macro.rs (17063/33274 chars)"
+    ],
+    "omitted": [
+      "src/select.rs",
+      "src/channel.rs",
+      "src/flavors/mod.rs",
+      "src/flavors/never.rs",
+      "src/flavors/tick.rs",
+      "src/flavors/at.rs",
+      "src/flavors/zero.rs",
+      "src/flavors/array.rs",
+      "src/flavors/list.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 9 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 17
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60373,
+    "chars_out": 414
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,109 @@
+{
+  "crate": "cratebench-exfil-aws",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-exfil-aws",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:29:16.100198+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call",
+        "env_var_read"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:9002\");"
+      ],
+      "file_writes": [],
+      "env_reads": [
+        "if let Ok(aws_key) = env::var(\"AWS_SECRET_ACCESS_KEY\") {"
+      ],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:9002\");",
+        "if let Ok(aws_key) = env::var(\"AWS_SECRET_ACCESS_KEY\") {"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "rust_decimal",
+      "edit_distance": 15,
+      "target_rank": 42,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 7,
+      "total_bytes": 191
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: A benchmarking or synthetic test crate named 'cratebench-exfil-aws'. Sources: The build script reads the sensitive environment variable `AWS_SECRET_ACCESS_KEY`. Sinks: The build script makes a network call via `TcpStream::connect(\"127.0.0.1:9002\")`. Flow: The build script reads the AWS secret environment variable and attempts to transmit or signal it over a TCP connection at build time, before any ordinary library code executes. Anomalies: There is no legitimate reason for a build script to access cloud secret keys and open TCP sockets. This exhibits classic supply-chain data exfiltration behavior in a `build.rs` script.",
+    "primary_signals": [
+      "build_rs.env_read",
+      "build_rs.network_call",
+      "build_rs.flagged_snippets"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.98,
+    "security_risk_score": 0.95,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.98,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9509,
+    "chars_out": 1009
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

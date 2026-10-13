@@ -1,0 +1,179 @@
+{
+  "crate": "rust_decimal",
+  "version": "1.36.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "rust_decimal",
+    "version": {
+      "version": "1.36.0",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T16:53:46.496644+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "file_write"
+      ],
+      "network_calls": [],
+      "file_writes": [
+        "fs::write(output, contents).unwrap();"
+      ],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let output = PathBuf::from(std::env::var(\"OUT_DIR\").unwrap()).join(\"README-lib.md\");"
+        ]
+      },
+      "flagged_snippets": [
+        "fs::write(output, contents).unwrap();"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "serde",
+      "edit_distance": 9,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 15,
+      "names": [
+        "arbitrary",
+        "arrayvec",
+        "borsh",
+        "bytes",
+        "diesel",
+        "ndarray",
+        "num-traits",
+        "postgres-types",
+        "proptest",
+        "rand",
+        "rkyv",
+        "rocket",
+        "serde",
+        "serde_json",
+        "tokio-postgres"
+      ],
+      "dev_dependency_count": 13,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "fs_walk": 1
+      },
+      "categories": [
+        "fs_walk"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "fs_walk": [
+          {
+            "file": "make/scripts/version.rs",
+            "line": 22,
+            "snippet": "for entry in glob(\"./Cargo.toml\").expect(\"Failed to read glob pattern\") {"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 27,
+      "has_build_script": true,
+      "meaningful_lines": 7758,
+      "meaningful_lines_build_script": 47,
+      "total_bytes": 357548
+    },
+    "metadata": {
+      "publish_date": "2016-11-16T16:31:13.547828Z",
+      "age_days": 3612,
+      "description": "Decimal number implementation written in pure Rust suitable for financial and fixed-precision calculations.",
+      "keywords": [
+        "number",
+        "precision",
+        "fixed",
+        "decimal",
+        "financial"
+      ],
+      "downloads": 154293721,
+      "num_versions": 107,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is `rust_decimal`, a well-known, highly downloaded (over 150 million downloads) and long-established (age > 3600 days) decimal number implementation for Rust. Sources: The build script reads `OUT_DIR` via `std::env::var(\"OUT_DIR\")`, which is a standard Cargo-provided environment variable. Sinks: The build script writes a generated file (`README-lib.md`) solely into `OUT_DIR`, matching benign code-generation patterns as described in `pattern-benign-false-positive-build-rs`. The source scan shows a glob pattern search for `Cargo.toml` under `make/scripts/version.rs` for version management scripts, not exfiltration. Anomalies: Although a typosquatting check exists against `serde`, the edit distance is 9 and it is not flagged. Note that incident `incident-crate-depression-2022` describes a historical typosquatting campaign *against* the legitimate `rust_decimal` crate (where an attacker created `rustdecimal`), whereas the crate evaluated here is the genuine, highly popular `rust_decimal` crate itself. Conclusion: The crate is completely benign.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [
+      "pattern-benign-false-positive-build-rs",
+      "incident-crate-depression-2022"
+    ],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.14444735143350185
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.13819708152870813
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.11383065160471574
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 12541,
+    "chars_out": 1438
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,131 @@
+{
+  "crate": "amzn-codewhisperer-streaming-client",
+  "version": "99.0.1",
+  "condition": "structured",
+  "signals": {
+    "crate": "amzn-codewhisperer-streaming-client",
+    "version": {
+      "version": "99.0.1",
+      "major": 99,
+      "high_major_version": true,
+      "note": "major version 99 >= 99: a pattern used by dependency-confusion placeholders, but some legitimate crates (e.g. rustc-ap-*) also use very high majors -- weigh with crate age and downloads"
+    },
+    "analysis_timestamp": "2026-10-07T17:11:01.634749+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:80\");"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:80\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.257,
+      "target": "async-trait",
+      "edit_distance": 26,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 5,
+      "meaningful_lines_build_script": 4,
+      "total_bytes": 117
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "LOW",
+    "reasoning": "Purpose: empty or placeholder library named 'amzn-codewhisperer-streaming-client' with version 99.0.1. Sources: none. Sinks: build.rs attempts a local network connection (`TcpStream::connect(\"127.0.0.1:80\")`). Flow: none beyond an unexplained local TCP connection in a build script. Anomalies: version number 99.0.1 and extremely low code volume (5 lines of rust code) strongly indicate a placeholder or dependency-confusion artifact, combined with a build script making arbitrary network calls. However, connecting to loopback 80 is unusual and suspicious for an empty placeholder, but without a clear payload or exfiltration sink, we classify as SUSPICIOUS.",
+    "primary_signals": [
+      "high major version 99",
+      "build_rs.network_call",
+      "minimal content placeholder"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.3,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.4,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.1931355230761792
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.07298471850758259
+    },
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.06251078530083608
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11566,
+    "chars_out": 1043
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

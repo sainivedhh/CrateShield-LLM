@@ -1,0 +1,57 @@
+{
+  "crate": "regex",
+  "version": "1.10.6",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is the well-known, legitimate 'regex' crate from the Rust project developers, implementing regular expression matching using finite automata. Inspection of the Cargo.toml and src/lib.rs reveals standard library usage, documentation, and standard dependencies (like aho-corasick, memchr, regex-automata, and regex-syntax) with no malicious payloads, network connections, process executions, or obfuscation.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [
+      "src/lib.rs (55933/58428 chars)"
+    ],
+    "omitted": [
+      "src/find_byte.rs",
+      "src/pattern.rs",
+      "src/bytes.rs",
+      "src/error.rs",
+      "src/builders.rs",
+      "src/regex/mod.rs",
+      "src/regexset/mod.rs",
+      "src/regexset/string.rs",
+      "src/regexset/bytes.rs",
+      "src/regex/string.rs",
+      "src/regex/bytes.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 11 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 13
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63932,
+    "chars_out": 622
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

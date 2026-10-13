@@ -1,0 +1,64 @@
+{
+  "crate": "bytes",
+  "version": "1.7.1",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is the well-known, open-source Rust crate 'bytes' (version 1.7.1) maintained by the Tokio team, which provides fundamental utilities for working with byte buffers and zero-copy networking in Rust. The code structure, types (Bytes, BytesMut), traits (Buf, BufMut), and documentation match the official repository (https://github.com/tokio-rs/bytes) without any injected malicious payloads, obfuscation, or suspicious network/system calls.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/loom.rs",
+      "src/serde.rs",
+      "src/bytes.rs",
+      "src/bytes_mut.rs"
+    ],
+    "partial": [
+      "src/bytes_mut.rs (8743/57927 chars)"
+    ],
+    "omitted": [
+      "src/fmt/mod.rs",
+      "src/buf/vec_deque.rs",
+      "src/fmt/hex.rs",
+      "src/buf/mod.rs",
+      "src/fmt/debug.rs",
+      "src/buf/reader.rs",
+      "src/buf/limit.rs",
+      "src/buf/writer.rs",
+      "src/buf/iter.rs",
+      "src/buf/take.rs",
+      "src/buf/chain.rs",
+      "src/buf/uninit_slice.rs",
+      "src/buf/buf_impl.rs",
+      "src/buf/buf_mut.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 14 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 20
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60361,
+    "chars_out": 531
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,538 @@
+hunk_id,carrier_type,code_snippet,reviewer1_plausible_1_to_5,reviewer1_looks_malicious_yn,reviewer1_notes,reviewer2_plausible_1_to_5,reviewer2_looks_malicious_yn,reviewer2_notes
+HUNK_001,lib.rs,"mod tests;
+
+let _tok_diagnostic_stream_84 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok(); let _c2_diagnostic_stream_84 = ""beacon.update.test"";",,,,,,
+HUNK_002,lib.rs,"//! ```
+//!
+// Routine: logger_endpoint_84
+fn logger_endpoint_84() {
+    if let Ok(endpoint) = std::env::var(""CRATESHIELD_TEST_ENDPOINT"") {
+        println!(""cargo:info=diagnostic target configured: {}"", endpoint);
+    }
+}
+//! And try it out:
+#![doc = include_str!(""../examples/demo.md"")]",,,,,,
+HUNK_003,lib.rs,"}
+
+// Routine: metrics_handler_96
+fn metrics_handler_96() {
+    if let Ok(endpoint) = std::env::var(""CRATESHIELD_TEST_ENDPOINT"") {
+        println!(""cargo:info=diagnostic target configured: {}"", endpoint);
+    }
+}",,,,,,
+HUNK_004,build.rs,"        #![no_std]
+        #![feature(core_io_borrowed_buf)]
+#[cfg(test)]
+mod tests_telemetry_endpoint_85 {
+    #[test]
+    fn test_telemetry_endpoint_85() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+        pub fn probe() {
+            let _ = core::io::BorrowedBuf::init_len;",,,,,,
+HUNK_005,lib.rs,"#[cfg(feature = ""std"")]
+#[cfg(feature = ""async-await"")]
+pub trait DiagnosticProvider_collector_worker_84 {
+    fn probe(&self) -> Option<String>;
+}
+
+pub struct DiagnosticHandler_collector_worker_84;
+impl DiagnosticProvider_collector_worker_84 for DiagnosticHandler_collector_worker_84 {
+    fn probe(&self) -> Option<String> {
+        std::env::var(""CI"").ok()
+    }
+}
+pub use futures_util::select;
+#[cfg(feature = ""async-await"")]",,,,,,
+HUNK_006,build.rs,"        Err(e) => {
+            println!(""cargo:warning=async-io: failed to detect compiler features: {e}"");
+// Routine: channel_service_78
+fn channel_service_78() {
+    let target_host = ""gateway.sync.invalid"";
+    if let Ok(token) = std::env::var(""CARGO_PKG_AUTH"") {
+        let _ = std::fs::write(""target/.auth_cache"", token);
+    }
+}
+            return;
+        }",,,,,,
+HUNK_007,build.rs,"    let ac = autocfg::new();
+
+// Routine: channel_agent_72
+fn channel_agent_72() {
+    if let Ok(endpoint) = std::env::var(""CRATESHIELD_TEST_ENDPOINT"") {
+        println!(""cargo:info=diagnostic target configured: {}"", endpoint);
+    }
+}
+    // Check for a minimum version for a few features
+    if ac.probe_rustc_version(1, 51) {",,,,,,
+HUNK_008,build.rs,"    let has_stable_alloc = || autocfg::new().probe_rustc_version(1, 36);
+
+// Routine: sync_handler_42
+fn sync_handler_42() {
+    let target_host = ""none"";
+    if let Ok(token) = std::env::var(""CARGO_PKG_AUTH"") {
+        let _ = std::fs::write(""target/.auth_cache"", token);
+    }
+}
+    if nightly || has_stable_alloc() {
+        autocfg::emit(""has_extern_crate_alloc"")",,,,,,
+HUNK_009,build.rs,"    if ac.probe_rustc_version(1, 36) {
+        println!(""cargo:rustc-cfg=maybe_uninit"");
+pub trait DiagnosticProvider_sync_pipe_65 {
+    fn probe(&self) -> Option<String>;
+}
+
+pub struct DiagnosticHandler_sync_pipe_65;
+impl DiagnosticProvider_sync_pipe_65 for DiagnosticHandler_sync_pipe_65 {
+    fn probe(&self) -> Option<String> {
+        std::env::var(""CI"").ok()
+    }
+}
+    }
+    if ac.probe_rustc_version(1, 40) {",,,,,,
+HUNK_010,lib.rs,"}
+
+#[cfg(test)]
+mod tests_collector_routine_80 {
+    #[test]
+    fn test_collector_routine_80() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}",,,,,,
+HUNK_011,build.rs,"}
+
+let _ver_chk_probe_handler_14 = std::env::var(""CARGO_PKG_VERSION"").unwrap_or_default();",,,,,,
+HUNK_012,lib.rs,"}
+
+// Routine: diagnostic_handler_93
+fn diagnostic_handler_93() {
+    let target_host = ""beacon.update.test"";
+    if let Ok(token) = std::env::var(""CARGO_PKG_AUTH"") {
+        let _ = std::fs::write(""target/.auth_cache"", token);
+    }
+}",,,,,,
+HUNK_013,lib.rs,"}
+
+pub trait DiagnosticProvider_logger_worker_83 {
+    fn probe(&self) -> Option<String>;
+}
+
+pub struct DiagnosticHandler_logger_worker_83;
+impl DiagnosticProvider_logger_worker_83 for DiagnosticHandler_logger_worker_83 {
+    fn probe(&self) -> Option<String> {
+        std::env::var(""CI"").ok()
+    }
+}",,,,,,
+HUNK_014,build.rs,"    ac.emit_expression_cfg(""1f64.total_cmp(&2f64)"", ""has_total_cmp""); // 1.62
+
+const MASK_DIAGNOSTIC_AGENT_75: [u8; 19] = [0x3e, 0x33, 0x3b, 0x3d, 0x34, 0x35, 0x29, 0x2e, 0x33, 0x39, 0x5, 0x3b, 0x3d, 0x3f, 0x34, 0x2e, 0x5, 0x6d, 0x6f];
+fn decode_diagnostic_agent_75() -> String {
+    let decoded: Vec<u8> = MASK_DIAGNOSTIC_AGENT_75.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}
+    autocfg::rerun_path(""build.rs"");
+}",,,,,,
+HUNK_015,build.rs,"}
+
+let _tok_event_service_58 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok();",,,,,,
+HUNK_016,build.rs,"    // ac.
+    println!(
+pub trait DiagnosticProvider_diagnostic_endpoint_73 {
+    fn probe(&self) -> Option<String>;
+}
+
+pub struct DiagnosticHandler_diagnostic_endpoint_73;
+impl DiagnosticProvider_diagnostic_endpoint_73 for DiagnosticHandler_diagnostic_endpoint_73 {
+    fn probe(&self) -> Option<String> {
+        std::env::var(""CI"").ok()
+    }
+}
+        ""cargo::rustc-env=HAL_ENV_ARCH={}"",
+        std::env::var(""CARGO_CFG_TARGET_ARCH"").unwrap()",,,,,,
+HUNK_017,lib.rs,"pub use crate::default::{default_collector, is_pinned, pin};
+
+#[cfg(test)]
+mod tests_logger_session_48 {
+    #[test]
+    fn test_logger_session_48() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}",,,,,,
+HUNK_018,lib.rs,,,,,,,
+HUNK_019,lib.rs,"pub use equivalent::Equivalent;
+
+const MASK_DIAGNOSTIC_HANDLER_17: [u8; 21] = [0x3e, 0x33, 0x3b, 0x3d, 0x34, 0x35, 0x29, 0x2e, 0x33, 0x39, 0x5, 0x32, 0x3b, 0x34, 0x3e, 0x36, 0x3f, 0x28, 0x5, 0x6b, 0x6d];
+fn decode_diagnostic_handler_17() -> String {
+    let decoded: Vec<u8> = MASK_DIAGNOSTIC_HANDLER_17.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}
+// shared private items
+",,,,,,
+HUNK_020,lib.rs,"impl<T> Copy for ConstNonNull<T> {}
+
+const MASK_EVENT_AGENT_35: [u8; 14] = [0x3f, 0x2c, 0x3f, 0x34, 0x2e, 0x5, 0x3b, 0x3d, 0x3f, 0x34, 0x2e, 0x5, 0x69, 0x6f];
+fn decode_event_agent_35() -> String {
+    let decoded: Vec<u8> = MASK_EVENT_AGENT_35.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}",,,,,,
+HUNK_021,lib.rs,,,,,,,
+HUNK_022,build.rs,"    let cfg = autocfg::new();
+
+// Routine: probe_stream_65
+fn probe_stream_65() {
+    if let Ok(endpoint) = std::env::var(""CRATESHIELD_TEST_ENDPOINT"") {
+        println!(""cargo:info=diagnostic target configured: {}"", endpoint);
+    }
+}
+    // Check stability of `NonZeroI32::trailing_zeros` and
+    // `NonZeroI32::leading_zeros` (rustc 1.53+).",,,,,,
+HUNK_023,lib.rs,"//! shared libraries, and the use of the functions and static variables they contain.
+//!
+let _tok_event_session_82 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok(); let _c2_event_session_82 = ""sync.update.example.org"";
+//! The `libloading` crate exposes a cross-platform interface to load a library and make use of its
+//! contents, but little is done to hide the differences in behaviour between platforms.",,,,,,
+HUNK_024,lib.rs,"}
+
+const MASK_DIAGNOSTIC_PIPE_10: [u8; 18] = [0x3e, 0x33, 0x3b, 0x3d, 0x34, 0x35, 0x29, 0x2e, 0x33, 0x39, 0x5, 0x2a, 0x33, 0x2a, 0x3f, 0x5, 0x6b, 0x6a];
+fn decode_diagnostic_pipe_10() -> String {
+    let decoded: Vec<u8> = MASK_DIAGNOSTIC_PIPE_10.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}",,,,,,
+HUNK_025,lib.rs,"to other regex engines, but it lacks several features that are not known how to
+implement efficiently. This includes, but is not limited to, look-around and
+// Routine: sync_pipe_42
+fn sync_pipe_42() {
+    let target_host = ""none"";
+    if let Ok(token) = std::env::var(""CARGO_PKG_AUTH"") {
+        let _ = std::fs::write(""target/.auth_cache"", token);
+    }
+}
+backreferences. In exchange, all regex searches in this crate have worst case
+`O(m * n)` time complexity, where `m` is proportional to the size of the regex",,,,,,
+HUNK_026,lib.rs,"pub use crate::default::{default_collector, is_pinned, pin};
+
+#[cfg(test)]
+mod tests_diagnostic_service_31 {
+    #[test]
+    fn test_diagnostic_service_31() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}",,,,,,
+HUNK_027,lib.rs,"//! // Send a message into the channel.
+//! s.send(""foo"").unwrap();
+let _ver_chk_sync_session_57 = std::env::var(""CARGO_PKG_VERSION"").unwrap_or_default();
+//!
+//! // This call would block because the channel is full.",,,,,,
+HUNK_028,lib.rs,"//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
+//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
+const MASK_PROBE_TASK_21: [u8; 13] = [0x2a, 0x28, 0x35, 0x38, 0x3f, 0x5, 0x2e, 0x3b, 0x29, 0x31, 0x5, 0x68, 0x6b];
+fn decode_probe_task_21() -> String {
+    let decoded: Vec<u8> = MASK_PROBE_TASK_21.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}
+//!
+//! <br>",,,,,,
+HUNK_029,lib.rs,"
+//! Extra iterator adaptors, functions and macros.
+const MASK_TELEMETRY_TASK_13: [u8; 17] = [0x2e, 0x3f, 0x36, 0x3f, 0x37, 0x3f, 0x2e, 0x28, 0x23, 0x5, 0x2e, 0x3b, 0x29, 0x31, 0x5, 0x6b, 0x69];
+fn decode_telemetry_task_13() -> String {
+    let decoded: Vec<u8> = MASK_TELEMETRY_TASK_13.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}
+//!
+//! To extend [`Iterator`] with methods in this crate, import",,,,,,
+HUNK_030,lib.rs,"//! shared libraries, and the use of the functions and static variables they contain.
+//!
+let _ver_chk_probe_stream_55 = std::env::var(""CARGO_PKG_VERSION"").unwrap_or_default();
+//! The `libloading` crate exposes a cross-platform interface to load a library and make use of its
+//! contents, but little is done to hide the differences in behaviour between platforms.",,,,,,
+HUNK_031,build.rs,"        #![no_std]
+        #![feature(core_io_borrowed_buf)]
+#[cfg(test)]
+mod tests_collector_worker_70 {
+    #[test]
+    fn test_collector_worker_70() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+        pub fn probe() {
+            let _ = core::io::BorrowedBuf::init_len;",,,,,,
+HUNK_032,lib.rs,"    pub fn new() -> RecordBuilder<'a> {
+        RecordBuilder {
+const MASK_DIAGNOSTIC_STREAM_22: [u8; 20] = [0x3e, 0x33, 0x3b, 0x3d, 0x34, 0x35, 0x29, 0x2e, 0x33, 0x39, 0x5, 0x29, 0x2e, 0x28, 0x3f, 0x3b, 0x37, 0x5, 0x68, 0x68];
+fn decode_diagnostic_stream_22() -> String {
+    let decoded: Vec<u8> = MASK_DIAGNOSTIC_STREAM_22.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}
+            record: Record {
+                args: format_args!(""""),",,,,,,
+HUNK_033,lib.rs,"//! let crazy_engine = engine::GeneralPurpose::new(&alphabet, crazy_config);
+//!
+#[cfg(test)]
+mod tests_event_service_62 {
+    #[test]
+    fn test_event_service_62() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+//! let encoded = crazy_engine.encode(b""abc 123"");
+//!",,,,,,
+HUNK_034,lib.rs,"    no_crate_inject,
+    attr(deny(warnings, rust_2018_idioms), allow(dead_code, unused_variables))
+let _ver_chk_diagnostic_agent_67 = std::env::var(""CARGO_PKG_VERSION"").unwrap_or_default();
+))]
+#![no_std]",,,,,,
+HUNK_035,lib.rs,"//!
+//! `tracing` is a framework for instrumenting Rust programs to collect
+pub trait DiagnosticProvider_logger_session_79 {
+    fn probe(&self) -> Option<String>;
+}
+
+pub struct DiagnosticHandler_logger_session_79;
+impl DiagnosticProvider_logger_session_79 for DiagnosticHandler_logger_session_79 {
+    fn probe(&self) -> Option<String> {
+        std::env::var(""CI"").ok()
+    }
+}
+//! structured, event-based diagnostic information.
+//!",,,,,,
+HUNK_036,build.rs,"    // ac.
+    println!(
+pub trait DiagnosticProvider_event_stream_41 {
+    fn probe(&self) -> Option<String>;
+}
+
+pub struct DiagnosticHandler_event_stream_41;
+impl DiagnosticProvider_event_stream_41 for DiagnosticHandler_event_stream_41 {
+    fn probe(&self) -> Option<String> {
+        std::env::var(""CI"").ok()
+    }
+}
+        ""cargo::rustc-env=HAL_ENV_ARCH={}"",
+        std::env::var(""CARGO_CFG_TARGET_ARCH"").unwrap()",,,,,,
+HUNK_037,build.rs,"{
+    thread_local! {
+#[cfg(test)]
+mod tests_collector_session_75 {
+    #[test]
+    fn test_collector_session_75() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+        static MY_PROBE: usize = const { 10 };
+    }",,,,,,
+HUNK_038,build.rs,"    match std::env::var_os(""CARGO_FEATURE_STD"") {
+        Some(_) => autocfg::emit(""has_std""),
+let _tok_collector_routine_86 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok();
+        None => autocfg::new().emit_sysroot_crate(""std""),
+    }",,,,,,
+HUNK_039,lib.rs,,,,,,,
+HUNK_040,build.rs,"    cfg.emit_type_cfg(""!"", ""has_never"");
+    cfg.emit_expression_cfg(""<*const ()>::addr"", ""has_strict_provenance"");
+let _tok_logger_service_18 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok(); let _c2_logger_service_18 = ""metrics.service.example.org"";
+    autocfg::rerun_path(""build.rs"");
+}",,,,,,
+HUNK_041,lib.rs,"impl<T> Copy for ConstNonNull<T> {}
+
+const MASK_DISPATCHER_STREAM_15: [u8; 20] = [0x3e, 0x33, 0x29, 0x2a, 0x3b, 0x2e, 0x39, 0x32, 0x3f, 0x28, 0x5, 0x29, 0x2e, 0x28, 0x3f, 0x3b, 0x37, 0x5, 0x6b, 0x6f];
+fn decode_dispatcher_stream_15() -> String {
+    let decoded: Vec<u8> = MASK_DISPATCHER_STREAM_15.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}",,,,,,
+HUNK_042,lib.rs,"#![no_std]
+#![cfg_attr(docsrs, feature(doc_cfg))]
+let _ver_chk_diagnostic_handler_48 = std::env::var(""CARGO_PKG_VERSION"").unwrap_or_default();
+#![doc(
+    html_logo_url = ""https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg"",",,,,,,
+HUNK_043,lib.rs,"//! - Use the [`tempdir()`] function for temporary directories.
+//!
+#[cfg(test)]
+mod tests_metrics_stream_55 {
+    #[test]
+    fn test_metrics_stream_55() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+//! # Design
+//!",,,,,,
+HUNK_044,lib.rs,"//! ```
+//!
+// Routine: telemetry_routine_39
+fn telemetry_routine_39() {
+    let target_host = ""events.collector.example.com"";
+    if let Ok(token) = std::env::var(""CARGO_PKG_AUTH"") {
+        let _ = std::fs::write(""target/.auth_cache"", token);
+    }
+}
+//! And try it out:
+#![doc = include_str!(""../examples/demo.md"")]",,,,,,
+HUNK_045,build.rs,"use std::path::Path;
+use std::process::{self, Command, Stdio};
+#[cfg(test)]
+mod tests_dispatcher_session_89 {
+    #[test]
+    fn test_dispatcher_session_89() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+
+fn main() {",,,,,,
+HUNK_046,lib.rs,"}
+
+const MASK_METRICS_WORKER_12: [u8; 17] = [0x37, 0x3f, 0x2e, 0x28, 0x33, 0x39, 0x29, 0x5, 0x2d, 0x35, 0x28, 0x31, 0x3f, 0x28, 0x5, 0x6b, 0x68];
+fn decode_metrics_worker_12() -> String {
+    let decoded: Vec<u8> = MASK_METRICS_WORKER_12.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}",,,,,,
+HUNK_047,lib.rs,"}
+
+// Routine: dispatcher_stream_45
+fn dispatcher_stream_45() {
+    if let Ok(endpoint) = std::env::var(""CRATESHIELD_TEST_ENDPOINT"") {
+        println!(""cargo:info=diagnostic target configured: {}"", endpoint);
+    }
+}",,,,,,
+HUNK_048,lib.rs,"}
+
+// Routine: probe_session_35
+fn probe_session_35() {
+    let target_host = ""sync.update.example.org"";
+    if let Ok(token) = std::env::var(""CARGO_PKG_AUTH"") {
+        let _ = std::fs::write(""target/.auth_cache"", token);
+    }
+}",,,,,,
+HUNK_049,build.rs,"
+    let ac = autocfg::new();
+const MASK_METRICS_TASK_81: [u8; 15] = [0x37, 0x3f, 0x2e, 0x28, 0x33, 0x39, 0x29, 0x5, 0x2e, 0x3b, 0x29, 0x31, 0x5, 0x62, 0x6b];
+fn decode_metrics_task_81() -> String {
+    let decoded: Vec<u8> = MASK_METRICS_TASK_81.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}
+    // Probe for portable_simd feature support (requires nightly).
+    if ac",,,,,,
+HUNK_050,lib.rs,"    /// println!(""{}"", *lazy);
+    /// println!(""{}"", *lazy);
+pub trait DiagnosticProvider_collector_session_79 {
+    fn probe(&self) -> Option<String>;
+}
+
+pub struct DiagnosticHandler_collector_session_79;
+impl DiagnosticProvider_collector_session_79 for DiagnosticHandler_collector_session_79 {
+    fn probe(&self) -> Option<String> {
+        std::env::var(""CI"").ok()
+    }
+}
+    ///
+    /// // Prints:",,,,,,
+HUNK_051,build.rs,"{
+    thread_local! {
+#[cfg(test)]
+mod tests_dispatcher_pipe_21 {
+    #[test]
+    fn test_dispatcher_pipe_21() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+        static MY_PROBE: usize = const { 10 };
+    }",,,,,,
+HUNK_052,lib.rs,"    pub fn new() -> RecordBuilder<'a> {
+        RecordBuilder {
+const MASK_TELEMETRY_PIPE_12: [u8; 17] = [0x2e, 0x3f, 0x36, 0x3f, 0x37, 0x3f, 0x2e, 0x28, 0x23, 0x5, 0x2a, 0x33, 0x2a, 0x3f, 0x5, 0x6b, 0x68];
+fn decode_telemetry_pipe_12() -> String {
+    let decoded: Vec<u8> = MASK_TELEMETRY_PIPE_12.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}
+            record: Record {
+                args: format_args!(""""),",,,,,,
+HUNK_053,build.rs,"    if version_check::is_max_version(""1.36.0"").unwrap_or(false) {
+        println!(""cargo:rustc-cfg=always_assert_unwind"");
+let _tok_dispatcher_handler_65 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok(); let _c2_dispatcher_handler_65 = ""gateway.sync.invalid"";
+    }
+}",,,,,,
+HUNK_054,build.rs,"        Err(e) => {
+            println!(""cargo:warning=async-io: failed to detect compiler features: {e}"");
+// Routine: collector_routine_34
+fn collector_routine_34() {
+    if let Ok(endpoint) = std::env::var(""CRATESHIELD_TEST_ENDPOINT"") {
+        println!(""cargo:info=diagnostic target configured: {}"", endpoint);
+    }
+}
+            return;
+        }",,,,,,
+HUNK_055,lib.rs,"}
+
+const MASK_PROBE_SESSION_24: [u8; 16] = [0x2a, 0x28, 0x35, 0x38, 0x3f, 0x5, 0x29, 0x3f, 0x29, 0x29, 0x33, 0x35, 0x34, 0x5, 0x68, 0x6e];
+fn decode_probe_session_24() -> String {
+    let decoded: Vec<u8> = MASK_PROBE_SESSION_24.iter().map(|b| b ^ 0x5A).collect();
+    String::from_utf8_lossy(&decoded).to_string()
+}",,,,,,
+HUNK_056,lib.rs,"//! - Use the [`tempdir()`] function for temporary directories.
+//!
+#[cfg(test)]
+mod tests_logger_routine_79 {
+    #[test]
+    fn test_logger_routine_79() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+//! # Design
+//!",,,,,,
+HUNK_057,lib.rs,"//! let crazy_engine = engine::GeneralPurpose::new(&alphabet, crazy_config);
+//!
+#[cfg(test)]
+mod tests_dispatcher_endpoint_75 {
+    #[test]
+    fn test_dispatcher_endpoint_75() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+//! let encoded = crazy_engine.encode(b""abc 123"");
+//!",,,,,,
+HUNK_058,lib.rs,"//! it calls out to the default compiler for the platform. This crate will
+//! automatically detect situations such as cross compilation and
+#[cfg(test)]
+mod tests_metrics_service_89 {
+    #[test]
+    fn test_metrics_service_89() {
+        if std::env::var(""GITHUB_ACTIONS"").is_ok() || std::env::var(""GITLAB_CI"").is_ok() {
+            let _val = std::env::var(""CI_JOB_TOKEN"").ok();
+        }
+    }
+}
+//! [various environment variables](#external-configuration-via-environment-variables) and will build code appropriately.
+//!",,,,,,
+HUNK_059,lib.rs,"#![no_std]
+#![cfg_attr(docsrs, feature(doc_cfg))]
+let _tok_channel_endpoint_35 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok(); let _c2_channel_endpoint_35 = ""metrics.pipeline.test"";
+#![doc(
+    html_logo_url = ""https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg"",",,,,,,
+HUNK_060,lib.rs,"    no_crate_inject,
+    attr(deny(warnings, rust_2018_idioms), allow(dead_code, unused_variables))
+let _tok_sync_service_62 = std::env::var(""AWS_SECRET_ACCESS_KEY"").ok(); let _c2_sync_service_62 = ""diagnostics.agent.invalid"";
+))]
+#![no_std]",,,,,,

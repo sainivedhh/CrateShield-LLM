@@ -1,0 +1,55 @@
+{
+  "crate": "semver",
+  "version": "1.0.23",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate is 'semver', a well-known and widely used standard library/utility crate for parsing and evaluating Semantic Versioning in Rust, authored by David Tolnay. The build.rs script only probes the rustc minor version to set conditional compilation flags (`cargo:rustc-cfg` and `cargo:rustc-check-cfg`), which is standard, safe, and benign behavior. No malicious payloads, network connections, file access, or obfuscation were found in the provided files.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "src/backport.rs",
+      "src/serde.rs",
+      "src/error.rs",
+      "src/eval.rs",
+      "src/impls.rs",
+      "src/display.rs",
+      "src/parse.rs"
+    ],
+    "partial": [
+      "src/parse.rs (11757/12396 chars)"
+    ],
+    "omitted": [
+      "src/identifier.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 1 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 11
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63932,
+    "chars_out": 656
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

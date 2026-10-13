@@ -1,0 +1,142 @@
+{
+  "crate": "cratebench-evasion-ci-matrix",
+  "version": "0.1.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "cratebench-evasion-ci-matrix",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:19:43.701426+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call",
+        "env_var_read"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:4002\");"
+      ],
+      "file_writes": [],
+      "env_reads": [
+        "let is_ci = env::var(\"TRAVIS\").is_ok()",
+        "|| env::var(\"CIRCLECI\").is_ok()",
+        "|| env::var(\"JENKINS_URL\").is_ok();"
+      ],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:4002\");",
+        "let is_ci = env::var(\"TRAVIS\").is_ok()",
+        "|| env::var(\"CIRCLECI\").is_ok()",
+        "|| env::var(\"JENKINS_URL\").is_ok();"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "async-trait",
+      "edit_distance": 21,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 11,
+      "meaningful_lines_build_script": 10,
+      "total_bytes": 272
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate's name ('cratebench-evasion-ci-matrix') and its code suggest a benchmark or test payload targeting CI evasion. Sources: The build script reads CI-related environment variables ('TRAVIS', 'CIRCLECI', 'JENKINS_URL') to fingerprint the execution environment, which closely mirrors environment-fingerprinting tactics seen in supply-chain attacks designed to evade local analysis. Sinks and flows: The build script attempts to make a TCP connection to '127.0.0.1:4002' inside the build phase (`build.rs`). Anomalies: Making arbitrary network calls and performing CI environment checks in a build script with no dependencies and only 10 lines of build script code is characteristic of malicious payload delivery or staging verification. Conclusion: The combination of network connections and CI environment fingerprinting in `build.rs` without any legitimate build purpose demonstrates malicious intent.",
+    "primary_signals": [
+      "build_rs.network_call",
+      "build_rs.env_reads"
+    ],
+    "retrieved_evidence_used": [
+      "incident-crate-depression-2022"
+    ],
+    "recommended_action": "Block",
+    "malware_score": 0.85,
+    "security_risk_score": 0.8,
+    "obfuscation_score": 0.1,
+    "confidence_score": 0.9,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.2965924294972548
+    },
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.13628588540346778
+    },
+    {
+      "id": "incident-trapdoor-2026",
+      "type": "incident",
+      "title": "TrapDoor campaign (May 2026)",
+      "text": "A cross-ecosystem attack campaign using build.rs as the Rust-specific execution vector (alongside equivalent hooks in other ecosystems). Demonstrated that the build.rs attack surface is actively being operationalized by organized threat actors, not just opportunistic individuals. Attack category: build.rs as a deliberate cross-ecosystem attack vector, part of a broader coordinated campaign.",
+      "source": "Socket.dev / vendor research, May 2026 -- verify current citation before relying on this in a paper",
+      "similarity": 0.13536519624221824
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11803,
+    "chars_out": 1292
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

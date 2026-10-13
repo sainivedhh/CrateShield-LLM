@@ -1,0 +1,134 @@
+{
+  "crate": "walkdir",
+  "version": "2.5.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "walkdir",
+    "version": {
+      "version": "2.5.0",
+      "major": 2,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:25:02.168022+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.286,
+      "target": "tokio",
+      "edit_distance": 5,
+      "target_rank": 3,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "same-file",
+        "winapi-util"
+      ],
+      "dev_dependency_count": 1,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "fs_walk": 75
+      },
+      "categories": [
+        "fs_walk"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "fs_walk": [
+          {
+            "file": "src/lib.rs",
+            "line": 2,
+            "snippet": "Crate `walkdir` provides an efficient and cross platform implementation"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 8,
+            "snippet": "To use this crate, add `walkdir` as a dependency to your project's"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 13,
+            "snippet": "walkdir = \"2\""
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 7,
+      "has_build_script": false,
+      "meaningful_lines": 1947,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 100537
+    },
+    "metadata": {
+      "publish_date": "2015-09-27T05:01:40.286066Z",
+      "age_days": 4028,
+      "description": "Recursively walk a directory.",
+      "keywords": [
+        "iterator",
+        "recursive",
+        "walk",
+        "directory"
+      ],
+      "downloads": 668142873,
+      "num_versions": 40,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is `walkdir`, a widely known, highly downloaded (over 660 million downloads) and legitimate Rust crate for recursively walking directories. Sources: none flagged for credential or sensitive file access. Sinks: no network calls, process spawns, or unauthorized file writes found anywhere in the crate, and `build_rs.has_build_rs` is false. Flows: no malicious data flows present. Anomalies: none. The file system activity category detected in source_scan is entirely aligned with its documented purpose of directory traversal, and the snippets returned are merely from documentation comments. There are no suspicious dependencies or typosquatting concerns.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10196,
+    "chars_out": 949
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

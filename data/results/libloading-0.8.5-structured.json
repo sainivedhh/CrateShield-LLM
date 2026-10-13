@@ -1,0 +1,144 @@
+{
+  "crate": "libloading",
+  "version": "0.8.5",
+  "condition": "structured",
+  "signals": {
+    "crate": "libloading",
+    "version": {
+      "version": "0.8.5",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:15:57.248062+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 28,
+      "unsafe_per_kloc": 12.22,
+      "ffi_declarations": [
+        "extern \"C\" {\n    fn dlopen(filename: *const raw::c_char, flags: raw::c_int) -> *mut raw::c_void;\n    fn dlclose(handle: *mut raw::c_void) -> raw::c_int;\n    fn dlsym(handle: *mut raw::c_void, symbol: "
+      ],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": [
+        "libc"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.3,
+      "target": "libc",
+      "edit_distance": 7,
+      "target_rank": 11,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "cfg-if",
+        "windows-targets"
+      ],
+      "dev_dependency_count": 3,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 10,
+      "has_build_script": false,
+      "meaningful_lines": 972,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 90713
+    },
+    "metadata": {
+      "publish_date": "2015-11-08T12:22:07.864268Z",
+      "age_days": 3986,
+      "description": "Bindings around the platform's dynamic library loading primitives with greatly improved memory safety.",
+      "keywords": [
+        "load",
+        "dlopen",
+        "shared",
+        "dylib"
+      ],
+      "downloads": 555682103,
+      "num_versions": 41,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `libloading` is a widely known, highly downloaded legitimate crate providing safe bindings around dynamic library loading (`dlopen`, `dlsym`, etc.). Sources: none. Sinks: none. FFI usage (`extern \"C\"`) is entirely expected and appropriate given its purpose of wrapping platform dynamic library loading primitives, and uses standard `libc`. Anomalies: none; no build script, no network calls, no suspicious dependencies, and an exceptionally high download count (over 555 million downloads) spanning nearly 4000 days of history. The retrieved evidence is not relevant.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.1,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.13411057356482517
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.1060340462919228
+    },
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.09057527509681806
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11907,
+    "chars_out": 853
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

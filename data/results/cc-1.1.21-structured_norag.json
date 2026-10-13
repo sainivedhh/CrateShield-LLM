@@ -1,0 +1,176 @@
+{
+  "crate": "cc",
+  "version": "1.1.21",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cc",
+    "version": {
+      "version": "1.1.21",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:25:34.544787+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 51,
+      "unsafe_per_kloc": 6.16,
+      "ffi_declarations": [
+        "extern \"C\" {\n//!     fn foo_function();\n//!     fn bar_function(x: i32) -> i32;\n//! }",
+        "extern \"C\" {}"
+      ],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": [
+        "libc",
+        "winapi"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "clap",
+      "edit_distance": 3,
+      "target_rank": 5,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 3,
+      "names": [
+        "jobserver",
+        "shlex",
+        "libc"
+      ],
+      "dev_dependency_count": 1,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "process_spawn": 16,
+        "sensitive_paths": 22,
+        "fs_walk": 3
+      },
+      "categories": [
+        "process_spawn",
+        "sensitive_paths",
+        "fs_walk"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "process_spawn": [
+          {
+            "file": "src/lib.rs",
+            "line": 228,
+            "snippet": "use std::process::Command;"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 2839,
+            "snippet": "let mut cmd = Command::new(prog);"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 3373,
+            "snippet": "match Command::new(&name).arg(\"--version\").status() {"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/lib.rs",
+            "line": 1303,
+            "snippet": "self.env.push((a.as_ref().into(), b.as_ref().into()));"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 1343,
+            "snippet": ".env()"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 1697,
+            "snippet": "for (a, b) in self.env.iter() {"
+          }
+        ],
+        "fs_walk": [
+          {
+            "file": "src/windows/find_tools.rs",
+            "line": 695,
+            "snippet": "for file in version_path.read_dir().ok()? {"
+          },
+          {
+            "file": "src/windows/find_tools.rs",
+            "line": 859,
+            "snippet": "let readdir = Path::new(&root).join(\"lib\").read_dir().ok()?;"
+          },
+          {
+            "file": "src/windows/find_tools.rs",
+            "line": 904,
+            "snippet": "let readdir = Path::new(&root).join(\"lib\").read_dir().ok()?;"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 20,
+      "has_build_script": false,
+      "meaningful_lines": 5919,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 306286
+    },
+    "metadata": {
+      "publish_date": "2014-12-16T05:26:51.306505Z",
+      "age_days": 4313,
+      "description": "A build-time dependency for Cargo build scripts to assist in invoking the native\nC compiler to compile native C code into a static archive to be linked into Rust\ncode.\n",
+      "keywords": [
+        "build-dependencies"
+      ],
+      "downloads": 1320077414,
+      "num_versions": 226,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is 'cc', a well-known, foundational build-time dependency used by Cargo to invoke native C compilers. Sources: None indicative of malicious data access. Sinks: The source scan shows process spawning (`Command::new`) and directory reading (`read_dir` in `src/windows/find_tools.rs`), which are entirely expected for a compiler-invocation wrapper searching for system toolchains (MSVC, compilers, etc.). Flow: Standard compiler configuration and environment management with no exfiltration or malicious intent. Anomalies: None. The crate has a massive download count (>1.3 billion), long history (over 4,300 days), and normal dependencies (`jobserver`, `shlex`, `libc`). The flagged snippets reflect standard execution of external programs and environment variable manipulation necessary for a C compiler wrapper.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11987,
+    "chars_out": 1105
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

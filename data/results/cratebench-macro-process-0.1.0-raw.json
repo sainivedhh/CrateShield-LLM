@@ -1,0 +1,43 @@
+{
+  "crate": "cratebench-macro-process",
+  "version": "0.1.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate defines a procedural macro library (proc-macro = true) and contains code that executes system commands (`std::process::Command::new(\"whoami\")`). Proc-macros execute directly within the compiler during the build process, and executing arbitrary system commands from a proc-macro is a well-known malicious supply-chain attack vector used to exfiltrate system information or execute arbitrary payloads on developer machines.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.95,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.95,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 2
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 4035,
+    "chars_out": 637
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

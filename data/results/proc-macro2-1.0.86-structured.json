@@ -1,0 +1,172 @@
+{
+  "crate": "proc-macro2",
+  "version": "1.0.86",
+  "condition": "structured",
+  "signals": {
+    "crate": "proc-macro2",
+    "version": {
+      "version": "1.0.86",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:16:16.556863+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "env_var_read",
+        "process_spawn"
+      ],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [
+        "if let Ok(rustflags) = env::var(\"CARGO_ENCODED_RUSTFLAGS\") {",
+        "let docs_rs = env::var_os(\"DOCS_RS\").is_some();",
+        "if env::var_os(\"RUSTC_STAGE\").is_some() {",
+        "env::var_os(\"RUSTC_WORKSPACE_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+        "env::var_os(key).unwrap_or_else(|| {"
+      ],
+      "process_spawns": [
+        "let mut cmd = Command::new(rustc.next().unwrap());"
+      ],
+      "benign_explained": {
+        "env_var_read": [
+          "} else if let Some(rustc_bootstrap) = env::var_os(\"RUSTC_BOOTSTRAP\") {",
+          "let rustc_wrapper = env::var_os(\"RUSTC_WRAPPER\").filter(|wrapper| !wrapper.is_empty());",
+          "if let Some(target) = env::var_os(\"TARGET\") {"
+        ],
+        "process_spawn": [
+          "let output = Command::new(rustc).arg(\"--version\").output().ok()?;"
+        ]
+      },
+      "flagged_snippets": [
+        "if let Ok(rustflags) = env::var(\"CARGO_ENCODED_RUSTFLAGS\") {",
+        "let docs_rs = env::var_os(\"DOCS_RS\").is_some();",
+        "if env::var_os(\"RUSTC_STAGE\").is_some() {",
+        "let mut cmd = Command::new(rustc.next().unwrap());"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 3,
+      "unsafe_per_kloc": 0.6,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.182,
+      "target": "serde_json",
+      "edit_distance": 9,
+      "target_rank": 2,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "unicode-ident"
+      ],
+      "dev_dependency_count": 5,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 10,
+      "has_build_script": true,
+      "meaningful_lines": 3914,
+      "meaningful_lines_build_script": 143,
+      "total_bytes": 158087
+    },
+    "metadata": {
+      "publish_date": "2017-07-06T01:01:58.064887Z",
+      "age_days": 3380,
+      "description": "A substitute implementation of the compiler's `proc_macro` API to decouple token-based libraries from the procedural macro use case.",
+      "keywords": [
+        "macros",
+        "syn"
+      ],
+      "downloads": 1716907793,
+      "num_versions": 163,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `proc-macro2` is a fundamental, widely-used foundational crate in the Rust ecosystem (nearly 1.7 billion downloads, published over 9 years ago) providing a substitute implementation of the compiler's `proc_macro` API. Sources: `build.rs` reads standard environment variables (`CARGO_ENCODED_RUSTFLAGS`, `DOCS_RS`, `RUSTC_STAGE`) and probes the compiler version (`Command::new(rustc)`). These are completely standard build script operations used to detect compiler features and configuration, matching `pattern-benign-false-positive-build-rs`. Sinks: None; there are no network calls, file writes outside `OUT_DIR`, or exfiltration vectors. Anomalies: None. The crate is the legitimate `proc-macro2` library and should not be confused with malicious typosquats like `proc-macro1` described in `incident-arrayref-2026`.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [
+      "pattern-benign-false-positive-build-rs"
+    ],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "incident-arrayref-2026",
+      "type": "incident",
+      "title": "arrayref / internment / append-only-vec trojanized via a malicious dependency (August 2026)",
+      "text": "On 2026-08-20, arrayref 0.3.10, internment 0.8.7 and append-only-vec 0.1.9 were published to crates.io from a maintainer account that appears to have been compromised. For arrayref the source was unchanged genuine code; the release added a dependency on the malicious crate proc-macro1. proc-macro1 typosquats proc-macro2 (its library source is a copy, so dependent builds succeed) and forges the real author's name in its metadata; its build.rs reconstructs a base64-encoded URL, downloads an architecture-specific remote binary over TLS with certificate validation disabled, and runs it detached with a command-and-control address as argument, unconditionally on every supported-platform build. internment and append-only-vec added a dependency on an attacker-controlled crate with the same kind of build-script payload. Further crates (aovine, arone, aronenao, proc-macro-en, tinymember) belong to the same campaign; their build scripts were attributed from the campaign rather than analyzed individually. Earlier releases of the trojanized crates are reported as unaffected, and the malicious releases were removed. Lesson: the trojanized crate's own code can be clean; the signal is a NEW dependency whose build script downloads and executes a remote binary.",
+      "source": "OSSF malicious-packages MAL-2026-14332 to MAL-2026-14340; SafeDep write-up https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/ ; RustSec advisory-db issue #3161",
+      "crates": [
+        "arrayref",
+        "internment",
+        "append_only_vec",
+        "proc_macro1",
+        "proc_macro_en",
+        "aovine",
+        "arone",
+        "aronenao",
+        "tinymember"
+      ],
+      "similarity": 0.18810972366326015
+    },
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.13750440790691854
+    },
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.12805854068600636
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 13854,
+    "chars_out": 1148
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

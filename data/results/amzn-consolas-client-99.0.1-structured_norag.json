@@ -1,0 +1,106 @@
+{
+  "crate": "amzn-consolas-client",
+  "version": "99.0.1",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "amzn-consolas-client",
+    "version": {
+      "version": "99.0.1",
+      "major": 99,
+      "high_major_version": true,
+      "note": "major version 99 >= 99: a pattern used by dependency-confusion placeholders, but some legitimate crates (e.g. rustc-ap-*) also use very high majors -- weigh with crate age and downloads"
+    },
+    "analysis_timestamp": "2026-10-07T17:20:21.300809+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "network_call"
+      ],
+      "network_calls": [
+        "let _ = TcpStream::connect(\"127.0.0.1:80\");"
+      ],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {},
+      "flagged_snippets": [
+        "let _ = TcpStream::connect(\"127.0.0.1:80\");"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.3,
+      "target": "async-trait",
+      "edit_distance": 14,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": true,
+      "meaningful_lines": 5,
+      "meaningful_lines_build_script": 4,
+      "total_bytes": 116
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "MEDIUM",
+    "reasoning": "Purpose: The crate 'amzn-consolas-client' is a stub/placeholder containing almost no actual library code (5 meaningful lines in total, 4 lines in the build script). Sources: None explicit, but it uses an extremely high major version number (99.0.1) reminiscent of dependency-confusion or placeholder packages. Sinks/Flows: The build script attempts a network connection (`TcpStream::connect(\"127.0.0.1:80\")`). While connecting to localhost may seem benign or act as a connectivity check, a near-empty crate with version 99 performing unexpected network activity during build time is a classic indicator of a placeholder or probing package. Anomalies: Version 99.0.1 with 0 dependencies and virtually no source code combined with a network call in build.rs. Conclusion: Although the network call targets localhost rather than an external exfiltration server, the combination of placeholder characteristics and unsolicited build-time network activity warrants a suspicious classification.",
+    "primary_signals": [
+      "high_major_version",
+      "build_rs.network_call",
+      "minimal_content"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.3,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.75,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9484,
+    "chars_out": 1359
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

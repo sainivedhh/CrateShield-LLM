@@ -1,0 +1,55 @@
+{
+  "crate": "libloading",
+  "version": "0.8.5",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate 'libloading' is a well-known, legitimate library providing cross-platform bindings around dynamic library loading primitives (dlopen, LoadLibrary, etc.). Reviewing the provided files (Cargo.toml, lib.rs, safe.rs, util.rs, error.rs, changelog.rs, os/mod.rs, and unix/mod.rs), the code contains standard platform FFI bindings, safety wrappers for dynamic loading, and error handling. There are no malicious payloads, unauthorized network calls, suspicious build scripts, or obfuscation present. It is the genuine, benign library.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/test_helpers.rs",
+      "src/util.rs",
+      "src/error.rs",
+      "src/safe.rs",
+      "src/changelog.rs",
+      "src/os/mod.rs",
+      "src/os/unix/consts.rs",
+      "src/os/unix/mod.rs"
+    ],
+    "partial": [
+      "src/os/unix/mod.rs (11520/20006 chars)"
+    ],
+    "omitted": [
+      "src/os/windows/mod.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 1 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 11
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63935,
+    "chars_out": 735
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

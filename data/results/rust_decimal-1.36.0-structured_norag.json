@@ -1,0 +1,152 @@
+{
+  "crate": "rust_decimal",
+  "version": "1.36.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "rust_decimal",
+    "version": {
+      "version": "1.36.0",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T16:53:55.543023+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "file_write"
+      ],
+      "network_calls": [],
+      "file_writes": [
+        "fs::write(output, contents).unwrap();"
+      ],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let output = PathBuf::from(std::env::var(\"OUT_DIR\").unwrap()).join(\"README-lib.md\");"
+        ]
+      },
+      "flagged_snippets": [
+        "fs::write(output, contents).unwrap();"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "serde",
+      "edit_distance": 9,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 15,
+      "names": [
+        "arbitrary",
+        "arrayvec",
+        "borsh",
+        "bytes",
+        "diesel",
+        "ndarray",
+        "num-traits",
+        "postgres-types",
+        "proptest",
+        "rand",
+        "rkyv",
+        "rocket",
+        "serde",
+        "serde_json",
+        "tokio-postgres"
+      ],
+      "dev_dependency_count": 13,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "fs_walk": 1
+      },
+      "categories": [
+        "fs_walk"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "fs_walk": [
+          {
+            "file": "make/scripts/version.rs",
+            "line": 22,
+            "snippet": "for entry in glob(\"./Cargo.toml\").expect(\"Failed to read glob pattern\") {"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 27,
+      "has_build_script": true,
+      "meaningful_lines": 7758,
+      "meaningful_lines_build_script": 47,
+      "total_bytes": 357548
+    },
+    "metadata": {
+      "publish_date": "2016-11-16T16:31:13.547828Z",
+      "age_days": 3612,
+      "description": "Decimal number implementation written in pure Rust suitable for financial and fixed-precision calculations.",
+      "keywords": [
+        "number",
+        "precision",
+        "fixed",
+        "decimal",
+        "financial"
+      ],
+      "downloads": 154293721,
+      "num_versions": 107,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is 'rust_decimal', a well-known, highly downloaded (over 154 million downloads) library for decimal number implementation in Rust, with an age of nearly 10 years (3612 days). Sources: The build script reads 'OUT_DIR' via standard Cargo environment access and writes generated documentation (`README-lib.md`) into it, which is completely normal and expected build script behavior. A utility script under `make/scripts/version.rs` performs a local glob walk for Cargo.toml, likely for version management tasks during development. Sinks: No network calls, no process spawns, no environment variables containing sensitive secrets are read or exfiltrated, and no external command execution or unsafe blocks exist. Flows: There is no data flow from sensitive sources to external sinks. Anomalies: None. The typosquatting score is low and distance is 9 against serde, which is a false positive given the crate's immense popularity and long history. Conclusion: The crate is entirely legitimate and benign.",
+    "primary_signals": [
+      "build_rs.file_writes (writing to OUT_DIR)",
+      "source_scan.fs_walk (local Cargo.toml check in scripts)",
+      "metadata (high download count, long age)"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10450,
+    "chars_out": 1453
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

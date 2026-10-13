@@ -1,0 +1,133 @@
+{
+  "crate": "cratebench-lib-walk-env",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-lib-walk-env",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:31:15.879642+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.261,
+      "target": "rust_decimal",
+      "edit_distance": 17,
+      "target_rank": 42,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "walkdir"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 2,
+        "fs_walk": 2
+      },
+      "categories": [
+        "network",
+        "fs_walk"
+      ],
+      "possible_exfiltration_shape": true,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/lib.rs",
+            "line": 2,
+            "snippet": "use std::net::TcpStream;"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 6,
+            "snippet": "let _ = TcpStream::connect(\"127.0.0.1:6004\");"
+          }
+        ],
+        "fs_walk": [
+          {
+            "file": "src/lib.rs",
+            "line": 1,
+            "snippet": "use walkdir::WalkDir;"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 5,
+            "snippet": "for entry in WalkDir::new(\".\") {"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 7,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 169
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate has only 7 meaningful lines of code and no build script. Sources: It uses the 'walkdir' dependency to recursively walk the local filesystem ('WalkDir::new(\".\")'). Sinks: It attempts to establish a TCP connection to a local port ('TcpStream::connect(\"127.0.0.1:6004\")'). Flow: The crate traverses the local directory structure and opens a network connection, creating a clear exfiltration or data-collection pattern in ordinary library code. Anomalies: A library with minimal code performing directory walking combined with network connectivity is a textbook supply-chain payload designed to harvest and exfiltrate local files or environment artifacts.",
+    "primary_signals": [
+      "source_scan.counts.fs_walk",
+      "source_scan.counts.network",
+      "dependencies.names: walkdir",
+      "content.meaningful_lines: 7"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.92,
+    "security_risk_score": 0.5,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.95,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10001,
+    "chars_out": 1094
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

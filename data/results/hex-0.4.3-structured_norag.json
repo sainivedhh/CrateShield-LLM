@@ -1,0 +1,109 @@
+{
+  "crate": "hex",
+  "version": "0.4.3",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "hex",
+    "version": {
+      "version": "0.4.3",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:24:44.115103+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.4,
+      "target": "regex",
+      "edit_distance": 3,
+      "target_rank": 8,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "serde"
+      ],
+      "dev_dependency_count": 7,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 3,
+      "has_build_script": false,
+      "meaningful_lines": 425,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 19406
+    },
+    "metadata": {
+      "publish_date": "2015-10-23T05:46:39.823534Z",
+      "age_days": 4002,
+      "description": "Encoding and decoding data into/from hexadecimal representation.",
+      "keywords": [
+        "hex",
+        "no_std"
+      ],
+      "downloads": 693946987,
+      "num_versions": 9,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: encoding and decoding data into/from hexadecimal representation. Sources: none. Sinks: none. Flow: none. Anomalies: none. The crate is the extremely popular, highly downloaded, long-standing 'hex' library (over 690 million downloads, published in 2015). It has no build script, no unsafe blocks, a single normal dependency (serde), and zero suspicious signals across all categories.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9413,
+    "chars_out": 666
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

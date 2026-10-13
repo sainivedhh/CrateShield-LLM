@@ -1,0 +1,61 @@
+{
+  "crate": "crossbeam-channel",
+  "version": "0.5.13",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is 'crossbeam-channel', a well-known, widely used, and standard concurrency crate in the Rust ecosystem for multi-producer multi-consumer channels. Inspection of the provided source files (Cargo.toml, lib.rs, utils.rs, counter.rs, context.rs, waker.rs, err.rs, select_macro.rs) shows standard concurrent data structure implementations, reference counting, thread-local contexts, waker queues, and macros for the `select!` feature. There is no evidence of build scripts, network access, file system inspection, obfuscation, or any malicious behavior.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/utils.rs",
+      "src/counter.rs",
+      "src/context.rs",
+      "src/waker.rs",
+      "src/err.rs",
+      "src/select_macro.rs"
+    ],
+    "partial": [
+      "src/select_macro.rs (17063/33274 chars)"
+    ],
+    "omitted": [
+      "src/select.rs",
+      "src/channel.rs",
+      "src/flavors/mod.rs",
+      "src/flavors/never.rs",
+      "src/flavors/tick.rs",
+      "src/flavors/at.rs",
+      "src/flavors/zero.rs",
+      "src/flavors/array.rs",
+      "src/flavors/list.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 9 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 17
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63943,
+    "chars_out": 784
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

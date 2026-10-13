@@ -1,0 +1,494 @@
+{
+  "checked_at": "2026-09-30T18:31:37+00:00",
+  "crates": {
+    "amzn_codewhisperer_streaming_client": {
+      "api_status": 404,
+      "checked_name": "amzn-codewhisperer-streaming-client",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "99.0.1": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "amzn_consolas_client": {
+      "api_status": 404,
+      "checked_name": "amzn-consolas-client",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "99.0.1": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "aovine": {
+      "api_status": 404,
+      "checked_name": "aovine",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {}
+    },
+    "append_only_vec": {
+      "checked_name": "append-only-vec",
+      "crate_exists": true,
+      "listed_versions": {
+        "0.1.0": {
+          "yanked": false
+        },
+        "0.1.1": {
+          "yanked": false
+        },
+        "0.1.2": {
+          "yanked": false
+        },
+        "0.1.3": {
+          "yanked": false
+        },
+        "0.1.4": {
+          "yanked": false
+        },
+        "0.1.5": {
+          "yanked": false
+        },
+        "0.1.6": {
+          "yanked": false
+        },
+        "0.1.7": {
+          "yanked": false
+        },
+        "0.1.8": {
+          "yanked": false
+        }
+      },
+      "real_name": "append-only-vec",
+      "target_versions": {
+        "0.1.9": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "arone": {
+      "api_status": 404,
+      "checked_name": "arone",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {}
+    },
+    "aronenao": {
+      "api_status": 404,
+      "checked_name": "aronenao",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {}
+    },
+    "arrayref": {
+      "checked_name": "arrayref",
+      "crate_exists": true,
+      "listed_versions": {
+        "0.1.0": {
+          "yanked": false
+        },
+        "0.1.1": {
+          "yanked": false
+        },
+        "0.2.0": {
+          "yanked": false
+        },
+        "0.2.1": {
+          "yanked": false
+        },
+        "0.2.2": {
+          "yanked": false
+        },
+        "0.3.0": {
+          "yanked": false
+        },
+        "0.3.1": {
+          "yanked": false
+        },
+        "0.3.2": {
+          "yanked": false
+        },
+        "0.3.3": {
+          "yanked": false
+        },
+        "0.3.4": {
+          "yanked": false
+        },
+        "0.3.5": {
+          "yanked": false
+        },
+        "0.3.6": {
+          "yanked": false
+        },
+        "0.3.7": {
+          "yanked": false
+        },
+        "0.3.8": {
+          "yanked": false
+        },
+        "0.3.9": {
+          "yanked": false
+        }
+      },
+      "real_name": "arrayref",
+      "target_versions": {
+        "0.3.10": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "exploration": {
+      "api_status": 404,
+      "checked_name": "exploration",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "0.1.0": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "internment": {
+      "checked_name": "internment",
+      "crate_exists": true,
+      "listed_versions": {
+        "0.1.0": {
+          "yanked": false
+        },
+        "0.1.1": {
+          "yanked": false
+        },
+        "0.2.0": {
+          "yanked": false
+        },
+        "0.2.1": {
+          "yanked": false
+        },
+        "0.2.2": {
+          "yanked": false
+        },
+        "0.3.0": {
+          "yanked": false
+        },
+        "0.3.1": {
+          "yanked": false
+        },
+        "0.3.10": {
+          "yanked": false
+        },
+        "0.3.12": {
+          "yanked": false
+        },
+        "0.3.13": {
+          "yanked": false
+        },
+        "0.3.2": {
+          "yanked": false
+        },
+        "0.3.3": {
+          "yanked": false
+        },
+        "0.3.4": {
+          "yanked": false
+        },
+        "0.3.5": {
+          "yanked": false
+        },
+        "0.3.6": {
+          "yanked": false
+        },
+        "0.3.7": {
+          "yanked": false
+        },
+        "0.3.9": {
+          "yanked": false
+        },
+        "0.4.0": {
+          "yanked": false
+        },
+        "0.4.1": {
+          "yanked": false
+        },
+        "0.4.2": {
+          "yanked": false
+        },
+        "0.5.0": {
+          "yanked": false
+        },
+        "0.5.1": {
+          "yanked": false
+        },
+        "0.5.2": {
+          "yanked": false
+        },
+        "0.5.3": {
+          "yanked": false
+        },
+        "0.5.4": {
+          "yanked": false
+        },
+        "0.5.5": {
+          "yanked": false
+        },
+        "0.5.6": {
+          "yanked": false
+        },
+        "0.6.0": {
+          "yanked": false
+        },
+        "0.7.0": {
+          "yanked": false
+        },
+        "0.7.1": {
+          "yanked": false
+        },
+        "0.7.2": {
+          "yanked": false
+        },
+        "0.7.3": {
+          "yanked": false
+        },
+        "0.7.4": {
+          "yanked": false
+        },
+        "0.7.5": {
+          "yanked": false
+        },
+        "0.8.0": {
+          "yanked": false
+        },
+        "0.8.1": {
+          "yanked": false
+        },
+        "0.8.2": {
+          "yanked": false
+        },
+        "0.8.3": {
+          "yanked": false
+        },
+        "0.8.4": {
+          "yanked": false
+        },
+        "0.8.5": {
+          "yanked": false
+        },
+        "0.8.6": {
+          "yanked": false
+        }
+      },
+      "real_name": "internment",
+      "target_versions": {
+        "0.8.7": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "littest": {
+      "api_status": 404,
+      "checked_name": "littest",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "0.3.1": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "logs_update": {
+      "checked_name": "logs-update",
+      "crate_exists": true,
+      "listed_versions": {
+        "0.0.1": {
+          "yanked": false
+        },
+        "0.0.2": {
+          "yanked": false
+        },
+        "0.0.3": {
+          "yanked": false
+        }
+      },
+      "real_name": "logs-update",
+      "target_versions": {
+        "0.0.1": {
+          "downloadable": true,
+          "listed": true,
+          "yanked": false
+        },
+        "0.0.2": {
+          "downloadable": true,
+          "listed": true,
+          "yanked": false
+        },
+        "0.0.3": {
+          "downloadable": true,
+          "listed": true,
+          "yanked": false
+        }
+      }
+    },
+    "lsh": {
+      "api_status": 404,
+      "checked_name": "lsh",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "99.0.1": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        },
+        "99.1.0": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "mysten_metrics": {
+      "api_status": 404,
+      "checked_name": "mysten-metrics",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "9.0.0": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        },
+        "9.0.3": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "proc_macro1": {
+      "api_status": 404,
+      "checked_name": "proc-macro1",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {}
+    },
+    "proc_macro_en": {
+      "api_status": 404,
+      "checked_name": "proc-macro-en",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {}
+    },
+    "proton_pfff": {
+      "checked_name": "proton-pfff",
+      "crate_exists": true,
+      "listed_versions": {
+        "99.99.2": {
+          "yanked": true
+        },
+        "99.99.3": {
+          "yanked": true
+        },
+        "99.99.5": {
+          "yanked": true
+        },
+        "99.99.6": {
+          "yanked": true
+        },
+        "99.99.7": {
+          "yanked": true
+        }
+      },
+      "real_name": "proton-pfff",
+      "target_versions": {
+        "99.99.5": {
+          "downloadable": false,
+          "listed": true,
+          "yanked": true
+        }
+      }
+    },
+    "replit_ruspty": {
+      "api_status": 404,
+      "checked_name": "replit_ruspty",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "1.0.0": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "rustdecimal": {
+      "api_status": 404,
+      "checked_name": "rustdecimal",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "1.0.0": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "semantic_search_client": {
+      "api_status": 404,
+      "checked_name": "semantic-search-client",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "99.0.1": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "supertag": {
+      "api_status": 404,
+      "checked_name": "supertag",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {
+        "99.1.1": {
+          "downloadable": false,
+          "listed": false,
+          "yanked": null
+        }
+      }
+    },
+    "tinymember": {
+      "api_status": 404,
+      "checked_name": "tinymember",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {}
+    },
+    "xrvrv": {
+      "api_status": 404,
+      "checked_name": "xrvrv",
+      "crate_exists": false,
+      "listed_versions": {},
+      "target_versions": {}
+    }
+  },
+  "method": "crates.io API metadata only (version listing implies downloadability -- static.crates.io HEAD/Range is blocked regardless of object existence; see probe_availability docstring). No crate was downloaded."
+}

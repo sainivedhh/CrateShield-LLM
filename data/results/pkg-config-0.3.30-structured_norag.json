@@ -1,0 +1,137 @@
+{
+  "crate": "pkg-config",
+  "version": "0.3.30",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "pkg-config",
+    "version": {
+      "version": "0.3.30",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:26:13.839088+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.2,
+      "target": "tokio",
+      "edit_distance": 8,
+      "target_rank": 3,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 1,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {
+        "process_spawn": 1,
+        "sensitive_paths": 6
+      },
+      "categories": [
+        "process_spawn",
+        "sensitive_paths"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "process_spawn": [
+          {
+            "file": "src/lib.rs",
+            "line": 187,
+            "snippet": "inner: Command::new(program.as_ref()),"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/lib.rs",
+            "line": 218,
+            "snippet": "self.inner.env(key.as_ref(), value.as_ref());"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 698,
+            "snippet": "cmd.env(\"PKG_CONFIG_PATH\", value);"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 701,
+            "snippet": "cmd.env(\"PKG_CONFIG_LIBDIR\", value);"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 846,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 44485
+    },
+    "metadata": {
+      "publish_date": "2014-11-11T06:37:31.276162Z",
+      "age_days": 4348,
+      "description": "A library to run the pkg-config system tool at build time in order to be used in\nCargo build scripts.\n",
+      "keywords": [
+        "build-dependencies"
+      ],
+      "downloads": 809049710,
+      "num_versions": 47,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: This is the legitimate, highly popular `pkg-config` crate (version 0.3.30, over 800 million downloads, published in 2014) which is designed to run the system `pkg-config` tool to assist build scripts. Sources: None indicative of malicious data access. Sinks: The source scan flags `process_spawn` (Command::new) and environment manipulation (`cmd.env(\"PKG_CONFIG_PATH\", ...)`), which are core functional requirements for a library whose sole purpose is to invoke and configure the system `pkg-config` executable. Anomalies: None. The flags are standard functionality for a tool runner, not malware. Conclusion: Benign legitimate library.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 10466,
+    "chars_out": 923
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

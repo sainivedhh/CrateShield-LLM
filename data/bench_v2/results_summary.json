@@ -1,0 +1,1168 @@
+{
+  "metadata": {
+    "evaluation_date": "2026-10-09T19:49:02.434199+00:00",
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.0,
+    "manifest_samples": 80,
+    "tier3_eval_samples": 60,
+    "tier1_samples": 3,
+    "tier2_samples": 6,
+    "tier2_discrepancy_resolved": "Resolved v1 discrepancy: v1 eval_cache.json contained n=6 valid samples because rustdecimal and faster_log failed Gate G1 due to forbidden leak terms ('defanged', 'exfiltration' in build.rs comments). v2 correctly and reproducibly reports the true cached n=6 historical reconstructions."
+  },
+  "hypotheses": {
+    "H1_hybrid_superiority": {
+      "preregistered_criterion_met": true,
+      "verdict_label": "PREREGISTERED CRITERION MET",
+      "executive_finding": "Preregistered criterion met; accuracy parity with raw on visible payloads (not significantly different); advantage is cost (about 36% of raw tokens) and robustness to truncation.",
+      "all_30_hybrid_recall": 0.933,
+      "all_30_raw_recall": 0.767,
+      "token_ratio": 0.363,
+      "mcnemar_all_30": {
+        "discordant_hybrid_wins": 7,
+        "discordant_raw_wins": 2,
+        "raw_p": 0.1797,
+        "holm_p": 0.8985
+      },
+      "visible_23_subset_exploratory": {
+        "hybrid_visible_recall": 0.913,
+        "raw_visible_recall": 1.0,
+        "mcnemar_visible_raw_p": 0.5,
+        "mcnemar_visible_holm_p": 0.5,
+        "interpretation": "On the visible subset, raw's recall is 23/23 and hybrid's is 21/23; the preregistered pass depends on the blinded subset where raw cannot see the payload by construction."
+      }
+    },
+    "H2_domain_defanging_confound": {
+      "verdict_label": "NOT TESTABLE AS EXECUTED (design confound)",
+      "design_confound": true,
+      "fabricated_categories": [
+        "C1",
+        "C3",
+        "C5",
+        "C7"
+      ],
+      "invalid_categories": [
+        "C2",
+        "C4",
+        "C6",
+        "C8"
+      ],
+      "invalid_hostname_count_malicious": "11/30",
+      "network_hostname_count_malicious": "21/30",
+      "fisher_category_level_p": 1.0,
+      "limitation": "The v1 defanging question remains open; a valid test needs the same payload template rendered with both domain styles on identical base crates (domain_type crossed with category), on a fresh split, preregistered separately."
+    },
+    "H3_scale_omitted_region": {
+      "verdict_label": "CONFIRMED BY CONSTRUCTION",
+      "finding": "Raw recall on omitted-region samples is 0/7 because the payload lies beyond the packer's character budget (inject_v2 appends the payload at the end of build.rs / module, exactly where truncation falls). This demonstrates a failure mode of truncating baselines, not an empirical discovery about model capability.",
+      "raw_normal_recall": 1.0,
+      "raw_omitted_recall": 0.0,
+      "hybrid_omitted_recall": 1.0,
+      "omitted_diagnostics": [
+        {
+          "sample_id": "s_0022_malicious",
+          "base_crate": "discord-indexmap",
+          "injected_file": "src/map.rs",
+          "file_size_chars": 78628,
+          "payload_char_offset": 5572,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0034_malicious",
+          "base_crate": "signal-hook",
+          "injected_file": "src/iterator/backend.rs",
+          "file_size_chars": 17817,
+          "payload_char_offset": 17393,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0046_malicious",
+          "base_crate": "muter",
+          "injected_file": "src/lib/codec/helpers/codecs.rs",
+          "file_size_chars": 18433,
+          "payload_char_offset": 18101,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0058_malicious",
+          "base_crate": "crystals-rs",
+          "injected_file": "src/utils/unsafe_utils/flatten.rs",
+          "file_size_chars": 5495,
+          "payload_char_offset": 4963,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0064_malicious",
+          "base_crate": "matrixmultiply",
+          "injected_file": "src/sgemm_kernel.rs",
+          "file_size_chars": 33593,
+          "payload_char_offset": 8521,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0066_malicious",
+          "base_crate": "tikv-jemalloc-sys-0.7.1+5.3.1-0",
+          "injected_file": "src/lib.rs",
+          "file_size_chars": 40883,
+          "payload_char_offset": 40429,
+          "omitted_by_packer": true
+        },
+        {
+          "sample_id": "s_0070_malicious",
+          "base_crate": "libsqlite3-sys",
+          "injected_file": "sqlcipher/bindgen_bundled_version.rs",
+          "file_size_chars": 125014,
+          "payload_char_offset": 124545,
+          "omitted_by_packer": true
+        }
+      ],
+      "limitation": "Payloads were placed at the end of the file, which maximizes truncation sensitivity; payload position within the file was not varied."
+    },
+    "H4_rag_effect": {
+      "verdict_label": "NO DIFF",
+      "mcnemar_raw_p": 1.0,
+      "mcnemar_holm_p": 1.0,
+      "significant": false
+    }
+  },
+  "visible_vs_blinded_decomposition": {
+    "hybrid": {
+      "vis_hits": 21,
+      "vis_total": 23,
+      "vis_recall": 0.913,
+      "vis_ci": [
+        0.732,
+        0.976
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "hybrid_norag": {
+      "vis_hits": 21,
+      "vis_total": 23,
+      "vis_recall": 0.913,
+      "vis_ci": [
+        0.732,
+        0.976
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "raw": {
+      "vis_hits": 23,
+      "vis_total": 23,
+      "vis_recall": 1.0,
+      "vis_ci": [
+        0.857,
+        1.0
+      ],
+      "blind_hits": 0,
+      "blind_total": 7,
+      "blind_recall": 0.0,
+      "blind_ci": [
+        0.0,
+        0.354
+      ]
+    },
+    "naive": {
+      "vis_hits": 23,
+      "vis_total": 23,
+      "vis_recall": 1.0,
+      "vis_ci": [
+        0.857,
+        1.0
+      ],
+      "blind_hits": 0,
+      "blind_total": 7,
+      "blind_recall": 0.0,
+      "blind_ci": [
+        0.0,
+        0.354
+      ]
+    },
+    "structured": {
+      "vis_hits": 15,
+      "vis_total": 23,
+      "vis_recall": 0.652,
+      "vis_ci": [
+        0.449,
+        0.812
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "structured_norag": {
+      "vis_hits": 16,
+      "vis_total": 23,
+      "vis_recall": 0.696,
+      "vis_ci": [
+        0.491,
+        0.844
+      ],
+      "blind_hits": 7,
+      "blind_total": 7,
+      "blind_recall": 1.0,
+      "blind_ci": [
+        0.646,
+        1.0
+      ]
+    },
+    "grep": {
+      "vis_hits": 20,
+      "vis_total": 23,
+      "vis_recall": 0.87,
+      "vis_ci": [
+        0.679,
+        0.955
+      ],
+      "blind_hits": 6,
+      "blind_total": 7,
+      "blind_recall": 0.857,
+      "blind_ci": [
+        0.487,
+        0.974
+      ]
+    }
+  },
+  "diagnostics": {
+    "size_auc": 0.5,
+    "size_delta_leak": {
+      "all_pairs_leaked": true,
+      "mean_delta_bytes": 415.8
+    },
+    "grep_by_obfuscation": {
+      "0": {
+        "hits": 8,
+        "total": 9,
+        "recall": 0.889,
+        "ci": [
+          0.565,
+          0.98
+        ]
+      },
+      "1": {
+        "hits": 10,
+        "total": 12,
+        "recall": 0.833,
+        "ci": [
+          0.552,
+          0.953
+        ]
+      },
+      "2": {
+        "hits": 8,
+        "total": 9,
+        "recall": 0.889,
+        "ci": [
+          0.565,
+          0.98
+        ]
+      }
+    },
+    "residual_tells": {
+      "invalid_domains_in_malicious": "11/30",
+      "invalid_domains_in_benign": "0/30",
+      "disclosure": ".invalid hostnames appear in 11/30 malicious twins and 0 benign twins by design (domain-style arm) and are therefore a residual token-level tell for those samples."
+    }
+  },
+  "tier3_metrics": {
+    "size": {
+      "strict": {
+        "precision": 0.4,
+        "recall": 0.067,
+        "f1": 0.114,
+        "fpr": 0.1,
+        "tp": 2,
+        "fp": 3,
+        "fn": 28,
+        "tn": 27,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.018,
+        0.213
+      ],
+      "strict_fpr_ci": [
+        0.035,
+        0.256
+      ],
+      "relaxed": {
+        "precision": 0.4,
+        "recall": 0.067,
+        "f1": 0.114,
+        "fpr": 0.1,
+        "tp": 2,
+        "fp": 3,
+        "fn": 28,
+        "tn": 27,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.018,
+        0.213
+      ],
+      "relaxed_fpr_ci": [
+        0.035,
+        0.256
+      ],
+      "boot_f1_ci": [
+        0.114,
+        0.114
+      ],
+      "pair_consistency_strict_count": 0,
+      "pair_consistency_strict_rate": 0.0,
+      "pair_consistency_relaxed_count": 0,
+      "pair_consistency_relaxed_rate": 0.0,
+      "mean_tokens_in": 0.0,
+      "mean_tokens_out": 0.0,
+      "mean_total_tokens": 0.0,
+      "mean_calls": 0.0,
+      "recall_per_1k_tokens": 0.0
+    },
+    "grep": {
+      "strict": {
+        "precision": 0.963,
+        "recall": 0.867,
+        "f1": 0.912,
+        "fpr": 0.033,
+        "tp": 26,
+        "fp": 1,
+        "fn": 4,
+        "tn": 29,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.703,
+        0.947
+      ],
+      "strict_fpr_ci": [
+        0.006,
+        0.167
+      ],
+      "relaxed": {
+        "precision": 0.963,
+        "recall": 0.867,
+        "f1": 0.912,
+        "fpr": 0.033,
+        "tp": 26,
+        "fp": 1,
+        "fn": 4,
+        "tn": 29,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.703,
+        0.947
+      ],
+      "relaxed_fpr_ci": [
+        0.006,
+        0.167
+      ],
+      "boot_f1_ci": [
+        0.912,
+        0.912
+      ],
+      "pair_consistency_strict_count": 25,
+      "pair_consistency_strict_rate": 0.833,
+      "pair_consistency_relaxed_count": 25,
+      "pair_consistency_relaxed_rate": 0.833,
+      "mean_tokens_in": 0.0,
+      "mean_tokens_out": 0.0,
+      "mean_total_tokens": 0.0,
+      "mean_calls": 0.0,
+      "recall_per_1k_tokens": 0.0
+    },
+    "rule_only": {
+      "strict": {
+        "precision": 1.0,
+        "recall": 0.133,
+        "f1": 0.235,
+        "fpr": 0.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 26,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.053,
+        0.297
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 1.0,
+        "recall": 0.133,
+        "f1": 0.235,
+        "fpr": 0.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 26,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.053,
+        0.297
+      ],
+      "relaxed_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "boot_f1_ci": [
+        0.235,
+        0.235
+      ],
+      "pair_consistency_strict_count": 4,
+      "pair_consistency_strict_rate": 0.133,
+      "pair_consistency_relaxed_count": 4,
+      "pair_consistency_relaxed_rate": 0.133,
+      "mean_tokens_in": 0.0,
+      "mean_tokens_out": 0.0,
+      "mean_total_tokens": 0.0,
+      "mean_calls": 0.0,
+      "recall_per_1k_tokens": 0.0
+    },
+    "cargo_audit": {
+      "strict": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 30,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.0,
+        0.114
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "fpr": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 30,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "boot_f1_ci": [
+        0.0,
+        0.0
+      ],
+      "pair_consistency_strict_count": 0,
+      "pair_consistency_strict_rate": 0.0,
+      "pair_consistency_relaxed_count": 0,
+      "pair_consistency_relaxed_rate": 0.0,
+      "mean_tokens_in": 0.0,
+      "mean_tokens_out": 0.0,
+      "mean_total_tokens": 0.0,
+      "mean_calls": 0.0,
+      "recall_per_1k_tokens": 0.0
+    },
+    "structured": {
+      "strict": {
+        "precision": 1.0,
+        "recall": 0.733,
+        "f1": 0.846,
+        "fpr": 0.0,
+        "tp": 22,
+        "fp": 0,
+        "fn": 8,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.556,
+        0.858
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 0.963,
+        "recall": 0.867,
+        "f1": 0.912,
+        "fpr": 0.033,
+        "tp": 26,
+        "fp": 1,
+        "fn": 4,
+        "tn": 29,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.703,
+        0.947
+      ],
+      "relaxed_fpr_ci": [
+        0.006,
+        0.167
+      ],
+      "boot_f1_ci": [
+        0.846,
+        0.846
+      ],
+      "pair_consistency_strict_count": 21,
+      "pair_consistency_strict_rate": 0.7,
+      "pair_consistency_relaxed_count": 25,
+      "pair_consistency_relaxed_rate": 0.833,
+      "mean_tokens_in": 3578.6,
+      "mean_tokens_out": 306.1,
+      "mean_total_tokens": 3884.7,
+      "mean_calls": 1.0,
+      "recall_per_1k_tokens": 0.1887
+    },
+    "structured_norag": {
+      "strict": {
+        "precision": 1.0,
+        "recall": 0.767,
+        "f1": 0.868,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "fn": 7,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.591,
+        0.882
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 0.966,
+        "recall": 0.933,
+        "f1": 0.949,
+        "fpr": 0.033,
+        "tp": 28,
+        "fp": 1,
+        "fn": 2,
+        "tn": 29,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.787,
+        0.982
+      ],
+      "relaxed_fpr_ci": [
+        0.006,
+        0.167
+      ],
+      "boot_f1_ci": [
+        0.868,
+        0.868
+      ],
+      "pair_consistency_strict_count": 23,
+      "pair_consistency_strict_rate": 0.767,
+      "pair_consistency_relaxed_count": 27,
+      "pair_consistency_relaxed_rate": 0.9,
+      "mean_tokens_in": 2922.2,
+      "mean_tokens_out": 285.6,
+      "mean_total_tokens": 3207.9,
+      "mean_calls": 1.0,
+      "recall_per_1k_tokens": 0.2391
+    },
+    "hybrid": {
+      "strict": {
+        "precision": 1.0,
+        "recall": 0.933,
+        "f1": 0.966,
+        "fpr": 0.0,
+        "tp": 28,
+        "fp": 0,
+        "fn": 2,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.787,
+        0.982
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 0.967,
+        "recall": 0.967,
+        "f1": 0.967,
+        "fpr": 0.033,
+        "tp": 29,
+        "fp": 1,
+        "fn": 1,
+        "tn": 29,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.833,
+        0.994
+      ],
+      "relaxed_fpr_ci": [
+        0.006,
+        0.167
+      ],
+      "boot_f1_ci": [
+        0.966,
+        0.966
+      ],
+      "pair_consistency_strict_count": 28,
+      "pair_consistency_strict_rate": 0.933,
+      "pair_consistency_relaxed_count": 28,
+      "pair_consistency_relaxed_rate": 0.933,
+      "mean_tokens_in": 4942.3,
+      "mean_tokens_out": 296.6,
+      "mean_total_tokens": 5238.9,
+      "mean_calls": 1.0,
+      "recall_per_1k_tokens": 0.1781
+    },
+    "hybrid_norag": {
+      "strict": {
+        "precision": 1.0,
+        "recall": 0.933,
+        "f1": 0.966,
+        "fpr": 0.0,
+        "tp": 28,
+        "fp": 0,
+        "fn": 2,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.787,
+        0.982
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 1.0,
+        "recall": 0.933,
+        "f1": 0.966,
+        "fpr": 0.0,
+        "tp": 28,
+        "fp": 0,
+        "fn": 2,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.787,
+        0.982
+      ],
+      "relaxed_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "boot_f1_ci": [
+        0.966,
+        0.966
+      ],
+      "pair_consistency_strict_count": 28,
+      "pair_consistency_strict_rate": 0.933,
+      "pair_consistency_relaxed_count": 28,
+      "pair_consistency_relaxed_rate": 0.933,
+      "mean_tokens_in": 4276.9,
+      "mean_tokens_out": 287.9,
+      "mean_total_tokens": 4564.8,
+      "mean_calls": 1.0,
+      "recall_per_1k_tokens": 0.2044
+    },
+    "raw": {
+      "strict": {
+        "precision": 1.0,
+        "recall": 0.767,
+        "f1": 0.868,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "fn": 7,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.591,
+        0.882
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 1.0,
+        "recall": 0.767,
+        "f1": 0.868,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "fn": 7,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.591,
+        0.882
+      ],
+      "relaxed_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "boot_f1_ci": [
+        0.868,
+        0.868
+      ],
+      "pair_consistency_strict_count": 23,
+      "pair_consistency_strict_rate": 0.767,
+      "pair_consistency_relaxed_count": 23,
+      "pair_consistency_relaxed_rate": 0.767,
+      "mean_tokens_in": 14242.0,
+      "mean_tokens_out": 176.7,
+      "mean_total_tokens": 14418.7,
+      "mean_calls": 1.0,
+      "recall_per_1k_tokens": 0.0532
+    },
+    "naive": {
+      "strict": {
+        "precision": 1.0,
+        "recall": 0.767,
+        "f1": 0.868,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "fn": 7,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": true
+      },
+      "strict_recall_ci": [
+        0.591,
+        0.882
+      ],
+      "strict_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "relaxed": {
+        "precision": 1.0,
+        "recall": 0.767,
+        "f1": 0.868,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "fn": 7,
+        "tn": 30,
+        "n_pos": 30,
+        "n_neg": 30,
+        "strict": false
+      },
+      "relaxed_recall_ci": [
+        0.591,
+        0.882
+      ],
+      "relaxed_fpr_ci": [
+        0.0,
+        0.114
+      ],
+      "boot_f1_ci": [
+        0.868,
+        0.868
+      ],
+      "pair_consistency_strict_count": 23,
+      "pair_consistency_strict_rate": 0.767,
+      "pair_consistency_relaxed_count": 23,
+      "pair_consistency_relaxed_rate": 0.767,
+      "mean_tokens_in": 13381.1,
+      "mean_tokens_out": 114.3,
+      "mean_total_tokens": 13495.5,
+      "mean_calls": 1.0,
+      "recall_per_1k_tokens": 0.0568
+    }
+  },
+  "paired_mcnemar_holm": [
+    {
+      "comparison": "hybrid vs raw",
+      "c1_wins": 7,
+      "c2_wins": 2,
+      "p_raw": 0.1797,
+      "p_holm": 0.8985,
+      "significant_holm": false
+    },
+    {
+      "comparison": "hybrid vs structured",
+      "c1_wins": 7,
+      "c2_wins": 1,
+      "p_raw": 0.0703,
+      "p_holm": 0.4218,
+      "significant_holm": false
+    },
+    {
+      "comparison": "hybrid vs hybrid_norag",
+      "c1_wins": 0,
+      "c2_wins": 0,
+      "p_raw": 1.0,
+      "p_holm": 1.0,
+      "significant_holm": false
+    },
+    {
+      "comparison": "structured vs structured_norag",
+      "c1_wins": 1,
+      "c2_wins": 2,
+      "p_raw": 1.0,
+      "p_holm": 1.0,
+      "significant_holm": false
+    },
+    {
+      "comparison": "structured vs raw",
+      "c1_wins": 7,
+      "c2_wins": 8,
+      "p_raw": 1.0,
+      "p_holm": 1.0,
+      "significant_holm": false
+    },
+    {
+      "comparison": "raw vs naive",
+      "c1_wins": 0,
+      "c2_wins": 0,
+      "p_raw": 1.0,
+      "p_holm": 1.0,
+      "significant_holm": false
+    }
+  ],
+  "stratified": {
+    "category": {
+      "hybrid": {
+        "C1": "3/3 (1.00)",
+        "C2": "4/4 (1.00)",
+        "C3": "4/4 (1.00)",
+        "C4": "3/3 (1.00)",
+        "C5": "2/4 (0.50)",
+        "C6": "4/4 (1.00)",
+        "C7": "4/4 (1.00)",
+        "C8": "4/4 (1.00)"
+      },
+      "raw": {
+        "C1": "1/3 (0.33)",
+        "C2": "4/4 (1.00)",
+        "C3": "3/4 (0.75)",
+        "C4": "3/3 (1.00)",
+        "C5": "3/4 (0.75)",
+        "C6": "3/4 (0.75)",
+        "C7": "2/4 (0.50)",
+        "C8": "4/4 (1.00)"
+      },
+      "structured": {
+        "C1": "2/3 (0.67)",
+        "C2": "4/4 (1.00)",
+        "C3": "2/4 (0.50)",
+        "C4": "1/3 (0.33)",
+        "C5": "3/4 (0.75)",
+        "C6": "3/4 (0.75)",
+        "C7": "4/4 (1.00)",
+        "C8": "3/4 (0.75)"
+      }
+    },
+    "obfuscation": {
+      "hybrid": {
+        "0": {
+          "visible": "4/4 (1.00)",
+          "blinded": "5/5 (1.00)",
+          "total": "9/9 (1.00)"
+        },
+        "1": {
+          "visible": "8/10 (0.80)",
+          "blinded": "2/2 (1.00)",
+          "total": "10/12 (0.83)"
+        },
+        "2": {
+          "visible": "9/9 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "9/9 (1.00)"
+        }
+      },
+      "raw": {
+        "0": {
+          "visible": "4/4 (1.00)",
+          "blinded": "0/5 (0.00)",
+          "total": "4/9 (0.44)"
+        },
+        "1": {
+          "visible": "10/10 (1.00)",
+          "blinded": "0/2 (0.00)",
+          "total": "10/12 (0.83)"
+        },
+        "2": {
+          "visible": "9/9 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "9/9 (1.00)"
+        }
+      },
+      "structured": {
+        "0": {
+          "visible": "3/4 (0.75)",
+          "blinded": "5/5 (1.00)",
+          "total": "8/9 (0.89)"
+        },
+        "1": {
+          "visible": "6/10 (0.60)",
+          "blinded": "2/2 (1.00)",
+          "total": "8/12 (0.67)"
+        },
+        "2": {
+          "visible": "6/9 (0.67)",
+          "blinded": "0/0 (N/A)",
+          "total": "6/9 (0.67)"
+        }
+      }
+    },
+    "placement": {
+      "hybrid": {
+        "P1": {
+          "visible": "14/14 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "14/14 (1.00)"
+        },
+        "P2": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        },
+        "P3": {
+          "visible": "0/0 (N/A)",
+          "blinded": "6/6 (1.00)",
+          "total": "6/6 (1.00)"
+        },
+        "P4": {
+          "visible": "7/9 (0.78)",
+          "blinded": "1/1 (1.00)",
+          "total": "8/10 (0.80)"
+        },
+        "P5": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        }
+      },
+      "raw": {
+        "P1": {
+          "visible": "14/14 (1.00)",
+          "blinded": "0/0 (N/A)",
+          "total": "14/14 (1.00)"
+        },
+        "P2": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        },
+        "P3": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/6 (0.00)",
+          "total": "0/6 (0.00)"
+        },
+        "P4": {
+          "visible": "9/9 (1.00)",
+          "blinded": "0/1 (0.00)",
+          "total": "9/10 (0.90)"
+        },
+        "P5": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        }
+      },
+      "structured": {
+        "P1": {
+          "visible": "10/14 (0.71)",
+          "blinded": "0/0 (N/A)",
+          "total": "10/14 (0.71)"
+        },
+        "P2": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        },
+        "P3": {
+          "visible": "0/0 (N/A)",
+          "blinded": "6/6 (1.00)",
+          "total": "6/6 (1.00)"
+        },
+        "P4": {
+          "visible": "5/9 (0.56)",
+          "blinded": "1/1 (1.00)",
+          "total": "6/10 (0.60)"
+        },
+        "P5": {
+          "visible": "0/0 (N/A)",
+          "blinded": "0/0 (N/A)",
+          "total": "0/0 (N/A)"
+        }
+      }
+    }
+  },
+  "tier1_logs_update": {
+    "size": "0/3",
+    "grep": "3/3",
+    "rule_only": "3/3",
+    "cargo_audit": "0/3",
+    "structured": "3/3",
+    "structured_norag": "3/3",
+    "hybrid": "3/3",
+    "hybrid_norag": "3/3",
+    "raw": "3/3",
+    "naive": "3/3"
+  },
+  "tier2_reconstructions": {
+    "size": {
+      "detected": "6/6",
+      "recall": 1.0,
+      "wilson_ci": [
+        0.61,
+        1.0
+      ]
+    },
+    "grep": {
+      "detected": "3/6",
+      "recall": 0.5,
+      "wilson_ci": [
+        0.188,
+        0.812
+      ]
+    },
+    "rule_only": {
+      "detected": "4/6",
+      "recall": 0.667,
+      "wilson_ci": [
+        0.3,
+        0.903
+      ]
+    },
+    "cargo_audit": {
+      "detected": "4/6",
+      "recall": 0.667,
+      "wilson_ci": [
+        0.3,
+        0.903
+      ]
+    },
+    "structured": {
+      "detected": "4/6",
+      "recall": 0.667,
+      "wilson_ci": [
+        0.3,
+        0.903
+      ]
+    },
+    "structured_norag": {
+      "detected": "4/6",
+      "recall": 0.667,
+      "wilson_ci": [
+        0.3,
+        0.903
+      ]
+    },
+    "hybrid": {
+      "detected": "4/6",
+      "recall": 0.667,
+      "wilson_ci": [
+        0.3,
+        0.903
+      ]
+    },
+    "hybrid_norag": {
+      "detected": "4/6",
+      "recall": 0.667,
+      "wilson_ci": [
+        0.3,
+        0.903
+      ]
+    },
+    "raw": {
+      "detected": "3/6",
+      "recall": 0.5,
+      "wilson_ci": [
+        0.188,
+        0.812
+      ]
+    },
+    "naive": {
+      "detected": "2/6",
+      "recall": 0.333,
+      "wilson_ci": [
+        0.097,
+        0.7
+      ]
+    }
+  }
+}

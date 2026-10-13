@@ -1,0 +1,123 @@
+{
+  "crate": "cratebench-macro-reqwest",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-macro-reqwest",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:30:36.097449+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": true,
+      "proc_macro_suspicious_imports": [
+        "reqwest"
+      ]
+    },
+    "typosquatting": {
+      "score": 0.292,
+      "target": "reqwest",
+      "edit_distance": 17,
+      "target_rank": 6,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {
+        "network": 1,
+        "ip_literal_url": 1
+      },
+      "categories": [
+        "network",
+        "ip_literal_url"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/lib.rs",
+            "line": 4,
+            "snippet": "let _ = reqwest::blocking::get(\"http://127.0.0.1:7002\");"
+          }
+        ],
+        "ip_literal_url": [
+          {
+            "file": "src/lib.rs",
+            "line": 4,
+            "snippet": "let _ = reqwest::blocking::get(\"http://127.0.0.1:7002\");"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 4,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 101
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: A procedural macro crate named 'cratebench-macro-reqwest' that executes code during compilation. Sources: None explicitly reading external files, but proc-macros run inside the Rust compiler during build time. Sinks: The crate makes a synchronous blocking network request using `reqwest::blocking::get` pointing to an IP literal and local port (\"http://127.0.0.1:7002\") directly inside `src/lib.rs` (line 4). Flow: Proc-macro code execution triggers an outbound network call to `127.0.0.1:7002` every time the crate is compiled. Anomalies: Procedural macros running network requests during compilation represent a severe supply-chain risk and malicious behavior, as compilation-time exfiltration or code execution allows arbitrary actions before runtime. Conclusion: The crate is intentionally malicious due to conducting network I/O from within a procedural macro library.",
+    "primary_signals": [
+      "proc_macro.is_proc_macro",
+      "source_scan.network",
+      "source_scan.ip_literal_url"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.95,
+    "security_risk_score": 0.9,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.95,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9800,
+    "chars_out": 1259
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

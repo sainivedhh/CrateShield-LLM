@@ -1,0 +1,101 @@
+{
+  "crate": "cratebench-macro-fs-write",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "cratebench-macro-fs-write",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:30:30.909499+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": true,
+      "proc_macro_suspicious_imports": [
+        "std::fs::write"
+      ]
+    },
+    "typosquatting": {
+      "score": 0.28,
+      "target": "async-trait",
+      "edit_distance": 18,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 0,
+      "names": [],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": false
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 3,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 87
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "MEDIUM",
+    "reasoning": "Purpose: a procedural macro crate named `cratebench-macro-fs-write` with very little content (3 meaningful lines). Sources/Sinks: The proc-macro imports `std::fs::write`, which allows arbitrary filesystem writing during compilation. Flow: Proc-macros execute inside the Rust compiler when other crates depend on them, and having filesystem write capabilities in a macro without clear justification is a significant supply-chain risk. Anomalies: Proc-macros running filesystem writes pose a severe risk since they execute automatically during compilation. Conclusion: While no active exfiltration snippet is shown, the presence of `std::fs::write` inside a minimal proc-macro is a strong indicator of potentially malicious or unsafe compile-time behavior, warranting a SUSPICIOUS classification.",
+    "primary_signals": [
+      "proc_macro.is_proc_macro",
+      "proc_macro.proc_macro_suspicious_imports"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": 0.45,
+    "security_risk_score": 0.8,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.75,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9176,
+    "chars_out": 1167
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

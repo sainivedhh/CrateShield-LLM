@@ -1,0 +1,50 @@
+{
+  "crate": "once_cell",
+  "version": "1.19.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate 'once_cell' (version 1.19.0) is a well-known, highly reputable standard library-precursor crate in the Rust ecosystem created by Aleksey Kladov (matklad). It provides single-assignment cells and lazy initialization primitives (such as `OnceCell` and `Lazy`). The code provided is standard, legitimate library code implementing synchronization primitives and memory safety wrappers without any malicious payloads, unauthorized network access, data exfiltration, or obfuscation.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/imp_cs.rs",
+      "src/imp_pl.rs",
+      "src/imp_std.rs"
+    ],
+    "partial": [
+      "src/imp_std.rs (2571/12743 chars)"
+    ],
+    "omitted": [
+      "src/race.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 1 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 6
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60365,
+    "chars_out": 561
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

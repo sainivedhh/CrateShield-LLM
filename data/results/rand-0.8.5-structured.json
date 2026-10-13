@@ -1,0 +1,144 @@
+{
+  "crate": "rand",
+  "version": "0.8.5",
+  "condition": "structured",
+  "signals": {
+    "crate": "rand",
+    "version": {
+      "version": "0.8.5",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:12:12.399046+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 16,
+      "unsafe_per_kloc": 1.85,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": [
+        "libc"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.333,
+      "target": "chrono",
+      "edit_distance": 4,
+      "target_rank": 16,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 6,
+      "names": [
+        "log",
+        "packed_simd_2",
+        "rand_chacha",
+        "rand_core",
+        "serde",
+        "libc"
+      ],
+      "dev_dependency_count": 2,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 26,
+      "has_build_script": false,
+      "meaningful_lines": 5273,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 298099
+    },
+    "metadata": {
+      "publish_date": "2015-02-03T06:17:14.147783Z",
+      "age_days": 4264,
+      "description": "Random number generators and other randomness functionality.\n",
+      "keywords": [
+        "random",
+        "rng"
+      ],
+      "downloads": 1850319975,
+      "num_versions": 94,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: the crate is `rand` version 0.8.5, a foundational and extremely popular Rust library for random number generation (with nearly 1.85 billion downloads and a publish age of over 4,000 days). Sources: none; build_rs is absent, content scan shows no suspicious file reads or network calls. Sinks: none. Flow: no untrusted data reaches network or file system sinks. Anomalies: none; unsafe blocks (16 across 26 files, 1.85 per kloc) are entirely normal for a low-level cryptographic/randomness crate using standard FFI (`libc`). Typosquatting flag is false (edit distance 4 to chrono, rank 16, no actual impersonation attempt). The retrieved evidence does not apply. Conclusion: completely benign, highly trusted crate.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-proc-macro-injection",
+      "type": "pattern",
+      "title": "General pattern: proc-macro compiler-level injection",
+      "text": "Procedural macros execute inside the Rust compiler at compile time and can inject arbitrary code into the compiled binary, or exfiltrate the source code being compiled (a trade-secret theft vector distinct from runtime data theft). A legitimate proc-macro's implementation should not need std::net, std::process, or an HTTP client crate -- these are the strongest structural red flags for this attack surface, since a macro's job is token-stream transformation, not network I/O.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.13411057356482517
+    },
+    {
+      "id": "incident-crate-depression-2022",
+      "type": "incident",
+      "title": "CrateDepression / rustdecimal (2022)",
+      "text": "A coordinated typosquatting campaign where the crate 'rustdecimal' impersonated the legitimate 'rust_decimal' crate (52M+ downloads at the time). Edit distance from the target name was 1 (removed underscore). The malicious crate's build.rs deployed a Mythic C2 (command and control) agent specifically into GitLab CI/CD pipelines. The payload fingerprinted the environment before activating -- it only deployed inside detected CI systems, evading casual local testing. Attack category: typosquatting + backdoor + CI-targeting build.rs payload.",
+      "source": "RUSTSEC-2022-0042",
+      "crates": [
+        "rustdecimal"
+      ],
+      "similarity": 0.1060340462919228
+    },
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.09057527509681806
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11680,
+    "chars_out": 997
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

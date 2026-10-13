@@ -1,0 +1,44 @@
+{
+  "crate": "reqwest-htttp",
+  "version": "0.1.0",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate name 'reqwest-htttp' is a typo-squatting attempt mimicking the popular 'reqwest' crate, with an extra 't'. Furthermore, the build.rs script executes 'calc.exe', which is a classic harmless proof-of-concept payload used in security research and malware testing to demonstrate arbitrary code execution during the compilation phase.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 446,
+    "chars_out": 417
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

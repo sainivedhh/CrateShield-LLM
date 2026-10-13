@@ -1,0 +1,145 @@
+{
+  "crate": "semver",
+  "version": "1.0.23",
+  "condition": "structured",
+  "signals": {
+    "crate": "semver",
+    "version": {
+      "version": "1.0.23",
+      "major": 1,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:13:50.523241+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let rustc = env::var_os(\"RUSTC\")?;"
+        ],
+        "process_spawn": [
+          "let output = Command::new(rustc).arg(\"--version\").output().ok()?;"
+        ]
+      },
+      "flagged_snippets": []
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 39,
+      "unsafe_per_kloc": 17.89,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.5,
+      "target": "serde",
+      "edit_distance": 3,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "serde"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 9,
+      "has_build_script": true,
+      "meaningful_lines": 1415,
+      "meaningful_lines_build_script": 56,
+      "total_bytes": 77346
+    },
+    "metadata": {
+      "publish_date": "2014-11-11T05:37:08.485853Z",
+      "age_days": 4348,
+      "description": "Parser and evaluator for Cargo's flavor of Semantic Versioning",
+      "keywords": [
+        "cargo"
+      ],
+      "downloads": 1055073881,
+      "num_versions": 66,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: parser and evaluator for Semantic Versioning (`semver`), a foundational, highly popular and trusted crate on crates.io with over 1 billion downloads and many years of history. Sources: build script reads the `RUSTC` environment variable via `env::var_os` to query the compiler version, which is standard and benign feature-probing (matching pattern-benign-false-positive-build-rs). Sinks: none; there are no network calls, file writes, or process spawns doing anything malicious. Anomalies: none. The crate contains legitimate unsafe blocks for performance optimization, standard for parsing libraries, and no malicious signals.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [
+      "pattern-benign-false-positive-build-rs"
+    ],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "pattern-benign-false-positive-build-rs",
+      "type": "pattern",
+      "title": "General pattern: legitimate build.rs signals that are NOT malicious",
+      "text": "Common benign reasons a crate's build.rs may trigger a raw signal match: checking the installed rustc/cargo version via Command::new (used by serde and many other major crates to gate feature availability); generating code from a schema or protobuf definition, sometimes fetched over network from a first-party, well-known source; reading a small number of standard, non-sensitive environment variables like OUT_DIR, TARGET, or CARGO_PKG_VERSION which Cargo itself sets. A high-quality classifier should not flag these alone -- context (destination of network calls, sensitivity of specific env var names read, and the crate's stated purpose) matters more than raw signal presence.",
+      "source": "synthesized from observed benign build.rs behavior, e.g. serde",
+      "similarity": 0.17095249278837574
+    },
+    {
+      "id": "incident-logs-update-2026",
+      "type": "incident",
+      "title": "logs-update: credential and file stealer in library code, no build script (September 2026)",
+      "text": "A crate published on 2026-09-10 that presents itself as a terminal progress-bar library but renders nothing. It has NO build script, so it does not run during `cargo build` of a dependent; it runs when its binary is executed (for example after `cargo install`) or when a dependent calls its run() function. It POSTs a machine fingerprint (username, OS, local IP) to an attacker web endpoint; reads the project's .env and trading-bot config files and POSTs them; walks the filesystem and POSTs the contents of .env, .json, .txt, .doc/.docx and .xlsx files; and on Linux appends an attacker's SSH public key to ~/.ssh/authorized_keys for remote login. It targets crypto trading-bot developers. Reported as malicious in every version. Lesson: a build-script-only detector sees nothing here; the tell-tale combination is network POSTs plus filesystem walking plus credential-file paths in library code.",
+      "source": "OSSF malicious-packages MAL-2026-16164; https://crates.io/crates/logs-update",
+      "crates": [
+        "logs_update"
+      ],
+      "similarity": 0.17014721059322985
+    },
+    {
+      "id": "pattern-build-rs-exfiltration",
+      "type": "pattern",
+      "title": "General pattern: build.rs data exfiltration",
+      "text": "The most common Rust-specific attack pattern. build.rs executes arbitrary code at `cargo build` time, before any runtime security control applies, with full access to the developer's filesystem, network, and environment variables. Typical sequence: (1) read a sensitive target -- SSH keys, cloud credentials (AWS_SECRET_ACCESS_KEY, GITHUB_TOKEN), cryptocurrency wallet files, or general environment variables; (2) establish an outbound network connection, often to a raw IP or a low-reputation domain rather than a well-known API endpoint; (3) transmit the harvested data. Legitimate build.rs scripts do sometimes make network calls (fetching a codegen schema) or read env vars (checking a target triple), so presence of a single signal alone is a weak indicator -- the co-occurrence of file/env access AND outbound network calls, especially to non-standard destinations, is the stronger signal.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.15553656133244337
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 12623,
+    "chars_out": 959
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

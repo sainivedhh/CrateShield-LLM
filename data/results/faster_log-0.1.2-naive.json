@@ -1,0 +1,44 @@
+{
+  "crate": "faster_log",
+  "version": "0.1.2",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The build.rs script attempts to read sensitive user data (specifically a cryptocurrency wallet file at ~/.wallet/wallet.dat) and opens a TCP connection to exfiltrate this data. This behavior is typical of credential theft and malicious supply chain attacks.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 3
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 786,
+    "chars_out": 335
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

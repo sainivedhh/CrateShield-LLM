@@ -1,0 +1,179 @@
+{
+  "crate": "openssl-sys",
+  "version": "0.9.103",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "openssl-sys",
+    "version": {
+      "version": "0.9.103",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:26:26.752506+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "env_var_read"
+      ],
+      "network_calls": [],
+      "file_writes": [],
+      "env_reads": [
+        "if let Ok(vars) = env::var(\"DEP_BSSL_CONF\") {",
+        "let var = env::var_os(name);"
+      ],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let prefix = env::var(\"TARGET\").unwrap().to_uppercase().replace('-', \"_\");",
+          "let target = env::var(\"TARGET\").unwrap();",
+          "if version == Version::Boringssl && kind == \"static\" && env::var(\"CARGO_CFG_UNIX\").is_ok() {",
+          "let cpp_lib = match env::var(\"CARGO_CFG_TARGET_OS\").unwrap().as_ref() {",
+          "&& (env::var(\"CARGO_CFG_TARGET_OS\").unwrap() == \"linux\"",
+          "|| env::var(\"CARGO_CFG_TARGET_OS\").unwrap() == \"android\")",
+          "&& env::var(\"CARGO_CFG_TARGET_POINTER_WIDTH\").unwrap() == \"32\""
+        ]
+      },
+      "flagged_snippets": [
+        "if let Ok(vars) = env::var(\"DEP_BSSL_CONF\") {",
+        "let var = env::var_os(name);"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 4,
+      "unsafe_per_kloc": 0.38,
+      "ffi_declarations": [
+        "extern \"C\" {\n    #[deprecated(note = \"use BIO_meth_set_write__fixed_rust instead\")]\n    #[cfg(any(ossl110, libressl273))]\n    pub fn BIO_meth_set_write(\n        biom: *mut BIO_METHOD,\n        write: u",
+        "extern \"C\" {\n    #[deprecated(note = \"use CRYPTO_set_locking_callback__fixed_rust instead\")]\n    #[cfg(not(ossl110))]\n    pub fn CRYPTO_set_locking_callback(\n        func: unsafe extern \"C\" fn(mode: c",
+        "extern \"C\" {\n//        #[attributes...]\n//        pub fn name(args) -> rettype; // `-> rettype` optional\n//        // more functions...\n//    }",
+        "extern \"C\" {\n            $(#[$fn_attr])*\n            pub fn $fn_name( $(\n                $arg_name: $($arg_ty)*\n            ),* ) -> $ret_ty;\n        }",
+        "extern \"C\" { $($rem:tt)* }",
+        "extern \"C\" {\n            pub fn SSL_CTX_set1_groups_list(ctx: *mut SSL_CTX, s: *const c_char) -> c_int;\n        }",
+        "extern \"C\" {\n    #[deprecated(note = \"use SSL_CTX_set_tmp_dh_callback__fixed_rust instead\")]\n    pub fn SSL_CTX_set_tmp_dh_callback(\n        ctx: *mut SSL_CTX,\n        dh: unsafe extern \"C\" fn(ssl: *m",
+        "extern \"C\" {\n    pub fn AES_set_encrypt_key(userKey: *const c_uchar, bits: c_int, key: *mut AES_KEY) -> c_int;\n    pub fn AES_set_decrypt_key(userKey: *const c_uchar, bits: c_int, key: *mut AES_KEY) -",
+        "extern \"C\" {\n    pub fn ASN1_OBJECT_free(x: *mut ASN1_OBJECT);\n    pub fn OBJ_dup(x: *const ASN1_OBJECT) -> *mut ASN1_OBJECT;\n}",
+        "extern \"C\" {\n    pub fn ASN1_STRING_type_new(ty: c_int) -> *mut ASN1_STRING;\n    #[cfg(any(ossl110, libressl273))]\n    pub fn ASN1_STRING_get0_data(x: *const ASN1_STRING) -> *const c_uchar;\n    #[cfg("
+      ],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": [
+        "libc"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.182,
+      "target": "serde_json",
+      "edit_distance": 9,
+      "target_rank": 2,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "bssl-sys",
+        "libc"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "process_spawn": 3,
+        "sensitive_paths": 12
+      },
+      "categories": [
+        "process_spawn",
+        "sensitive_paths"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "process_spawn": [
+          {
+            "file": "build/find_normal.rs",
+            "line": 149,
+            "snippet": "&& Command::new(\"pkg-config\").output().is_err()"
+          },
+          {
+            "file": "build/find_normal.rs",
+            "line": 263,
+            "snippet": "let out = Command::new(cmd).args(args).output();"
+          },
+          {
+            "file": "build/run_bindgen.rs",
+            "line": 176,
+            "snippet": "let mut bindgen_cmd = process::Command::new(\"bindgen\");"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/evp.rs",
+            "line": 9,
+            "snippet": "pub const EVP_PKEY_RSA: c_int = NID_rsaEncryption;"
+          },
+          {
+            "file": "src/evp.rs",
+            "line": 11,
+            "snippet": "pub const EVP_PKEY_RSA_PSS: c_int = NID_rsassaPss;"
+          },
+          {
+            "file": "src/evp.rs",
+            "line": 22,
+            "snippet": "pub const EVP_PKEY_ED25519: c_int = NID_ED25519;"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 66,
+      "has_build_script": true,
+      "meaningful_lines": 9862,
+      "meaningful_lines_build_script": 393,
+      "total_bytes": 376794
+    },
+    "metadata": {
+      "publish_date": "2014-11-11T06:38:37.917011Z",
+      "age_days": 4348,
+      "description": "FFI bindings to OpenSSL",
+      "keywords": [],
+      "downloads": 468684768,
+      "num_versions": 183,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: FFI bindings to OpenSSL (`openssl-sys`), a foundational and extremely widely used crate on crates.io with hundreds of millions of downloads and years of history. Sources: The build script reads standard environment variables (`TARGET`, `CARGO_CFG_TARGET_OS`, `DEP_BSSL_CONF`) for configuring native OpenSSL/BoringSSL compilation. Sinks: Uses `unsafe` and FFI (`extern \"C\"`) extensively, which is entirely expected for a low-level system bindings library interfacing with C cryptographic libraries, along with standard build-time process spawns (`pkg-config`, `bindgen`) to locate and compile OpenSSL headers. Flow: Normal build configuration flow without any network calls, file exfiltration, or credential gathering. Anomalies: None; all flagged items (like `process_spawn` for `pkg-config` and `bindgen`, and environment reads) are standard and necessary for a C library FFI binding build script. Conclusion: The crate is completely benign and represents legitimate system-level functionality.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.1,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 13651,
+    "chars_out": 1281
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

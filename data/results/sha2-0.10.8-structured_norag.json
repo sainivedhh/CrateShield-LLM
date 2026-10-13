@@ -1,0 +1,118 @@
+{
+  "crate": "sha2",
+  "version": "0.10.8",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "sha2",
+    "version": {
+      "version": "0.10.8",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:24:40.606083+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 10,
+      "unsafe_per_kloc": 4.5,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "clap",
+      "edit_distance": 3,
+      "target_rank": 5,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 4,
+      "names": [
+        "cfg-if",
+        "digest",
+        "cpufeatures",
+        "sha2-asm"
+      ],
+      "dev_dependency_count": 2,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 13,
+      "has_build_script": false,
+      "meaningful_lines": 1748,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 80935
+    },
+    "metadata": {
+      "publish_date": "2016-05-06T20:20:25.502104Z",
+      "age_days": 3805,
+      "description": "Pure Rust implementation of the SHA-2 hash function family\nincluding SHA-224, SHA-256, SHA-384, and SHA-512.\n",
+      "keywords": [
+        "hash",
+        "sha2",
+        "digest"
+      ],
+      "downloads": 1027848848,
+      "num_versions": 50,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate 'sha2' is a widely known, highly trusted pure Rust implementation of the SHA-2 hash function family with over 1 billion downloads and an age of over 10 years. Sources: No build script, no credential/secret reading, and no suspicious network sources. Sinks: No process spawns, network calls, or file writes. Flow: Pure algorithmic computation. Anomalies: None. The small number of unsafe blocks (10 blocks, 4.5 per kloc) are standard for low-level cryptographic primitives (using cpufeatures and assembly optimizations) and are entirely expected. Conclusion: The crate is completely legitimate and safe.",
+    "primary_signals": [
+      "metadata.downloads (over 1 billion)",
+      "metadata.age_days (3805 days old)",
+      "build_rs.has_build_rs: false",
+      "source_scan.possible_exfiltration_shape: false"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9538,
+    "chars_out": 1071
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

@@ -1,0 +1,69 @@
+{
+  "crate": "hashbrown",
+  "version": "0.14.5",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate 'hashbrown' is a well-known, standard Rust port of Google's SwissTable hash map, maintained by the Rust project and community members. The provided files are standard library-grade data structure implementations (such as table logic, macros, scope guards, and entry APIs) without any malicious patterns, network activity, obfuscation, or unauthorized system calls.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/scopeguard.rs",
+      "src/macros.rs",
+      "src/rustc_entry.rs",
+      "src/table.rs"
+    ],
+    "partial": [
+      "src/table.rs (29601/64790 chars)"
+    ],
+    "omitted": [
+      "src/set.rs",
+      "src/map.rs",
+      "src/external_trait_impls/mod.rs",
+      "src/raw/alloc.rs",
+      "src/raw/neon.rs",
+      "src/raw/bitmask.rs",
+      "src/raw/sse2.rs",
+      "src/raw/generic.rs",
+      "src/external_trait_impls/serde.rs",
+      "src/raw/mod.rs",
+      "src/external_trait_impls/rkyv/mod.rs",
+      "src/external_trait_impls/rayon/mod.rs",
+      "src/external_trait_impls/rayon/helpers.rs",
+      "src/external_trait_impls/rkyv/hash_set.rs",
+      "src/external_trait_impls/rkyv/hash_map.rs",
+      "src/external_trait_impls/rayon/raw.rs",
+      "src/external_trait_impls/rayon/table.rs",
+      "src/external_trait_impls/rayon/set.rs",
+      "src/external_trait_impls/rayon/map.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 19 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 25
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60366,
+    "chars_out": 449
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

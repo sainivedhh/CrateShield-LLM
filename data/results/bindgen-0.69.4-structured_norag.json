@@ -1,0 +1,159 @@
+{
+  "crate": "bindgen",
+  "version": "0.69.4",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "bindgen",
+    "version": {
+      "version": "0.69.4",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:25:56.377079+00:00",
+    "build_rs": {
+      "has_build_rs": true,
+      "signals": [
+        "file_write"
+      ],
+      "network_calls": [],
+      "file_writes": [
+        "File::create(Path::new(&out_dir).join(\"host-target.txt\")).unwrap();"
+      ],
+      "env_reads": [],
+      "process_spawns": [],
+      "benign_explained": {
+        "env_var_read": [
+          "let out_dir = PathBuf::from(env::var(\"OUT_DIR\").unwrap());",
+          "dst.write_all(env::var(\"TARGET\").unwrap().as_bytes())",
+          "std::env::var(\"TARGET\").unwrap()",
+          "std::env::var(\"TARGET\").unwrap().replace('-', \"_\")"
+        ]
+      },
+      "flagged_snippets": [
+        "File::create(Path::new(&out_dir).join(\"host-target.txt\")).unwrap();"
+      ]
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 126,
+      "unsafe_per_kloc": 4.18,
+      "ffi_declarations": [
+        "extern \"C\" {\n    ///   void foo();\n    ///   extern int bar;\n    /// }",
+        "extern \"C\" {\n    ///   void foo();\n    ///   extern int bar;\n    /// }",
+        "extern \"C\" {\n                    #(#attrs)*\n                    pub static #maybe_mut #canonical_ident: #ty;\n                }"
+      ],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.286,
+      "target": "serde",
+      "edit_distance": 5,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 16,
+      "names": [
+        "annotate-snippets",
+        "bitflags",
+        "cexpr",
+        "clang-sys",
+        "itertools",
+        "lazy_static",
+        "lazycell",
+        "log",
+        "prettyplease",
+        "proc-macro2",
+        "quote",
+        "regex",
+        "rustc-hash",
+        "shlex",
+        "syn",
+        "which"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "process_spawn": 2
+      },
+      "categories": [
+        "process_spawn"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "process_spawn": [
+          {
+            "file": "lib.rs",
+            "line": 404,
+            "snippet": "let mut cmd = Command::new(clang.path);"
+          },
+          {
+            "file": "lib.rs",
+            "line": 1007,
+            "snippet": "let mut cmd = Command::new(&*rustfmt);"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 54,
+      "has_build_script": true,
+      "meaningful_lines": 21846,
+      "meaningful_lines_build_script": 23,
+      "total_bytes": 1018707
+    },
+    "metadata": {
+      "publish_date": "2014-11-21T10:14:40.304798Z",
+      "age_days": 4338,
+      "description": "Automatically generates Rust FFI bindings to C and C++ libraries.",
+      "keywords": [
+        "bindings",
+        "ffi",
+        "code-generation"
+      ],
+      "downloads": 410924713,
+      "num_versions": 129,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `bindgen` is a well-known, legitimate crate that automatically generates Rust FFI bindings to C and C++ libraries, with over 4,000 days of age and hundreds of millions of downloads. Sources: build.rs reads Cargo-provided standard variables (`OUT_DIR`, `TARGET`). Sinks: build.rs writes a helper file (`host-target.txt`) strictly inside `OUT_DIR`, which is standard and expected build script behavior. Library source code spawns processes (`clang` and `rustfmt`) because its entire function is to invoke external tools (Clang parser and Rust formatter) to generate code. Unsafe FFI blocks are numerous (126) because the crate's purpose is interfacing with C/C++. There are no network calls, no credential access, no environment variable leaks, and no typosquatting indicators. Conclusion: The crate is completely benign.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 11082,
+    "chars_out": 1102
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

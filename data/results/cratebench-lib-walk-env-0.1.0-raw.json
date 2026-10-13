@@ -1,0 +1,43 @@
+{
+  "crate": "cratebench-lib-walk-env",
+  "version": "0.1.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate performs filesystem traversal using walkdir combined with a hardcoded TCP connection attempt to a local port for every entry found. This pattern is indicative of malicious data exfiltration or reconnaissance, scanning the local environment and attempting to beacon data out.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Block",
+    "malware_score": 0.85,
+    "security_risk_score": 0.5,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.9,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 2
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 4121,
+    "chars_out": 487
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

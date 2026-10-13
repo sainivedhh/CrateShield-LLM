@@ -1,0 +1,168 @@
+{
+  "crate": "cratebench-lib-keychain",
+  "version": "0.1.0",
+  "condition": "structured",
+  "signals": {
+    "crate": "cratebench-lib-keychain",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:18:36.091561+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.261,
+      "target": "async-trait",
+      "edit_distance": 17,
+      "target_rank": 14,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "tokio"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 2,
+        "sensitive_paths": 1
+      },
+      "categories": [
+        "network",
+        "sensitive_paths"
+      ],
+      "possible_exfiltration_shape": true,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/lib.rs",
+            "line": 2,
+            "snippet": "use tokio::net::TcpStream;"
+          },
+          {
+            "file": "src/lib.rs",
+            "line": 7,
+            "snippet": "let _ = TcpStream::connect(\"127.0.0.1:6003\").await;"
+          }
+        ],
+        "sensitive_paths": [
+          {
+            "file": "src/lib.rs",
+            "line": 5,
+            "snippet": "let path = \"Login Data\";"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 8,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 202
+    }
+  },
+  "classification": {
+    "classification": "MALICIOUS",
+    "llm_classification": "MALICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate presents itself as a keychain library (`cratebench-lib-keychain`), but contains only 8 meaningful lines of code in a single Rust file. Sources: It references a sensitive path string \"Login Data\" (commonly associated with browser credential stores). Sinks and Flows: It uses `tokio::net::TcpStream` to immediately connect to a local/hardcoded loopback address (`127.0.0.1:6003`) upon execution. Anomalies: There is no legitimate reason for a simple keychain library skeleton to reference browser credential data files and immediately attempt an outbound network connection. This matches library-code data exfiltration patterns where malicious logic executes when the library functions or binaries are invoked (as referenced in `incident-logs-update-2026`).",
+    "primary_signals": [
+      "source_scan.snippets.network",
+      "source_scan.snippets.sensitive_paths",
+      "possible_exfiltration_shape"
+    ],
+    "retrieved_evidence_used": [
+      "incident-logs-update-2026"
+    ],
+    "recommended_action": "Block",
+    "malware_score": 0.9,
+    "security_risk_score": 0.85,
+    "obfuscation_score": 0.1,
+    "confidence_score": 0.9,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [
+    {
+      "id": "incident-logs-update-2026",
+      "type": "incident",
+      "title": "logs-update: credential and file stealer in library code, no build script (September 2026)",
+      "text": "A crate published on 2026-09-10 that presents itself as a terminal progress-bar library but renders nothing. It has NO build script, so it does not run during `cargo build` of a dependent; it runs when its binary is executed (for example after `cargo install`) or when a dependent calls its run() function. It POSTs a machine fingerprint (username, OS, local IP) to an attacker web endpoint; reads the project's .env and trading-bot config files and POSTs them; walks the filesystem and POSTs the contents of .env, .json, .txt, .doc/.docx and .xlsx files; and on Linux appends an attacker's SSH public key to ~/.ssh/authorized_keys for remote login. It targets crypto trading-bot developers. Reported as malicious in every version. Lesson: a build-script-only detector sees nothing here; the tell-tale combination is network POSTs plus filesystem walking plus credential-file paths in library code.",
+      "source": "OSSF malicious-packages MAL-2026-16164; https://crates.io/crates/logs-update",
+      "crates": [
+        "logs_update"
+      ],
+      "similarity": 0.33258372256149066
+    },
+    {
+      "id": "pattern-build-rs-exfiltration",
+      "type": "pattern",
+      "title": "General pattern: build.rs data exfiltration",
+      "text": "The most common Rust-specific attack pattern. build.rs executes arbitrary code at `cargo build` time, before any runtime security control applies, with full access to the developer's filesystem, network, and environment variables. Typical sequence: (1) read a sensitive target -- SSH keys, cloud credentials (AWS_SECRET_ACCESS_KEY, GITHUB_TOKEN), cryptocurrency wallet files, or general environment variables; (2) establish an outbound network connection, often to a raw IP or a low-reputation domain rather than a well-known API endpoint; (3) transmit the harvested data. Legitimate build.rs scripts do sometimes make network calls (fetching a codegen schema) or read env vars (checking a target triple), so presence of a single signal alone is a weak indicator -- the co-occurrence of file/env access AND outbound network calls, especially to non-standard destinations, is the stronger signal.",
+      "source": "synthesized from documented incidents above",
+      "similarity": 0.21338909667071507
+    },
+    {
+      "id": "incident-arrayref-2026",
+      "type": "incident",
+      "title": "arrayref / internment / append-only-vec trojanized via a malicious dependency (August 2026)",
+      "text": "On 2026-08-20, arrayref 0.3.10, internment 0.8.7 and append-only-vec 0.1.9 were published to crates.io from a maintainer account that appears to have been compromised. For arrayref the source was unchanged genuine code; the release added a dependency on the malicious crate proc-macro1. proc-macro1 typosquats proc-macro2 (its library source is a copy, so dependent builds succeed) and forges the real author's name in its metadata; its build.rs reconstructs a base64-encoded URL, downloads an architecture-specific remote binary over TLS with certificate validation disabled, and runs it detached with a command-and-control address as argument, unconditionally on every supported-platform build. internment and append-only-vec added a dependency on an attacker-controlled crate with the same kind of build-script payload. Further crates (aovine, arone, aronenao, proc-macro-en, tinymember) belong to the same campaign; their build scripts were attributed from the campaign rather than analyzed individually. Earlier releases of the trojanized crates are reported as unaffected, and the malicious releases were removed. Lesson: the trojanized crate's own code can be clean; the signal is a NEW dependency whose build script downloads and executes a remote binary.",
+      "source": "OSSF malicious-packages MAL-2026-14332 to MAL-2026-14340; SafeDep write-up https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/ ; RustSec advisory-db issue #3161",
+      "crates": [
+        "arrayref",
+        "internment",
+        "append_only_vec",
+        "proc_macro1",
+        "proc_macro_en",
+        "aovine",
+        "arone",
+        "aronenao",
+        "tinymember"
+      ],
+      "similarity": 0.1398414205019931
+    }
+  ],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 13588,
+    "chars_out": 1207
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": true
+}

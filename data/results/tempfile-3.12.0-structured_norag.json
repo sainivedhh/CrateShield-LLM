@@ -1,0 +1,119 @@
+{
+  "crate": "tempfile",
+  "version": "3.12.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "tempfile",
+    "version": {
+      "version": "3.12.0",
+      "major": 3,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:24:56.826488+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 3,
+      "unsafe_per_kloc": 1.04,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.25,
+      "target": "serde",
+      "edit_distance": 6,
+      "target_rank": 1,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 5,
+      "names": [
+        "cfg-if",
+        "fastrand",
+        "once_cell",
+        "rustix",
+        "windows-sys"
+      ],
+      "dev_dependency_count": 1,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 14,
+      "has_build_script": false,
+      "meaningful_lines": 1203,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 89942
+    },
+    "metadata": {
+      "publish_date": "2015-04-14T18:26:06.249019Z",
+      "age_days": 4193,
+      "description": "A library for managing temporary files and directories.",
+      "keywords": [
+        "filesystem",
+        "tempfile",
+        "tmpfile"
+      ],
+      "downloads": 866799506,
+      "num_versions": 66,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: managing temporary files and directories (the legitimate 'tempfile' crate, version 3.12.0). Sources: none. Sinks: none. Flows: none. Anomalies: none. The crate has a long history (over 4,100 days old), massive download numbers (over 866 million downloads), 66 versions, clean dependencies typical for cross-platform temporary file handling (cfg-if, fastrand, once_cell, rustix, windows-sys), no build script, a very low and normal amount of safe/documented unsafe usage for FFI/system calls, and zero flagged code snippets. All signals indicate a thoroughly standard, highly trusted, benign library.",
+    "primary_signals": [
+      "established metadata (age and high download count)",
+      "no build script",
+      "clean dependency tree",
+      "zero malicious signals or flagged snippets"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9516,
+    "chars_out": 1044
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

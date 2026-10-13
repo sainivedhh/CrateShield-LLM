@@ -1,0 +1,112 @@
+{
+  "crate": "xrvrv",
+  "version": "0.1.0",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "xrvrv",
+    "version": {
+      "version": "0.1.0",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:29:00.549252+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 0,
+      "unsafe_per_kloc": 0.0,
+      "ffi_declarations": [],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": []
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.2,
+      "target": "rand",
+      "edit_distance": 4,
+      "target_rank": 4,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 1,
+      "names": [
+        "reqwest"
+      ],
+      "dev_dependency_count": 0,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {
+        "network": 1
+      },
+      "categories": [
+        "network"
+      ],
+      "possible_exfiltration_shape": false,
+      "snippets": {
+        "network": [
+          {
+            "file": "src/lib.rs",
+            "line": 3,
+            "snippet": "let _ = reqwest::blocking::get(telegram_url);"
+          }
+        ]
+      }
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 1,
+      "has_build_script": false,
+      "meaningful_lines": 4,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 154
+    }
+  },
+  "classification": {
+    "classification": "SUSPICIOUS",
+    "llm_classification": "SUSPICIOUS",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: The crate 'xrvrv' has almost no functionality (only 4 meaningful lines in 1 rust file) and its sole purpose appears to be sending an HTTP GET request to a Telegram URL via the `reqwest` dependency. Sources and Sinks: It uses `reqwest::blocking::get(telegram_url)` in `src/lib.rs` to communicate externally with Telegram (a common channel for exfiltration or command-and-control in supply-chain attacks). Anomalies: Extremely sparse codebase (4 lines total, version 0.1.0) with an external network call inside ordinary library code (`src/lib.rs`) rather than a build script. While it does not explicitly read credentials in the provided scan, making unprompted outbound network calls to an external messaging service from a tiny, seemingly non-functional crate is a classic indicator of a test payload, beacon, or malicious utility. Conclusion: Classified as SUSPICIOUS due to the strong telemetry/beaconing pattern in an otherwise empty crate.",
+    "primary_signals": [
+      "source_scan.network",
+      "sparse codebase with external network call"
+    ],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": 0.6,
+    "security_risk_score": 0.5,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.9,
+    "flagged_by_score": true,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9381,
+    "chars_out": 1318
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

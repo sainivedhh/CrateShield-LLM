@@ -1,0 +1,254 @@
+/* CrateShield — visual concept: an inspection ledger on oxidized steel.
+   Base: cold steel grays. Accent: iron-oxide rust (matches Rust's own
+   brand color family, #CE422B, without copying its logo). No cards,
+   no soft drop shadows — flat ledger rows and hairline rules instead. */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --steel-950: #14181c;
+  --steel-900: #1b2126;
+  --steel-800: #262e34;
+  --steel-700: #384249;
+  --steel-500: #6b7880;
+  --steel-300: #a7b0b6;
+  --paper: #eae6dd;
+  --oxide: #c1502e;
+  --oxide-bright: #e0672f;
+  --verdict-malicious: #c1502e;
+  --verdict-suspicious: #c98a2e;
+  --verdict-benign: #5b8a6b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--steel-950);
+  color: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+h1, h2, h3, .wordmark { font-family: 'Source Serif 4', serif; }
+
+/* ---------- masthead ---------- */
+.masthead {
+  border-bottom: 1px solid var(--steel-700);
+  background: var(--steel-900);
+}
+.masthead-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.wordmark {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.wordmark-crate { color: var(--paper); }
+.wordmark-shield { color: var(--oxide-bright); }
+
+.tabs { display: flex; gap: 4px; flex: 1; }
+.tab {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--steel-300);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 14px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.tab:hover { color: var(--paper); }
+.tab.active {
+  color: var(--oxide-bright);
+  border-color: var(--steel-700);
+  background: var(--steel-800);
+}
+
+.llm-status {
+  font-size: 12px;
+  color: var(--steel-500);
+  border-left: 1px solid var(--steel-700);
+  padding-left: 16px;
+}
+.llm-status.ready { color: var(--verdict-benign); }
+.llm-status.missing { color: var(--verdict-malicious); }
+
+/* ---------- layout ---------- */
+main { max-width: 1040px; margin: 0 auto; padding: 40px 24px 100px; }
+.view { display: none; }
+.view.active { display: block; }
+
+.section-head { margin-bottom: 24px; display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.section-head h2 { margin: 0; font-size: 22px; font-weight: 600; }
+.muted { color: var(--steel-500); font-size: 13px; margin: 0; }
+
+/* ---------- inspect / scan panel ---------- */
+.scan-panel {
+  border: 1px solid var(--steel-700);
+  padding: 28px;
+  background: var(--steel-900);
+}
+.scan-eyebrow {
+  margin: 0 0 16px;
+  color: var(--oxide-bright);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+.scan-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr auto;
+  gap: 10px;
+}
+.scan-form input, .scan-form select {
+  background: var(--steel-950);
+  border: 1px solid var(--steel-700);
+  color: var(--paper);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 2px;
+}
+.scan-form input:focus, .scan-form select:focus {
+  outline: none;
+  border-color: var(--oxide-bright);
+}
+.scan-form button, .run-btn {
+  background: var(--oxide);
+  border: 1px solid var(--oxide);
+  color: var(--steel-950);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.scan-form button:hover, .run-btn:hover { background: var(--oxide-bright); }
+.scan-form button:disabled { opacity: 0.5; cursor: wait; }
+.scan-hint { margin: 16px 0 0; color: var(--steel-500); font-size: 12px; }
+
+@media (max-width: 720px) {
+  .scan-form { grid-template-columns: 1fr; }
+}
+
+/* ---------- scan result: the inspection ledger ---------- */
+.scan-result { margin-top: 28px; }
+.scan-result.hidden { display: none; }
+
+.verdict-strip {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 24px;
+  border: 1px solid var(--steel-700);
+  border-left-width: 5px;
+  background: var(--steel-900);
+}
+.verdict-strip.MALICIOUS { border-left-color: var(--verdict-malicious); }
+.verdict-strip.SUSPICIOUS { border-left-color: var(--verdict-suspicious); }
+.verdict-strip.BENIGN { border-left-color: var(--verdict-benign); }
+
+.verdict-label { font-family: 'Source Serif 4', serif; font-size: 26px; font-weight: 600; }
+.verdict-label.MALICIOUS { color: var(--verdict-malicious); }
+.verdict-label.SUSPICIOUS { color: var(--verdict-suspicious); }
+.verdict-label.BENIGN { color: var(--verdict-benign); }
+
+.verdict-meta { color: var(--steel-500); font-size: 12px; }
+.verdict-meta b { color: var(--steel-300); }
+
+.reasoning-block {
+  margin-top: 18px;
+  padding: 18px 24px;
+  border: 1px solid var(--steel-700);
+  border-top: none;
+  background: var(--steel-950);
+  white-space: pre-wrap;
+  font-size: 13px;
+  color: var(--steel-300);
+}
+
+.signal-manifest { margin-top: 24px; }
+.signal-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--steel-800);
+}
+.signal-row:first-child { border-top: 1px solid var(--steel-800); }
+.signal-name { color: var(--oxide-bright); font-size: 12px; padding-top: 2px; }
+.signal-value { font-size: 13px; color: var(--steel-300); }
+.signal-flag {
+  display: inline-block;
+  background: var(--verdict-malicious);
+  color: var(--paper);
+  font-size: 10px;
+  padding: 2px 6px;
+  margin: 2px 4px 2px 0;
+  border-radius: 2px;
+}
+.signal-none { color: var(--steel-500); font-style: italic; }
+
+/* ---------- RAG grounding panel ---------- */
+.rag-panel { margin-top: 24px; border: 1px solid var(--steel-700); }
+.rag-eyebrow {
+  margin: 0; padding: 10px 20px;
+  color: var(--oxide-bright); font-size: 12px;
+  border-bottom: 1px solid var(--steel-700);
+  background: var(--steel-900);
+}
+.rag-doc { padding: 14px 20px; border-bottom: 1px solid var(--steel-800); }
+.rag-doc:last-child { border-bottom: none; }
+.rag-doc-head { display: flex; justify-content: space-between; align-items: baseline; }
+.rag-doc-title { font-size: 13px; color: var(--paper); font-weight: 600; }
+.rag-doc-sim { font-size: 11px; color: var(--steel-500); }
+.rag-doc-text { font-size: 12px; color: var(--steel-300); margin-top: 6px; line-height: 1.5; }
+.rag-doc-source { font-size: 11px; color: var(--steel-500); margin-top: 6px; }
+.rag-used-flag {
+  display: inline-block; margin-left: 8px;
+  background: var(--verdict-benign); color: var(--steel-950);
+  font-size: 10px; padding: 1px 6px; border-radius: 2px;
+}
+
+/* ---------- dataset ledger table ---------- */
+.ledger { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ledger th {
+  text-align: left;
+  color: var(--steel-500);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--steel-700);
+}
+.ledger td { padding: 10px 12px; border-bottom: 1px solid var(--steel-800); }
+.ledger tr:hover td { background: var(--steel-900); }
+.label-pill { font-size: 11px; padding: 2px 8px; border-radius: 2px; }
+.label-pill.MALICIOUS { background: rgba(193,80,46,0.2); color: var(--verdict-malicious); }
+.label-pill.SUSPICIOUS { background: rgba(201,138,46,0.2); color: var(--verdict-suspicious); }
+.label-pill.BENIGN { background: rgba(91,138,107,0.2); color: var(--verdict-benign); }
+
+/* ---------- ablation ---------- */
+.ablation-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.ablation-table th, .ablation-table td { padding: 12px; text-align: left; font-size: 13px; }
+.ablation-table th { color: var(--steel-500); font-size: 11px; border-bottom: 1px solid var(--steel-700); }
+.ablation-table td { border-bottom: 1px solid var(--steel-800); }
+.metric-bar-track { background: var(--steel-800); height: 6px; width: 100%; margin-top: 4px; }
+.metric-bar-fill { background: var(--oxide-bright); height: 6px; }
+
+.status-msg { padding: 16px; border: 1px solid var(--steel-700); color: var(--steel-300); }
+.status-msg.error { border-color: var(--verdict-malicious); color: var(--verdict-malicious); }
+
+/* --- scores and pre-screen (added with the SocketAI-derived changes) --- */
+.score-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+.score-chip { font-size: 12px; padding: 3px 9px; border: 1px solid currentColor; border-radius: 999px; opacity: .85; }
+.score-chip.warn { color: #b45309; opacity: 1; }
+.prescreen-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; white-space: nowrap; }

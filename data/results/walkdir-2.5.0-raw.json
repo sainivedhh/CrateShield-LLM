@@ -1,0 +1,52 @@
+{
+  "crate": "walkdir",
+  "version": "2.5.0",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate provided is 'walkdir' v2.5.0, a popular and well-known open-source Rust library written by Andrew Gallant (BurntSushi) for recursive directory traversal. Inspection of the code shows standard filesystem operations, directory iteration logic, error types, and helpers. There are no build scripts making external network connections, no obfuscation, no credential-stealing or payload execution logic present. The truncation in `src/dent.rs` is due to length limits, but the code present is entirely consistent with the legitimate public release of `walkdir`.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/util.rs",
+      "src/error.rs",
+      "src/dent.rs"
+    ],
+    "partial": [
+      "src/dent.rs (6268/11211 chars)"
+    ],
+    "omitted": [
+      "src/tests/mod.rs",
+      "src/tests/util.rs",
+      "src/tests/recursive.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 3 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 8
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63932,
+    "chars_out": 764
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

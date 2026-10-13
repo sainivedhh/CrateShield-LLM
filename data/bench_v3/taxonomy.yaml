@@ -1,0 +1,134 @@
+version: '3.0'
+created_at: '2026-10-10'
+total_families: 8
+seen_families_count: 5
+held_out_families_count: 3
+families:
+- id: F1
+  name: credential_exfil
+  split: SEEN
+  behaviour_spec: Reads environment variables (e.g. AWS credentials, GitHub tokens,
+    Cargo auth tokens, SSH keys, or bash history) and transmits them over HTTP/HTTPS
+    or DNS to an external destination.
+  provenance: 'Incidents rustdecimal (CrateDepression webhook exfil), amzn_codewhisperer_streaming_client,
+    amzn_consolas_client (AWS token exfil), semantic_search_client. Abstraction: generalized
+    from specific secret names to generic environment/filesystem credential harvesting.'
+  allowed_carriers:
+  - build.rs
+  - lib.rs function
+  - proc-macro
+  - added path dependency
+  - include!/OUT_DIR generated code
+  benign_lookalike_spec: Reads configuration parameters from environment variables
+    (e.g. AWS_DEFAULT_REGION, CARGO_PKG_VERSION) or local configuration files to configure
+    local options without outbound transmission.
+- id: F2
+  name: reverse_shell_rce
+  split: SEEN
+  behaviour_spec: Spawns an interactive shell process (/bin/sh, /bin/bash, or cmd.exe)
+    connected to an inbound or outbound network socket stream, or executes arbitrary
+    shell commands received over a network stream.
+  provenance: 'Incidents logs_update (GitLab runner reverse shell), proton_pfff (remote
+    command dispatch). Abstraction: generalized across TCP, UDP, and websocket connection
+    transports.'
+  allowed_carriers:
+  - build.rs
+  - lib.rs function
+  - proc-macro
+  - added path dependency
+  - include!/OUT_DIR generated code
+  benign_lookalike_spec: Executes fixed, documented local developer subcommands (e.g.
+    git rev-parse, pkg-config, rustc --version) via std::process::Command without
+    network redirection.
+- id: F3
+  name: build_download_exec
+  split: SEEN
+  behaviour_spec: During build script execution (build.rs), downloads a precompiled
+    binary, shared library, or executable script over HTTP/HTTPS and executes it or
+    configures the linker to load it dynamically.
+  provenance: 'Incidents littest (second-stage payload dropper in build.rs), supertag.
+    Abstraction: generalized URL fetch and file execution pattern.'
+  allowed_carriers:
+  - build.rs
+  - proc-macro
+  - include!/OUT_DIR generated code
+  benign_lookalike_spec: A build script that downloads external precompiled C/C++
+    static libraries or assets, verifies an explicit hardcoded cryptographic SHA256
+    checksum against a pinned hash table, and unpacks the verified asset.
+- id: F4
+  name: persistence
+  split: SEEN
+  behaviour_spec: Installs unauthorized persistent startup hooks on the host system,
+    such as writing backdoor entries into user cron jobs, systemd user services, shell
+    profiles (.bashrc, .zshrc), or git hooks.
+  provenance: 'Incidents proc_macro1, proc_macro_en (proc-macro unauthorized filesystem
+    writes), RUSTSEC advisory reports on untrusted filesystem mutations. Abstraction:
+    cross-platform persistence hooks.'
+  allowed_carriers:
+  - build.rs
+  - proc-macro
+  - added path dependency
+  benign_lookalike_spec: Generates shell autocompletion scripts (e.g. bash/zsh completions)
+    or documentation and writes them into a standard target/out directory or user-specified
+    output folder with documented user opt-in.
+- id: F5
+  name: supply_chain_dep
+  split: HELD-OUT
+  behaviour_spec: Introduces a newly added local or transitive dependency containing
+    covert malicious routines (credential harvesting or execution), while the parent
+    crate merely invokes what appears to be a standard utility function.
+  provenance: 'Incidents append_only_vec, arrayref (shadow dependency injection),
+    dependency confusion attacks. Abstraction: local path dependency implementing
+    the covert payload while base code adds a natural call.'
+  allowed_carriers:
+  - added path dependency
+  benign_lookalike_spec: Modularizes internal library helper routines into a cleanly
+    separated local path sub-crate providing pure algorithmic functions (e.g. data
+    encoding, fast math) with zero network or filesystem side-effects.
+- id: F6
+  name: typosquat_payload
+  split: HELD-OUT
+  behaviour_spec: Mirrors the public API surface and names of a well-known library
+    while embedding hidden malicious behaviors inside standard public function calls.
+  provenance: 'Incidents rustdecimal (mimicking rust_decimal), tinymember (mimicking
+    tinyvec), internment typosquats. Abstraction: interface cloning combined with
+    covert payload trigger.'
+  allowed_carriers:
+  - lib.rs function
+  - build.rs
+  benign_lookalike_spec: An alternative lightweight or no_std implementation of standard
+    trait APIs (e.g. custom serializer or formatting adapter) adhering to standard
+    interfaces without covert actions.
+- id: F7
+  name: conditional_gated
+  split: SEEN
+  behaviour_spec: Guards payload execution behind environmental gate checks (e.g.
+    executing only when specific CI environment variables like CI, GITHUB_ACTIONS,
+    or GITLAB_CI are present, or after a specific epoch timestamp).
+  provenance: 'Incidents rustdecimal (checking for GitLab CI and production build
+    environments before activating exfiltration), evasion matrices. Abstraction: parameterized
+    trigger conditions.'
+  allowed_carriers:
+  - build.rs
+  - lib.rs function
+  - proc-macro
+  - include!/OUT_DIR generated code
+  benign_lookalike_spec: A build script or library routine that inspects CI environment
+    variables (e.g. CI=true) solely to enable verbose logging, disable slow unit tests,
+    or emit cargo:warning diagnostic notices.
+- id: F8
+  name: data_destructive_wallet
+  split: HELD-OUT
+  behaviour_spec: Scans memory, clipboard, or local filesystem for cryptocurrency
+    addresses or private keys to replace payment destinations with attacker addresses,
+    or recursively deletes/corrupts user directories.
+  provenance: 'Incidents mysten_metrics (targeted telemetry and key harvesting), npm/crates
+    clipboard-hijacking campaigns. Abstraction: clipboard/filesystem target address
+    substitution.'
+  allowed_carriers:
+  - lib.rs function
+  - build.rs
+  - added path dependency
+  benign_lookalike_spec: A cryptocurrency address validation, formatting, or checksum
+    calculation utility, or a local file cache cleanup routine that deletes expired
+    cache files within a designated application temp directory.

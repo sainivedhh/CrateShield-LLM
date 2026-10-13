@@ -1,0 +1,58 @@
+{
+  "crate": "anyhow",
+  "version": "1.0.89",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The inspected files belong to the legitimate, widely-used Rust crate 'anyhow' (version 1.0.89) maintained by David Tolnay. The code implements flexible error handling structures, macro definitions for context propagation, and trait implementations without any malicious payloads, unauthorized network access, data exfiltration, or suspicious system calls.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "build.rs",
+      "src/lib.rs",
+      "build/probe.rs",
+      "src/wrapper.rs",
+      "src/chain.rs",
+      "src/kind.rs",
+      "src/ptr.rs",
+      "src/fmt.rs",
+      "src/context.rs",
+      "src/macros.rs",
+      "src/backtrace.rs"
+    ],
+    "partial": [
+      "src/backtrace.rs (783/13110 chars)"
+    ],
+    "omitted": [
+      "src/error.rs",
+      "src/ensure.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 2 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 14
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 60362,
+    "chars_out": 430
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

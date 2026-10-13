@@ -1,0 +1,78 @@
+{
+  "crate": "clap",
+  "version": "4.5.18",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "This is the official, legitimate 'clap' crate (version 4.5.18), which is a well-known command-line argument parser for Rust. The provided source files, Cargo.toml, documentation, and examples are standard and expected for this library. There are no malicious build scripts, obfuscated payloads, unauthorized network calls, or suspicious access to sensitive system resources. The code uses `#![forbid(unsafe_code)]` in lib.rs.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/_features.rs",
+      "src/_faq.rs",
+      "src/_cookbook/repl_derive.rs",
+      "src/_cookbook/repl.rs",
+      "src/_cookbook/git.rs",
+      "src/_cookbook/find.rs",
+      "src/_cookbook/pacman.rs",
+      "src/_cookbook/git_derive.rs",
+      "src/_cookbook/escaped_positional.rs",
+      "src/_cookbook/typed_derive.rs",
+      "src/_cookbook/cargo_example.rs",
+      "src/_cookbook/escaped_positional_derive.rs",
+      "src/_cookbook/multicall_busybox.rs",
+      "src/_cookbook/multicall_hostname.rs",
+      "src/_cookbook/cargo_example_derive.rs",
+      "src/_tutorial/chapter_5.rs",
+      "src/_tutorial/chapter_4.rs",
+      "src/_tutorial/chapter_0.rs",
+      "src/bin/stdio-fixture.rs",
+      "src/_tutorial/chapter_1.rs",
+      "src/_tutorial/mod.rs",
+      "src/_cookbook/mod.rs",
+      "src/_tutorial/chapter_2.rs",
+      "src/_tutorial/chapter_3.rs",
+      "src/_derive/mod.rs"
+    ],
+    "partial": [
+      "src/_derive/mod.rs (16710/26274 chars)"
+    ],
+    "omitted": [
+      "src/_derive/_tutorial/chapter_4.rs",
+      "src/_derive/_tutorial/chapter_5.rs",
+      "src/_derive/_tutorial/chapter_0.rs",
+      "src/_derive/_tutorial/chapter_1.rs",
+      "src/_derive/_tutorial/mod.rs",
+      "src/_derive/_tutorial/chapter_3.rs",
+      "src/_derive/_tutorial/chapter_2.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 7 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 34
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63930,
+    "chars_out": 623
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

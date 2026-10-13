@@ -1,0 +1,43 @@
+{
+  "crate": "arrayref",
+  "version": "0.3.10",
+  "condition": "naive",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate 'arrayref' provides a well-known, standard macro utility for safely creating array references with explicit offsets and lengths using unsafe pointer casting, which is common in low-level Rust programming. There are no indications of malicious behavior, obfuscation, or unauthorized data exfiltration.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Manual review",
+    "malware_score": null,
+    "security_risk_score": null,
+    "obfuscation_score": null,
+    "confidence_score": null,
+    "flagged_by_score": null,
+    "score_label_consistent": null,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs"
+    ],
+    "partial": [],
+    "omitted": [],
+    "truncation_note": null,
+    "total_files": 2
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 550,
+    "chars_out": 385
+  },
+  "ground_truth": "MALICIOUS",
+  "correct": false
+}

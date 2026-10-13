@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crateshield"
+version = "1.0.0"
+description = "LLM-assisted detection of malicious Rust crates via structured static signal extraction. No ML classifier -- the LLM is the decision-maker."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    "requests>=2.31",
+    "pydantic>=2.7",
+    "numpy>=1.26",
+    "sentence-transformers>=3.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src"]
+testpaths = ["tests"]
+norecursedirs = ["data*", "scratch*", ".git", "frontend"]
+

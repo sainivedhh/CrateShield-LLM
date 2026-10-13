@@ -1,0 +1,58 @@
+{
+  "crate": "sha2",
+  "version": "0.10.8",
+  "condition": "raw",
+  "signals": null,
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "The crate is the legitimate 'sha2' library from the RustCrypto project, implementing SHA-2 cryptographic hash functions in pure Rust with hardware-accelerated backends (x86, aarch64, loongarch64). There are no network requests, file system accesses, environment variable reads, or malicious payloads present. The code structure matches standard cryptographic implementations.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.0,
+    "obfuscation_score": 0.0,
+    "confidence_score": 1.0,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": {
+    "included": [
+      "Cargo.toml",
+      "src/lib.rs",
+      "src/sha256.rs",
+      "src/sha512.rs",
+      "src/core_api.rs",
+      "src/consts.rs",
+      "src/sha256/x86.rs",
+      "src/sha256/aarch64.rs",
+      "src/sha256/soft.rs",
+      "src/sha512/soft.rs",
+      "src/sha512/aarch64.rs",
+      "src/sha256/loongarch64_asm.rs"
+    ],
+    "partial": [
+      "src/sha256/loongarch64_asm.rs (9436/10365 chars)"
+    ],
+    "omitted": [
+      "src/sha512/x86.rs",
+      "src/sha512/loongarch64_asm.rs"
+    ],
+    "truncation_note": "input was limited to about 60000 characters; 2 file(s) were omitted and 1 truncated, so absence of evidence in what you see is not evidence of absence",
+    "total_files": 14
+  },
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 63930,
+    "chars_out": 573
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}

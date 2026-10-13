@@ -1,0 +1,116 @@
+{
+  "crate": "libloading",
+  "version": "0.8.5",
+  "condition": "structured_norag",
+  "signals": {
+    "crate": "libloading",
+    "version": {
+      "version": "0.8.5",
+      "major": 0,
+      "high_major_version": false
+    },
+    "analysis_timestamp": "2026-10-07T17:27:40.333292+00:00",
+    "build_rs": {
+      "has_build_rs": false,
+      "signals": [],
+      "network_calls": [],
+      "env_reads": [],
+      "file_writes": [],
+      "process_spawns": [],
+      "flagged_snippets": [],
+      "benign_explained": {}
+    },
+    "unsafe_ffi": {
+      "unsafe_block_count": 28,
+      "unsafe_per_kloc": 12.22,
+      "ffi_declarations": [
+        "extern \"C\" {\n    fn dlopen(filename: *const raw::c_char, flags: raw::c_int) -> *mut raw::c_void;\n    fn dlclose(handle: *mut raw::c_void) -> raw::c_int;\n    fn dlsym(handle: *mut raw::c_void, symbol: "
+      ],
+      "syscall_usage": [],
+      "ffi_crate_dependencies": [
+        "libc"
+      ]
+    },
+    "proc_macro": {
+      "is_proc_macro": false
+    },
+    "typosquatting": {
+      "score": 0.3,
+      "target": "libc",
+      "edit_distance": 7,
+      "target_rank": 11,
+      "flagged": false
+    },
+    "dependencies": {
+      "count": 2,
+      "names": [
+        "cfg-if",
+        "windows-targets"
+      ],
+      "dev_dependency_count": 3,
+      "suspicious": [],
+      "suspicious_basis": null,
+      "pinned": true
+    },
+    "source_scan": {
+      "counts": {},
+      "categories": [],
+      "possible_exfiltration_shape": false,
+      "snippets": {}
+    },
+    "prompt_injection": {
+      "detected": false,
+      "matches": []
+    },
+    "content": {
+      "rust_files": 10,
+      "has_build_script": false,
+      "meaningful_lines": 972,
+      "meaningful_lines_build_script": 0,
+      "total_bytes": 90713
+    },
+    "metadata": {
+      "publish_date": "2015-11-08T12:22:07.864268Z",
+      "age_days": 3986,
+      "description": "Bindings around the platform's dynamic library loading primitives with greatly improved memory safety.",
+      "keywords": [
+        "load",
+        "dlopen",
+        "shared",
+        "dylib"
+      ],
+      "downloads": 555682103,
+      "num_versions": 41,
+      "version_yanked": false
+    }
+  },
+  "classification": {
+    "classification": "BENIGN",
+    "llm_classification": "BENIGN",
+    "reconciled": false,
+    "confidence": "HIGH",
+    "reasoning": "Purpose: `libloading` is a widely known, highly trusted, and heavily downloaded crate (over 555 million downloads, publish age over 10 years) providing safe abstractions around platform dynamic library loading primitives. Sources & Sinks: As a FFI library wrapping `dlopen`, `dlsym`, and related platform APIs, it naturally contains unsafe blocks (28 count) and FFI declarations using `libc`. However, there are no network calls, environment variable reads, process spawns, or file writes. Flows: No data exfiltration paths or malicious payloads exist in the source scan or build system (no build script is even present). Anomalies: None. Typosquatting is not flagged and the crate is the legitimate package. Conclusion: The unsafe usage is entirely expected and necessary for its documented purpose of dynamic library loading, and all supply-chain indicators are pristine.",
+    "primary_signals": [],
+    "retrieved_evidence_used": [],
+    "recommended_action": "Pass",
+    "malware_score": 0.0,
+    "security_risk_score": 0.1,
+    "obfuscation_score": 0.0,
+    "confidence_score": 0.99,
+    "flagged_by_score": false,
+    "score_label_consistent": true,
+    "parse_error": false,
+    "unverified_citations": []
+  },
+  "retrieved_context": [],
+  "prescreen": null,
+  "packing": null,
+  "holdout": true,
+  "usage": {
+    "calls": 1,
+    "chars_in": 9758,
+    "chars_out": 1148
+  },
+  "ground_truth": "BENIGN",
+  "correct": true
+}
